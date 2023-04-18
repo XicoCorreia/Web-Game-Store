@@ -14,8 +14,9 @@ var app = express();
 
 app.use(cors({origin: '*'}));
 app.use(logger('dev'));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
