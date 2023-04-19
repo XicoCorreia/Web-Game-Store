@@ -37,6 +37,22 @@ router.post('/signup',async function(req,res,next){
 
 });
 
+//User login requires query params ?username="someuser"&password="somepassword"
+router.get('/login',async function(req,res,next){
+  content=req.query
+  if(!content.hasOwnProperty('username') || !content.hasOwnProperty('password')){
+    return res.status(400).json({message:'Bad Request'});
+  }
+  findUser = await User.find({username:String(content.username)});
+  if(findUser.length==0){
+    return res.status(404).json({message:'Not found'});
+  }
+  if(!(content.password===findUser[0].password)){
+    return res.status(401).json({message:'Error logging in'});
+  }
+  return res.status(200).json({message:"Login sucessful"});
+});
+
 async function validateUser(name){
   try{
     if(name.length<3){
