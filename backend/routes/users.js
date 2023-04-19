@@ -14,23 +14,48 @@ router.get('/',async function(req, res, next) {
 Create new User given body with username and password
 Content-type must be x-www-form-urlencoded 
 */
-router.post('/',async function(req,res,next){
+router.post('/signup',async function(req,res,next){
   content=JSON.parse(JSON.stringify((req.body)));
   if(!content.hasOwnProperty('username') || !content.hasOwnProperty('password')){
-    return res.status(400).json({Error:'Bad Request'});
+    return res.status(400).json({message:'Bad Request'});
   }
+  validation = await validateUser(content.username);
+  if(!(validation==="Ok")){
+    return res.status(400).json({message:validation});
+  }
+  
   try{
     newId = await findNextId();
-    newUser = new User({...content,id:newId});
+    newUser = new User({...req.body,id:newId});
     await newUser.save();
-    insertedUser= await await User.find(newUser).select('-_id -__v -password') ;
+    insertedUser= await User.find(newUser).select('-_id -__v -password') ;
     return res.status(201).json(insertedUser);
 
-  }catch (error){
-    return res.status(304).json({Error:'Not Modified'})
+  }catch(error){
+    return res.status(500).json({message:'Internal Server Error'});
   }
 
 });
+
+async function validateUser(name){
+  try{
+    if(name.length<3){
+      return "Username needs to be 3 characters at least";
+    }
+    if(!(/^[a-zA-Z0-9]+$/.test(name))){
+      return "Username needs to be alphanumeric";
+    }
+    content = await User.find({username:name});
+    if(content.length==0){
+      return "Ok";
+    }else{
+      return "Username needs to be unique";
+    }
+
+  }catch (error){
+    return "Database Error";
+  }
+}
 
 async function findNextId(){
   count = await User.find().count();
