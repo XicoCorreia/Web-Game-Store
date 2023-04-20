@@ -3,7 +3,6 @@ var router = express.Router();
 const mongoose = require("mongoose");
 
 const {Item} = require("../db/models/item");
-const ITEMS = require('../db/init/storeItems').ITEMS;
 
 //GET ITEMS
 router.get('/',async function(req, res, next) {
