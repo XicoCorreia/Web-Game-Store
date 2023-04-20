@@ -9,6 +9,13 @@ const ITEMS=[
     type:'game',price:5,
     cover:'https://cdn.akamai.steamstatic.com/steam/apps/1794680/header.jpg?t=1681394120',
     video:'https://cdn.akamai.steamstatic.com/steam/apps/256911886/movie480_vp9.webm?t=1666779005'},
+    {id:3,title:'Cyberpunk 2077',
+    description:'Cyberpunk 2077 is an open-world, action-adventure RPG set in the dark future of Night City — a dangerous megalopolis obsessed with power, glamor, and ceaseless body modification.',
+    type:'game',price:30,
+    cover:'https://cdn.akamai.steamstatic.com/steam/apps/1091500/header.jpg?t=1680026109',
+    video:'https://cdn.akamai.steamstatic.com/steam/apps/256812920/movie480_vp9.webm?t=1611326875',
+    reel:['https://cdn.akamai.steamstatic.com/steam/apps/1091500/ss_9284d1c5b248726760233a933dbb83757d7d5d95.1920x1080.jpg?t=1680026109',
+    'https://cdn.akamai.steamstatic.com/steam/apps/1091500/ss_429db1d013a0366417d650d84f1eff02d1a18c2d.1920x1080.jpg?t=1680026109']},
     
 
 ];

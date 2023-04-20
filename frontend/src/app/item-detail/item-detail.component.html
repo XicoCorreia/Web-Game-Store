@@ -1,13 +1,18 @@
 <div *ngIf="item">
     <h2>{{item.title}}</h2>
     <img class="img-responsive" src={{item.cover}}>
-    <br>
+    <div class="reel">
+        <video *ngIf="item.video" #videoPlayer type="video/mp4"  autoplay="true" [muted]="true" [loop]="true" src="{{item.video}}">
+            Browser not supported
+        </video >
+        <br>
+        <img class="img-responsive" *ngIf="item.reel[0]" src={{item.reel[0]}}>
+        <img class="img-responsive" *ngIf="item.reel[1]" src={{item.reel[1]}}>
+    </div>
     <p>{{item.description}}</p>
 
     <p>Type: {{item.type}}</p>
     <p *ngIf="item.price>0">Price: {{item.price}}€</p>
     <p *ngIf="item.price==0">Free to Play</p>
-    <video controls #videoPlayer src="{{item.video}}" type="video/mp4"  autoplay="true" [muted]="true" [loop]="true" src="{{item.video}}">
-        Browser not supported
-    </video >
+    
 </div>

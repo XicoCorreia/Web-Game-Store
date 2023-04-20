@@ -6,6 +6,6 @@ export interface Item {
     platform:String;
     price:Number;
     cover:String;
-    reel:[String];
+    reel:String[];
     video:String;
 };
