@@ -3,9 +3,7 @@
 <ul class="items">
     <li *ngFor="let item of items">
         <img class="img-responsive" src={{item.cover}}><br>
-        <span class="badge">{{item.id}}</span> {{item.title}}
-        
-        
+        <p>{{item.id}} {{item.title}} {{item.price}}€</p>    
     </li>
 
 </ul>
