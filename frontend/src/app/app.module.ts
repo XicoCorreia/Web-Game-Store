@@ -7,12 +7,14 @@ import { ItemsComponent } from './items/items.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { ItemDetailComponent } from './item-detail/item-detail.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ItemsComponent,
     ItemDetailComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
