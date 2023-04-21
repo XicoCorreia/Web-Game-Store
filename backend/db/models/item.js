@@ -6,13 +6,13 @@ const ItemSchema = new mongoose.Schema({
     description : {type:String,required:true,maxLength: 1000},
     type : {type:String,lowercase:true,required:true,enum:['game','subscription','dlc']},
     platform : {type:String, lowercase:true,required:true,enum:['all','xbox','pc','playstation','switch'],default:'all'},
-    language : {type:String,required:true,default: 'english'},
+    language : {type:[String],required:true,default: ['english']},
     price : {type:Number,required:true},
     cover : {type:String,required:true,
         default:'https://t3.ftcdn.net/jpg/04/62/93/66/360_F_462936689_BpEEcxfgMuYPfTaIAOC1tCDurmsno7Sp.jpg'},
     reel : {type:[String],required:false,default:[]},
-    video : {type:String,required:false,default:''}
-
+    video : {type:String,required:false,default:''},
+    stars : {type:Number,required:true,min:1,max:5}
 });
 
 const Item = mongoose.model("Item",ItemSchema);

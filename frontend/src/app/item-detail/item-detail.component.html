@@ -12,7 +12,13 @@
     <p>{{item.description}}</p>
 
     <p>Type: {{item.type}}</p>
+    <p *ngIf="item.platform=='all'">Platform: PC, XBOX, Playstation, Nintendo Switch</p>
+    <p *ngIf="item.platform!='all'">Platform: {{item.platform}}</p>
+    <p>Stars: {{item.stars}}</p>
     <p *ngIf="item.price>0">Price: {{item.price}}€</p>
     <p *ngIf="item.price==0">Free to Play</p>
+    <ul>Available Languages:
+        <li *ngFor="let lang of item.language">{{lang}}</li>
+    </ul>
     
 </div>

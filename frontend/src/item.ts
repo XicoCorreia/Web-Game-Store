@@ -6,6 +6,8 @@ export interface Item {
     platform:String;
     price:Number;
     cover:String;
+    language:String[];
     reel:String[];
     video:String;
+    stars:Number;
 };
