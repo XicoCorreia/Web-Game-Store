@@ -8,6 +8,7 @@ import { ItemsComponent } from './items/items.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ItemDetailComponent } from './item-detail/item-detail.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     ItemsComponent,
     ItemDetailComponent,
     DashboardComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
