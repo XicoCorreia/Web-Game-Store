@@ -1,5 +1,5 @@
 {
-  "ignorePatterns": [".angular", "node_modules"],
+  "ignorePatterns": ["bin", "node_modules"],
   "env": {
     "commonjs": true,
     "es2021": true,
@@ -10,5 +10,7 @@
   "parserOptions": {
     "ecmaVersion": "latest"
   },
-  "rules": {}
+  "rules": {
+    "no-unused-vars": "warn"
+  }
 }
