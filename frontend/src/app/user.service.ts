@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User } from './user';
+import { User } from '../user';
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +22,12 @@ export class UserService {
   }
 
   updateUser(user : User): Observable<any> {
-    //Verify if name has more than 3 letters, only alphanumeric and unique
-    // Error message or Ok 
-    const url = `${this.userUrl}/hero/${user._id}`;
+    const url = `${this.userUrl}/profile/${user._id}`;
     return this.http.put(url, user, this.httpOptions);
+  }
+
+  checkUsername(name : string) {
+    const url = `${this.userUrl}/profile/${name}`;
+    return this.http.get(url);
   }
 }

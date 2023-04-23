@@ -11,8 +11,10 @@
             <button> Change profile picture</button>
             Change name: 
             <Input id="profile_name" [(ngModel)] = "user.name" placeholder="user.name"/>
+            <script src="./profile-edit.component.ts"></script>
         </h1>
     </div>
     <button type="button" (click)="save()">Apply changes</button>
     <button type="button" (click)="goBack()">Return to profile page</button>
+    <h1 id="feedback" style="color: red;">{{feedback}} </h1>
 </div>

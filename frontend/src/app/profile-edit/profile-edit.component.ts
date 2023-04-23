@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../user';
+import { User } from '../../user';
 import { ActivatedRoute } from '@angular/router';
 import {UserService} from '../user.service';
 import { Location } from '@angular/common';
@@ -12,6 +12,7 @@ import { Location } from '@angular/common';
 export class ProfileEditComponent implements OnInit{
 
   user: User | undefined; 
+  feedback = "";
 
   constructor(
     private route: ActivatedRoute,
@@ -28,13 +29,32 @@ export class ProfileEditComponent implements OnInit{
   }
 
   goBack(): void {
+    this.feedback = "";
     this.location.back();
   }
 
   save(): void {
+    const input = document.getElementById('input') as HTMLInputElement;
+    const name = input.value;
+    this.feedback = "";
+    
     if (this.user) {
-      this.userService.updateUser(this.user)
-        .subscribe(() => this.goBack());
+      if(!name.match(/^[0-9a-z]+$/)){
+        this.feedback = "Your name should only has numbers and letters!"
+        return;
+      }
+
+      this.userService.checkUsername(name).subscribe(res => {
+        if(res.toString.length > 0){
+          this.feedback = "Username already exists";
+        }
+      });
+
+      if(this.feedback == ""){
+        this.userService.updateUser(this.user);
+        this.feedback = "Changes applied with success";
+      }
+
     }
   }
 }
