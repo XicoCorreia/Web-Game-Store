@@ -7,7 +7,8 @@ import { ProfileComponent } from './profile/profile.component';
 const routes: Routes = [
   { path: 'browse', component: ItemsComponent },
   { path: 'detail/:id', component: ItemDetailComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile/:id', component: ProfileComponent },
+  { path: 'profile/edit/:id', component: ProfileComponent }
 ];
 
 @NgModule({

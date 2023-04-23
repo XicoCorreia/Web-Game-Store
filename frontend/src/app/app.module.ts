@@ -9,6 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ItemDetailComponent } from './item-detail/item-detail.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ProfileEditComponent } from './profile-edit/profile-edit.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,11 +19,13 @@ import { ProfileComponent } from './profile/profile.component';
     ItemDetailComponent,
     DashboardComponent,
     ProfileComponent,
+    ProfileEditComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

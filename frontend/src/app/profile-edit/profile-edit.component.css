@@ -1,0 +1,22 @@
+.profile {
+    display: inline-flex;
+}
+
+#profile_picture {
+    width: 5cm;
+    height: 5cm;
+    padding-right: 35px;
+}
+
+#profile_name{
+    margin: 0px;
+    padding-top: 20px;
+    font-size: 25px;
+
+}
+nav button{
+    width: 100px;
+    margin-bottom: 10px;
+    display: block;
+    cursor: pointer;
+}
