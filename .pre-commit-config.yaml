@@ -16,11 +16,13 @@ repos:
       - id: backend
         name: ESLint Backend
         language: system
-        entry: npm exec --prefix backend eslint --fix
+        entry: npm exec --prefix backend eslint backend -- --fix
         pass_filenames: false
+        verbose: true
 
       - id: frontend
         name: ESLint Frontend
         language: system
-        entry: npm exec --prefix backend eslint --fix
+        entry: npm exec --prefix frontend eslint frontend -- --fix
         pass_filenames: false
+        verbose: true

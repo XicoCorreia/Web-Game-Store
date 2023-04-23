@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
-import { catchError, Observable, of, pipe, tap } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 
 import { Item } from '../item';
 
@@ -11,6 +11,7 @@ import { Item } from '../item';
 })
 export class ItemService {
   private itemsUrl = 'http://127.0.0.1:3000/items';
+
   constructor(private http: HttpClient) {}
 
   getItems(): Observable<Item[]> {

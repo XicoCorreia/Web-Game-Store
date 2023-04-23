@@ -20,9 +20,9 @@ export class UserService {
     return this.http.get<User>(url);
   }
 
-  updateUser(user: User): Observable<any> {
+  updateUser(user: User): Observable<User> {
     const url = `${this.userUrl}/profile/${user._id}`;
-    return this.http.put(url, user, this.httpOptions);
+    return this.http.put<User>(url, user, this.httpOptions);
   }
 
   checkUsername(name: string) {
