@@ -1,0 +1,45 @@
+h1 {
+    color: white;
+    padding: 20px;
+}
+
+#signup{
+    width: 382px;
+    overflow: hidden;
+    margin: auto;
+    margin: 50 0 0 450px;
+    padding: 80px;
+    background: #47645c;
+    border-radius: 15px ;
+}
+p {
+    color: white;
+    font-size: 17px;
+    text-decoration: none;
+}
+label {
+    color: white;
+}
+
+.container {
+    margin-left: 100px;
+}
+
+button[type = submit] {
+    margin-top: 40px;
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 17px;
+    padding-left: 7px;
+    color: black;
+}
+button[type = button] {
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 17px;
+    padding-left: 7px;
+    color: black;
+}
+

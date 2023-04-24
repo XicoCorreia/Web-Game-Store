@@ -12,6 +12,8 @@ const UserSchema = new mongoose.Schema({
   },
   following: { type: [String], required: true, default: [] },
   followers: { type: [String], required: true, default: [] },
+  library: { type: [String], required: true, default: [] },
+  wishlist: { type: [String], required: true, default: [] },
 });
 
 const User = mongoose.model("User", UserSchema);
