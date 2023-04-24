@@ -15,17 +15,18 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getUser(id: string): Observable<User> {
-    const url = `${this.userUrl + '/profile'}/${id}`;
+  getUserByUsername(name: string): Observable<User> {
+    const url = `${this.userUrl + '/profile'}/${name}`;
     return this.http.get<User>(url);
   }
 
   updateUser(user: User): Observable<User> {
-    const url = `${this.userUrl}/profile/${user.id}`;
+    const url = `${this.userUrl}/profile/${user.name}`;
     return this.http.put<User>(url, user, this.httpOptions);
   }
 
   checkUsername(name: string) {
+    //TODO
     const url = `${this.userUrl}/profile/${name}`;
     return this.http.get(url);
   }

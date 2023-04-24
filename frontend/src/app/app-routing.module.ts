@@ -10,8 +10,8 @@ import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 const routes: Routes = [
   { path: 'browse', component: ItemsComponent },
   { path: 'detail/:id', component: ItemDetailComponent },
-  { path: 'profile/:id', component: ProfileComponent },
-  { path: 'profile/edit/:id', component: ProfileEditComponent },
+  { path: 'profile/:username', component: ProfileComponent },
+  { path: 'profile/edit/:username', component: ProfileEditComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
 ];

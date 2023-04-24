@@ -25,7 +25,9 @@ export class ProfileEditComponent implements OnInit {
 
   getUser(): void {
     const id = this.route.snapshot.paramMap.get('id')!;
-    this.userService.getUser(id).subscribe((user) => (this.user = user));
+    this.userService
+      .getUserByUsername(id)
+      .subscribe((user) => (this.user = user));
   }
 
   goBack(): void {
@@ -43,7 +45,7 @@ export class ProfileEditComponent implements OnInit {
         this.feedback = 'Your name should only has numbers and letters!';
         return;
       }
-
+      //TODO
       this.userService.checkUsername(name).subscribe((res) => {
         if (res.toString.length > 0) {
           this.feedback = 'Username already exists';

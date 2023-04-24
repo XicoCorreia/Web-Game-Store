@@ -4,13 +4,6 @@
       <div *ngIf="user.image != undefined">
         <img id="profile_picture" src="user.image" alt="Profile picture" />
       </div>
-      <div *ngIf="user.image == undefined">
-        <img
-          id="profile_picture"
-          src="{{ defaultImage }}"
-          alt="Profile picture"
-        />
-      </div>
       <h1 id="profile_name">user.name</h1>
     </h1>
   </div>

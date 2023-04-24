@@ -10,7 +10,6 @@ import { UserService } from '../user.service';
 })
 export class ProfileComponent implements OnInit {
   user: User | undefined;
-  defaultImage = '../../assets/profilePhoto.jpg';
   followers_button = 'Show followers';
   following_button = 'Show following';
   followers = false;
@@ -26,8 +25,10 @@ export class ProfileComponent implements OnInit {
   }
 
   getUser(): void {
-    const id = this.route.snapshot.paramMap.get('id')!;
-    this.userService.getUser(id).subscribe((user) => (this.user = user));
+    const username = this.route.snapshot.paramMap.get('username')!;
+    this.userService
+      .getUserByUsername(username)
+      .subscribe((user) => (this.user = user));
   }
 
   showFollowing() {
