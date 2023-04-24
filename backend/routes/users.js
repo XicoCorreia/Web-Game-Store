@@ -53,6 +53,43 @@ router.get('/login',async function(req,res,next){
   return res.status(200).json({message:"Login sucessful"});
 });
 
+
+/* 
+Follow user given body with username=username (username is username of user following ) follow=username (follow is username to follow)
+Content-type must be x-www-form-urlencoded 
+*/
+router.put('/follow',async function(req,res,next){
+  content=JSON.parse(JSON.stringify((req.body)));
+  if(!content.hasOwnProperty('username') || !content.hasOwnProperty('follow')){
+    return res.status(400).json({message:'Bad Request'});
+  }
+  findUsers = await User.find({$or:[{username:content.username},{username:content.follow}]});
+  if(findUsers.length!=2){
+    return res.status(404).json({message:'Not found'});
+  }
+  user1=null;
+  user2=null;
+  if(findUsers[0].username=content.username){
+    user1=findUsers[0];
+    user2=findUsers[1];
+  }else{
+    user1=findUsers[1];
+    user2=findUsers[0];
+  }
+  if(!(user1.following).includes(user2.username) && !(user2.followers).includes(user1.username)){
+    user1.following.push(user2.username);
+    user2.followers.push(user1.username);
+  }
+  try{
+    await user1.save();
+    await user2.save();
+    return res.status(200).json({message:'Added follower'});
+  }catch (error){
+    return res.status(500).json({message:'Internal Server Error'});
+  }
+
+});
+
 async function validateUser(name){
   try{
     if(name.length<3){
