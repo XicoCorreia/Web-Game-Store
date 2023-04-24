@@ -21,7 +21,7 @@ export class UserService {
   }
 
   updateUser(user: User): Observable<User> {
-    const url = `${this.userUrl}/profile/${user._id}`;
+    const url = `${this.userUrl}/profile/${user.id}`;
     return this.http.put<User>(url, user, this.httpOptions);
   }
 

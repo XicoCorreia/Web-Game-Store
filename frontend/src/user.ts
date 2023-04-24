@@ -2,8 +2,8 @@ export interface User {
   id: string;
   name: string;
   image?: string;
-  following: string[];
-  followers: string[];
+  following: User[];
+  followers: User[];
   library: string[];
   wishlist: string[];
 }

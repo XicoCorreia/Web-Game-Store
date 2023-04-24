@@ -7,7 +7,7 @@
       <div *ngIf="user.image == undefined">
         <img
           id="profile_picture"
-          src="../../assets/profilePhoto.jpg"
+          src="{{ defaultImage }}"
           alt="Profile picture"
         />
       </div>
@@ -15,7 +15,25 @@
     </h1>
   </div>
   <nav>
-    <button>Library</button>
-    <button>WishList</button>
+    <a routerLink="/library/{{ user.id }}"> Library </a>
+    <a routerLink="/wishlist/{{ user.id }}"> Wishlist</a>
+
+    <button #followers_button (click)="showFollowers()">
+      {{ followers_button }}
+    </button>
+    <ul *ngIf="followers" id="followers">
+      <li *ngFor="let follower of user.followers">
+        <a routerLink="/profile/follower.id"> follower.name </a>
+      </li>
+    </ul>
+
+    <button #following_button (click)="showFollowing()">
+      {{ following_button }}
+    </button>
+    <ul *ngIf="following" id="following">
+      <li *ngFor="let follow of user.following">
+        <a routerLink="/profile/follow.id"> follow.name </a>
+      </li>
+    </ul>
   </nav>
 </div>
