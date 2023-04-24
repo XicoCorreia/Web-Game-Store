@@ -10,6 +10,11 @@ import { UserService } from '../user.service';
 })
 export class ProfileComponent implements OnInit {
   user: User | undefined;
+  defaultImage = '../../assets/profilePhoto.jpg';
+  followers_button = 'Show followers';
+  following_button = 'Show following';
+  followers = false;
+  following = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -23,5 +28,25 @@ export class ProfileComponent implements OnInit {
   getUser(): void {
     const id = this.route.snapshot.paramMap.get('id')!;
     this.userService.getUser(id).subscribe((user) => (this.user = user));
+  }
+
+  showFollowing() {
+    if (this.following) {
+      this.following = false;
+      this.following_button = 'Show following';
+    } else {
+      this.following = true;
+      this.following_button = 'Hide following';
+    }
+  }
+
+  showFollowers() {
+    if (this.followers) {
+      this.followers = false;
+      this.followers_button = 'Show followers';
+    } else {
+      this.followers = true;
+      this.followers_button = 'Hide followers';
+    }
   }
 }
