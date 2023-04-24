@@ -1,12 +1,16 @@
 var express = require("express");
 var router = express.Router();
-const mongoose = require("mongoose");
 
 const { Item } = require("../db/models/item");
 
-//GET ITEMS
+/**
+ * GET items listing (with optional titlesearch query).
+ */
 router.get("/", async function (req, res, next) {
-  const items = await Item.find().select("-_id -__v");
+  const query = req.query.title
+    ? { title: { $regex: req.query.title, $options: "i" } }
+    : {};
+  const items = await Item.find(query).sort({ title: 1 }).select("-_id -__v");
   return res.status(200).json(items);
 });
 
