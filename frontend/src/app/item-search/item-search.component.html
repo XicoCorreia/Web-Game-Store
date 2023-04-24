@@ -4,6 +4,7 @@
     #searchBox
     id="search-box"
     ngModel
+    placeholder="Search for any item (min 3 characters))"
     minlength="3"
     (input)="search(searchBox.value)"
   />
@@ -16,4 +17,5 @@
       </a>
     </li>
   </ul>
+  <p *ngIf="!hasResults">No items found</p>
 </div>

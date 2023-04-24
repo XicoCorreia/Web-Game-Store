@@ -26,6 +26,8 @@ import {
 })
 export class ItemSearchComponent {
   items$!: Observable<Item[]>;
+  hasResults = true;
+
   private searchTerms = new Subject<string>();
 
   constructor(private itemService: ItemService) {}
@@ -37,9 +39,15 @@ export class ItemSearchComponent {
     this.items$ = this.searchTerms.pipe(
       debounceTime(200),
       distinctUntilChanged(),
-      switchMap((term: string) =>
-        term.length >= 3 ? this.itemService.searchItems(term) : of([])
-      )
+      switchMap((term: string) => {
+        if (term.length >= 3) {
+          return this.itemService.searchItems(term);
+        } else {
+          this.hasResults = true;
+          return of([]);
+        }
+      })
     );
+    this.items$.subscribe((items) => (this.hasResults = items.length !== 0));
   }
 }
