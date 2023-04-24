@@ -11,6 +11,16 @@ router.get('/',async function(req, res, next) {
   return res.status(200).json(users);
 });
 
+/* GET user by username*/
+router.get('/:username',async function(req, res, next) {
+  const username =(req.url).substring(1);
+  const user=await User.find().select('-_id -__v -password');
+  if(user.length==0){
+    return res.status(404).json({message:'Not found'});
+  }
+  return res.status(200).json(user[0]);
+});
+
 /* 
 Create new User given body with username and password
 Content-type must be x-www-form-urlencoded 
