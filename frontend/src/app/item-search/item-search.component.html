@@ -1,0 +1,19 @@
+<div id="search-component">
+  <label for="search-box">Item Search</label>
+  <input
+    #searchBox
+    id="search-box"
+    ngModel
+    minlength="3"
+    (input)="search(searchBox.value)"
+  />
+
+  <ul class="search-result">
+    <li *ngFor="let item of items$ | async">
+      <a routerLink="/detail/{{ item.id }}">
+        <img class="img-responsive" src="{{ item.cover }}" />
+        {{ item.title }}
+      </a>
+    </li>
+  </ul>
+</div>
