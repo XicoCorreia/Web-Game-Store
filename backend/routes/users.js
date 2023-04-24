@@ -111,7 +111,34 @@ router.put('/library',async function(req,res,next){
   }
   try{
     await findUser[0].save();
-    return res.status(200).json(findUser[0]);
+    return res.status(200).json({message:'Item added to library'});
+  }catch (error){
+    return res.status(500).json({message:'Internal Server Error'});
+  }
+});
+
+/* 
+Add item to wishlist give body with username and title of game
+Content-type must be x-www-form-urlencoded 
+*/
+router.put('/wishlist',async function(req,res,next){
+  content=JSON.parse(JSON.stringify((req.body)));
+  if(!content.hasOwnProperty('username') || !content.hasOwnProperty('title')){
+    return res.status(400).json({message:'Bad Request'});
+  }
+  findUser = await User.find({username:content.username});
+  findItem = await Item.find({title:content.title});
+  if(findUser.length==0 || findItem.length==0){
+    return res.status(404).json({message:'Not found'});
+  }
+  if(!findUser[0].wishlist.includes(findItem[0].title)){
+    findUser[0].wishlist.push(findItem[0].title);
+  }else{
+    return res.status(400).json({message:'Item already in wishlist'});
+  }
+  try{
+    await findUser[0].save();
+    return res.status(200).json({message:'Item added to wishlist'});
   }catch (error){
     return res.status(500).json({message:'Internal Server Error'});
   }

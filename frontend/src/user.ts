@@ -1,5 +1,9 @@
 export interface User {
-    _id: string;
-    name: string;
-    image?: string;
+    id: String;
+    name: String;
+    image?: String;
+    following: String[];
+    followers: String[];
+    library: String[];
+    wishlist: String[];
 }
