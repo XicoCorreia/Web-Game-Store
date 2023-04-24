@@ -24,9 +24,9 @@ export class ProfileEditComponent implements OnInit {
   }
 
   getUser(): void {
-    const id = this.route.snapshot.paramMap.get('id')!;
+    const username = this.route.snapshot.paramMap.get('username')!;
     this.userService
-      .getUserByUsername(id)
+      .getUserByUsername(username)
       .subscribe((user) => (this.user = user));
   }
 
@@ -36,25 +36,28 @@ export class ProfileEditComponent implements OnInit {
   }
 
   save(): void {
-    const input = document.getElementById('input') as HTMLInputElement;
+    const input = document.getElementById('profile_name') as HTMLInputElement;
     const name = input.value;
     this.feedback = '';
 
     if (this.user) {
-      if (!name.match(/^[0-9a-z]+$/)) {
+      if (name.length < 3) {
+        this.feedback = 'Your name should has more than 3 characters!';
+        return;
+      }
+      if (!name.match(/^[0-9a-zA-Z]+$/)) {
         this.feedback = 'Your name should only has numbers and letters!';
         return;
       }
-      //TODO
       this.userService.checkUsername(name).subscribe((res) => {
-        if (res.toString.length > 0) {
+        if (res.hasOwnProperty('username')) {
           this.feedback = 'Username already exists';
         }
       });
 
       if (this.feedback == '') {
-        this.userService.updateUser(this.user);
         this.feedback = 'Changes applied with success';
+        this.userService.updateUser(this.user).subscribe(() => {});
       }
     }
   }
