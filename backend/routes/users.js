@@ -19,6 +19,35 @@ router.get("/:username", async function (req, res, next) {
   return res.status(200).json(user[0]);
 });
 
+/* GET user by id */
+router.get("/profile/:id", async function (req, res, next) {
+  User.findById(req.params.id).exec(function (err, user) {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.status(400).json("User doesn't exist");
+    }
+    res.json(user);
+  });
+});
+
+/* UPDATE user */
+router.post("/profile/:id", async function (req, res, next) {
+  const id = req.params.id;
+  const user_update = req.body;
+  User.findByIdAndUpdate(id, user_update).exec(function (err, user) {
+    if (err) {
+      return next(err);
+    }
+
+    if (!user) {
+      return res.status(400).json("User doesn't exist");
+    }
+    res.sendStatus(204);
+  });
+});
+
 /*
 Create new User given body with username and password
 Content-type must be x-www-form-urlencoded
