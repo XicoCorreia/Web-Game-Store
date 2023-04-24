@@ -1,13 +1,13 @@
 export interface Item {
-    id:Number;
-    title:String;
-    description:String;
-    type:String;
-    platform:String;
-    price:Number;
-    cover:String;
-    language:String[];
-    reel:String[];
-    video:String;
-    stars:Number;
-};
+  id: number;
+  title: string;
+  description: string;
+  type: string;
+  platform: string;
+  price: number;
+  cover: string;
+  language: string[];
+  reel: string[];
+  video: string;
+  stars: number;
+}

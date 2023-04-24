@@ -1,0 +1,28 @@
+exclude: ^(\.git|\.angular|bin|node_modules)/
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-yaml
+
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.7.1
+    hooks:
+      - id: prettier
+
+  - repo: local
+    hooks:
+      - id: backend
+        name: ESLint Backend
+        language: system
+        entry: npm exec --prefix backend eslint backend -- --fix
+        pass_filenames: false
+        verbose: true
+
+      - id: frontend
+        name: ESLint Frontend
+        language: system
+        entry: npm exec --prefix frontend eslint frontend -- --fix
+        pass_filenames: false
+        verbose: true

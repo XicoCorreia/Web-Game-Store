@@ -1,17 +1,21 @@
 <div *ngIf="user">
-    <div>
-        <h1 class = "profile">  
-            <div *ngIf="user.image != undefined">
-                <img id = "profile_picture" src= "user.image" alt = "Profile picture"> 
-            </div>
-            <div *ngIf="user.image == undefined">
-                <img id = "profile_picture" src= "../../assets/profilePhoto.jpg" alt = "Profile picture"> 
-            </div>
-            <h1 id = "profile_name">  user.name </h1>
-        </h1>
-    </div>
-    <nav>
-        <button> Library </button>
-        <button> WishList </button>
-    </nav>
+  <div>
+    <h1 class="profile">
+      <div *ngIf="user.image != undefined">
+        <img id="profile_picture" src="user.image" alt="Profile picture" />
+      </div>
+      <div *ngIf="user.image == undefined">
+        <img
+          id="profile_picture"
+          src="../../assets/profilePhoto.jpg"
+          alt="Profile picture"
+        />
+      </div>
+      <h1 id="profile_name">user.name</h1>
+    </h1>
+  </div>
+  <nav>
+    <button>Library</button>
+    <button>WishList</button>
+  </nav>
 </div>

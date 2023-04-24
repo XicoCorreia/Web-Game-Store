@@ -1,7 +1,7 @@
 <h2>Store</h2>
 
-<a *ngFor="let item of items" routerLink='/detail/{{item.id}}'>
-    <img class="img-responsive" src={{item.cover}}><br>
-    <p *ngIf="item.price>0">{{item.title}} {{item.price}}€</p>
-    <p *ngIf="item.price==0">{{item.title}} Free to Play</p> 
+<a *ngFor="let item of items" routerLink="/detail/{{ item.id }}">
+  <img class="img-responsive" src="{{ item.cover }}" /><br />
+  <p *ngIf="item.price > 0">{{ item.title }} {{ item.price }}€</p>
+  <p *ngIf="item.price == 0">{{ item.title }} Free to Play</p>
 </a>

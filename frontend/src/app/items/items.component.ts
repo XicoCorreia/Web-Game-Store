@@ -1,23 +1,24 @@
 import { Component } from '@angular/core';
-import {Item} from '../../item';
-import {ItemService} from '../item.service';
+import { Item } from '../../item';
+import { ItemService } from '../item.service';
 
 @Component({
   selector: 'app-items',
   templateUrl: './items.component.html',
-  styleUrls: ['./items.component.css']
+  styleUrls: ['./items.component.css'],
 })
 export class ItemsComponent {
-  items:Item[]=[];
+  items: Item[] = [];
 
-  constructor(private itemService:ItemService){}
+  constructor(private itemService: ItemService) {}
 
-  ngOnInit():void{
+  ngOnInit(): void {
     this.getItems();
   }
 
-  getItems():void{
-    this.itemService.getItems().subscribe((data)=>{this.items=data});
+  getItems(): void {
+    this.itemService.getItems().subscribe((data) => {
+      this.items = data;
+    });
   }
-
 }
