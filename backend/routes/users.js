@@ -23,7 +23,7 @@ router.get("/:username", async function (req, res, next) {
 router.put("/:id", async function (req, res, next) {
   const id = req.params.id;
   const user_update = req.body;
-  User.findByIdAndUpdate(id, user_update).then((user) => {
+  User.updateOne({id : id}, user_update).then((user) => {
     if (!user) {
       return res.status(400).json("User doesn't exist");
     }
