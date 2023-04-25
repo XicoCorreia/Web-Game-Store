@@ -34,6 +34,17 @@ export class ProfileEditComponent implements OnInit {
     this.feedback = '';
   }
 
+  onselectFile(event: Event) {
+    const file = (<HTMLInputElement>event.target).files;
+    if (file && file[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file[0]);
+      reader.onload = (event) => {
+        this.user!.image = event.target?.result as string;
+      };
+    }
+  }
+
   save(): void {
     const input = document.getElementById('profile_name') as HTMLInputElement;
     const name = input.value;

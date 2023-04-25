@@ -9,7 +9,7 @@
           alt="Profile picture"
         />
       </div>
-      <button>Change profile picture</button>
+      <input id="fileInput" type="file" (change)="onselectFile($event)" />
       Change name:
       <div>
         <Input
