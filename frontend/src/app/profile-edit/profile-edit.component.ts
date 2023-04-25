@@ -32,7 +32,6 @@ export class ProfileEditComponent implements OnInit {
 
   goBack(): void {
     this.feedback = '';
-    this.location.back();
   }
 
   save(): void {
