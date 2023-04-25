@@ -11,11 +11,15 @@
       </div>
       <button>Change profile picture</button>
       Change name:
-      <Input
-        id="profile_name"
-        [(ngModel)]="user.username"
-        placeholder="Username"
-      />
+      <div>
+        <Input
+          name="username"
+          ngDefaultControl
+          id="profile_name"
+          [(ngModel)]="user.username"
+          placeholder="Username"
+        />
+      </div>
     </h1>
   </div>
   <button type="button" (click)="save()">Apply changes</button>
