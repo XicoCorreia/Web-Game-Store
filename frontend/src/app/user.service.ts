@@ -20,7 +20,7 @@ export class UserService {
     return this.http.get<User>(url);
   }
 
-  updateUser(user: User): Observable<any> {
+  updateUser(user: User): Observable<object> {
     console.log(user);
     const url = `${this.userUrl}/${user.id}`;
     return this.http.put(url, user, this.httpOptions);
