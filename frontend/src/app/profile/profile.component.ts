@@ -10,9 +10,8 @@ import { UserService } from '../user.service';
 })
 export class ProfileComponent implements OnInit {
   user: User | undefined;
-  defaultImage = '../../assets/profilePhoto.jpg';
-  followers_button = 'Show followers';
-  following_button = 'Show following';
+  followers_b = 'Show followers';
+  following_b = 'Show following';
   followers = false;
   following = false;
 
@@ -26,27 +25,29 @@ export class ProfileComponent implements OnInit {
   }
 
   getUser(): void {
-    const id = this.route.snapshot.paramMap.get('id')!;
-    this.userService.getUser(id).subscribe((user) => (this.user = user));
+    const username = this.route.snapshot.paramMap.get('username')!;
+    this.userService
+      .getUserByUsername(username)
+      .subscribe((user) => (this.user = user));
   }
 
   showFollowing() {
     if (this.following) {
       this.following = false;
-      this.following_button = 'Show following';
+      this.following_b = 'Show following';
     } else {
       this.following = true;
-      this.following_button = 'Hide following';
+      this.following_b = 'Hide following';
     }
   }
 
   showFollowers() {
     if (this.followers) {
       this.followers = false;
-      this.followers_button = 'Show followers';
+      this.followers_b = 'Show followers';
     } else {
       this.followers = true;
-      this.followers_button = 'Hide followers';
+      this.followers_b = 'Hide followers';
     }
   }
 }

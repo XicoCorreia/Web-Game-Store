@@ -12,11 +12,26 @@ router.get("/", async function (req, res, next) {
 /* GET user by username*/
 router.get("/:username", async function (req, res, next) {
   const username = req.url.substring(1);
-  const user = await User.find().select("-_id -__v -password");
+  const user = await User.find({username : username}).select("-_id -__v -password");
   if (user.length == 0) {
     return res.status(404).json({ message: "Not found" });
   }
   return res.status(200).json(user[0]);
+});
+
+/* UPDATE user */
+router.put("/:id", async function (req, res, next) {
+  const id = req.params.id;
+  const user_update = req.body;
+  User.findByIdAndUpdate(id, user_update).then((user) => {
+    if (!user) {
+      return res.status(400).json("User doesn't exist");
+    }
+    res.sendStatus(204);
+  }).catch((err) => {
+    return next(err);
+  });
+
 });
 
 /*

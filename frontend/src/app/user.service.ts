@@ -7,7 +7,7 @@ import { User } from '../user';
   providedIn: 'root',
 })
 export class UserService {
-  private userUrl = 'http://localhost:3000';
+  private userUrl = 'http://localhost:3000/users';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -15,18 +15,19 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getUser(id: string): Observable<User> {
-    const url = `${this.userUrl + '/profile'}/${id}`;
+  getUserByUsername(name: string): Observable<User> {
+    const url = `${this.userUrl}/${name}`;
     return this.http.get<User>(url);
   }
 
-  updateUser(user: User): Observable<User> {
-    const url = `${this.userUrl}/profile/${user.id}`;
-    return this.http.put<User>(url, user, this.httpOptions);
+  updateUser(user: User): Observable<any> {
+    console.log(user);
+    const url = `${this.userUrl}/${user.id}`;
+    return this.http.put(url, user, this.httpOptions);
   }
 
   checkUsername(name: string) {
-    const url = `${this.userUrl}/profile/${name}`;
+    const url = `${this.userUrl}/${name}`;
     return this.http.get(url);
   }
 }
