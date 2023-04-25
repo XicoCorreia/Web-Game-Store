@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { Observable, of } from 'rxjs';
 import { User } from '../../user';
 
 @Component({
@@ -13,8 +12,9 @@ export class LoginComponent {
 
   constructor(private authService:AuthService){}
 
-  login(name:String,pass:String):void{
-    this.currentUser=this.authService.login(name,pass);
-    
+  login(name:string,pass:string):void{
+    if (name != '' && pass != '') {
+      this.currentUser=this.authService.login(name,pass);
+    }
   }
 }

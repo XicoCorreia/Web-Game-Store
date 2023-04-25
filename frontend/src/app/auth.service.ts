@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../user';
-import { Observable, catchError, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +8,7 @@ import { Observable, catchError, of } from 'rxjs';
 export class AuthService {
 
   private currentUser:User={} as User;
-  private isloggedIn:Boolean=false;
+  private isloggedIn = false;
 
   private userUrl = 'http://localhost:3000';
 
@@ -19,14 +18,14 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  signup(name:String,pass:String):User{
+  signup(name:string,pass:string):User{
     this.http.post<User>(`${this.userUrl}/users/signup`,{username:name,password:pass},this.httpOptions).subscribe((data)=>this.currentUser=data);
     return this.currentUser;
   }
 
-  login(name:String,pass:String):User{
+  login(name:string,pass:string):User{
     this.http.get<User>(`${this.userUrl}/users/login?username=${name}&password=${pass}`).subscribe(((data)=>this.currentUser=data));
-    if(this.currentUser.hasOwnProperty('username')){
+    if (Object.prototype.hasOwnProperty.call(this.currentUser, 'username')) {
       this.isloggedIn=true;
       return this.currentUser;
     }else{
@@ -39,7 +38,7 @@ export class AuthService {
     return this.currentUser;
   }
 
-  canActivate():Boolean{
+  canActivate():boolean{
     return this.isloggedIn;
   }
 }
