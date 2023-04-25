@@ -49,15 +49,16 @@ export class ProfileEditComponent implements OnInit {
         this.feedback = 'Your name should only has numbers and letters!';
         return;
       }
-      this.userService.checkUsername(name).subscribe((res) => {
-        if (res.hasOwnProperty('username')) {
+      this.userService.getUserByUsername(name).subscribe((res) => {
+        if (res.username) {
           this.feedback = 'Username already exists';
         }
       });
 
       if (this.feedback == '') {
-        this.feedback = 'Changes applied with success';
-        this.userService.updateUser(this.user).subscribe(() => {});
+        this.userService
+          .updateUser(this.user)
+          .subscribe(() => (this.feedback = 'Changes applied with success'));
       }
     }
   }
