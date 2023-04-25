@@ -12,7 +12,9 @@ router.get("/", async function (req, res, next) {
 /* GET user by username*/
 router.get("/:username", async function (req, res, next) {
   const username = req.url.substring(1);
-  const user = await User.find({username : username}).select("-_id -__v -password");
+  const user = await User.find({ username: username }).select(
+    "-_id -__v -password"
+  );
   if (user.length == 0) {
     return res.status(404).json({ message: "Not found" });
   }
@@ -23,15 +25,16 @@ router.get("/:username", async function (req, res, next) {
 router.put("/:id", async function (req, res, next) {
   const id = req.params.id;
   const user_update = req.body;
-  User.updateOne({id : id}, user_update).then((user) => {
-    if (!user) {
-      return res.status(400).json("User doesn't exist");
-    }
-    res.sendStatus(204);
-  }).catch((err) => {
-    return next(err);
-  });
-
+  User.updateOne({ id: id }, user_update)
+    .then((user) => {
+      if (!user) {
+        return res.status(400).json("User doesn't exist");
+      }
+      res.sendStatus(204);
+    })
+    .catch((err) => {
+      return next(err);
+    });
 });
 
 /*
@@ -54,9 +57,15 @@ router.post("/signup", async function (req, res, next) {
   try {
     const newId = await findNextId();
     const newUser = await User.create({ ...req.body, id: newId });
-    retUser = {id:newUser.id,username:newUser.username,image:newUser.image,
-      following:newUser.following,followers:newUser.followers,
-      library:newUser.library,wishlist:newUser.wishlist};
+    const retUser = {
+      id: newUser.id,
+      username: newUser.username,
+      image: newUser.image,
+      following: newUser.following,
+      followers: newUser.followers,
+      library: newUser.library,
+      wishlist: newUser.wishlist,
+    };
 
     return res.status(201).json(retUser);
   } catch (error) {
@@ -80,9 +89,15 @@ router.post("/login", async function (req, res, next) {
   if (!(content.password === findUser[0].password)) {
     return res.status(401).json({ message: "Error logging in" });
   }
-  retUser = {id:findUser[0].id,username:findUser[0].username,image:findUser[0].image,
-    following:findUser[0].following,followers:findUser[0].followers,
-    library:findUser[0].library,wishlist:findUser[0].wishlist};
+  const retUser = {
+    id: findUser[0].id,
+    username: findUser[0].username,
+    image: findUser[0].image,
+    following: findUser[0].following,
+    followers: findUser[0].followers,
+    library: findUser[0].library,
+    wishlist: findUser[0].wishlist,
+  };
   return res.status(200).json(retUser);
 });
 
