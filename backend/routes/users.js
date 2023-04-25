@@ -73,14 +73,14 @@ router.get("/login", async function (req, res, next) {
   ) {
     return res.status(400).json({ message: "Bad Request" });
   }
-  const findUser = await User.find({ username: String(content.username) });
+  const findUser = await User.find({ username: content.username });
   if (findUser.length == 0) {
     return res.status(404).json({ message: "Not found" });
   }
   if (!(content.password === findUser[0].password)) {
     return res.status(401).json({ message: "Error logging in" });
   }
-  return res.status(200).json({ message: "Login sucessful" });
+  return res.status(200).json(findUser);
 });
 
 /*
