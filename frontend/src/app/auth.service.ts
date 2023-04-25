@@ -20,12 +20,12 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   signup(name:String,pass:String):User{
-    this.http.post<User>(`${this.userUrl}/users/signup`,{username:name,password:pass},this.httpOptions).subscribe((data)=>this.currentUser=data);
+    this.http.post<User>(`${this.userUrl}/users/signup`,{username:name,password:pass}).subscribe((data)=>this.currentUser=data);
     return this.currentUser;
   }
 
   login(name:String,pass:String):User{
-    this.http.get<User>(`${this.userUrl}/users/login?username=${name}&password=${pass}`).subscribe(((data)=>this.currentUser=data));
+    this.http.post<User>(`${this.userUrl}/users/login`,{username:name,password:pass}).subscribe(((data)=>this.currentUser=data));
     if(this.currentUser.hasOwnProperty('username')){
       this.isloggedIn=true;
       return this.currentUser;
