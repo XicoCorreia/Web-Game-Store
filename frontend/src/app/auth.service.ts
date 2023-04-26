@@ -24,8 +24,7 @@ export class AuthService {
     return this.http
       .post<User>(
         `${this.userUrl}/users/signup`,
-        { username: name, password: pass },
-        this.httpOptions
+        { username: name, password: pass }
       )
       .pipe(
         catchError((error) => {
