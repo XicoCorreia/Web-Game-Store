@@ -1,9 +1,27 @@
-.reel img {
-  max-width: 25%;
-  height: auto;
+.main {
+  padding: 0px;
+  margin: auto;
+  max-width: 800px;
 }
 
-.reel video {
-  max-width: 25%;
-  height: auto;
+.info{
+  /* flexbox */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: flex-start;
+  align-items: flex-start;
+}
+.details{
+  align-self:center;
+}
+
+.lang{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: flex-start;
+  align-items: flex-start;
 }
