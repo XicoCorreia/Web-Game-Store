@@ -1,6 +1,5 @@
 var express = require("express");
 var router = express.Router();
-const mongoose = require("mongoose");
 
 const { User } = require("../db/models/user");
 const USERS = require("../db/init/mock-users").USERS;
