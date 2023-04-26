@@ -32,7 +32,17 @@ export class ProfileEditComponent implements OnInit {
 
   goBack(): void {
     this.feedback = '';
-    this.location.back();
+  }
+
+  onselectFile(event: Event) {
+    const file = (<HTMLInputElement>event.target).files;
+    if (file && file[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file[0]);
+      reader.onload = (event) => {
+        this.user!.image = event.target?.result as string;
+      };
+    }
   }
 
   save(): void {

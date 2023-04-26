@@ -9,7 +9,7 @@
           alt="Profile picture"
         />
       </div>
-      <button>Change profile picture</button>
+      <input id="fileInput" type="file" (change)="onselectFile($event)" />
       Change name:
       <div>
         <Input
@@ -23,6 +23,12 @@
     </h1>
   </div>
   <button type="button" (click)="save()">Apply changes</button>
-  <button type="button" (click)="goBack()">Return to profile page</button>
+  <button
+    type="button"
+    (click)="goBack()"
+    [routerLink]="['/profile/', user.username]"
+  >
+    Return to profile page
+  </button>
   <h1 id="feedback">{{ feedback }}</h1>
 </div>

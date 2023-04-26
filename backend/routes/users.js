@@ -25,7 +25,7 @@ router.get("/:username", async function (req, res, next) {
 router.put("/:id", async function (req, res, next) {
   const id = req.params.id;
   const user_update = req.body;
-  User.findByIdAndUpdate(id, user_update)
+  User.updateOne({ id: id }, user_update)
     .then((user) => {
       if (!user) {
         return res.status(400).json("User doesn't exist");
@@ -56,20 +56,26 @@ router.post("/signup", async function (req, res, next) {
 
   try {
     const newId = await findNextId();
-    const newUser = new User({ ...req.body, id: newId });
-    await newUser.save();
-    const insertedUser = await User.findOne(newUser.id).select(
-      "-_id -__v -password"
-    );
-    return res.status(201).json(insertedUser);
+    const newUser = await User.create({ ...req.body, id: newId });
+    const retUser = {
+      id: newUser.id,
+      username: newUser.username,
+      image: newUser.image,
+      following: newUser.following,
+      followers: newUser.followers,
+      library: newUser.library,
+      wishlist: newUser.wishlist,
+    };
+
+    return res.status(201).json(retUser);
   } catch (error) {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
 //User login requires query params ?username="someuser"&password="somepassword"
-router.get("/login", async function (req, res, next) {
-  const content = req.query;
+router.post("/login", async function (req, res, next) {
+  const content = JSON.parse(JSON.stringify(req.body));
   if (
     !Object.prototype.hasOwnProperty.call(content, "username") ||
     !Object.prototype.hasOwnProperty.call(content, "password")
@@ -83,7 +89,16 @@ router.get("/login", async function (req, res, next) {
   if (!(content.password === findUser[0].password)) {
     return res.status(401).json({ message: "Error logging in" });
   }
-  return res.status(200).json(findUser);
+  const retUser = {
+    id: findUser[0].id,
+    username: findUser[0].username,
+    image: findUser[0].image,
+    following: findUser[0].following,
+    followers: findUser[0].followers,
+    library: findUser[0].library,
+    wishlist: findUser[0].wishlist,
+  };
+  return res.status(200).json(retUser);
 });
 
 /*
