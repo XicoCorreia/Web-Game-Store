@@ -25,17 +25,19 @@
   align-items: flex-start;
 }
 
-.reel{
+.reel {
   margin: auto;
   max-width: 600px;
   align-items: center;
 }
 
-.reel img{
+.reel img {
   width: 600px;
 }
 
-p,h2,h3{
+p,
+h2,
+h3 {
   padding-left: 20px;
   padding-right: 20px;
 }

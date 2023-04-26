@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { User } from '../../user';
 
-
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -37,7 +36,7 @@ export class SignupComponent {
   }
 }
 */
-  signup (name: string, pass: string, pass2:string): void{
+  signup(name: string, pass: string, pass2: string): void {
     if (pass === pass2) {
       if (name.length >= 3) {
         if (name.match(/^[0-9a-zA-Z]+$/)) {
@@ -50,23 +49,27 @@ export class SignupComponent {
             });
           } else {
             if (!/(?=.*[a-z])/.test(pass)) {
-              this.feedback += 'A senha precisa ter pelo menos uma letra minúscula.';
+              this.feedback +=
+                'A senha precisa ter pelo menos uma letra minúscula.';
             }
             if (!/(?=.*[A-Z])/.test(pass)) {
-              this.feedback += 'A senha precisa ter pelo menos uma letra maiúscula.';
+              this.feedback +=
+                'A senha precisa ter pelo menos uma letra maiúscula.';
             }
             if (!/(?=.*\d)/.test(pass)) {
               this.feedback += 'A senha precisa ter pelo menos um número.';
             }
             if (!/^[a-zA-Z\d]{8,}$/.test(pass)) {
-              this.feedback += 'A senha precisa ter pelo menos 8 caracteres alfanuméricos.';
+              this.feedback +=
+                'A senha precisa ter pelo menos 8 caracteres alfanuméricos.';
             }
           }
         } else {
           this.feedback = 'Username só pode ter caracteres alfanuméricos!';
         }
       } else {
-        this.feedback = 'Username tem que ter no mínimo 3 caracteres alfanuméricos!';
+        this.feedback =
+          'Username tem que ter no mínimo 3 caracteres alfanuméricos!';
       }
     } else {
       this.feedback = 'Passwords não coincidem!';

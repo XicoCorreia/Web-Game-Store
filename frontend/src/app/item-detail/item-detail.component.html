@@ -16,19 +16,19 @@
   </div>
   <p>{{ item.description }}</p>
   <div class="reel">
-  <video
-    *ngIf="item.video"
-    type="video/mp4"
-    autoplay="true"
-    controls="true"
-    [muted]="true"
-    [loop]="true"
-    src="{{ item.video }}"
-    width="600px"
-    height="auto"
-  >
-    Browser not supported
-  </video>
+    <video
+      *ngIf="item.video"
+      type="video/mp4"
+      autoplay="true"
+      controls="true"
+      [muted]="true"
+      [loop]="true"
+      src="{{ item.video }}"
+      width="600px"
+      height="auto"
+    >
+      Browser not supported
+    </video>
     <img class="img-responsive" *ngIf="item.reel[0]" src="{{ item.reel[0] }}" />
     <img class="img-responsive" *ngIf="item.reel[1]" src="{{ item.reel[1] }}" />
   </div>

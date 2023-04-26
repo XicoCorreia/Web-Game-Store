@@ -22,10 +22,10 @@ export class AuthService {
 
   signup(name: string, pass: string): Observable<User> {
     return this.http
-      .post<User>(
-        `${this.userUrl}/users/signup`,
-        { username: name, password: pass }
-      )
+      .post<User>(`${this.userUrl}/users/signup`, {
+        username: name,
+        password: pass,
+      })
       .pipe(
         catchError((error) => {
           console.error(error);

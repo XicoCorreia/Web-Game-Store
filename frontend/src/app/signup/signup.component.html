@@ -2,16 +2,22 @@
   <div class="container">
     <h1>Sign Up</h1>
     <p>Email</p>
-    <input type="text" placeholder="Enter Username" #username/>
+    <input type="text" placeholder="Enter Username" #username />
     <p>Password</p>
-    <input type="password" placeholder="Enter Password" #password1/>
+    <input type="password" placeholder="Enter Password" #password1 />
     <p>Repeat password</p>
-    <input type="password" placeholder="Repeat Password" #password2/>
+    <input type="password" placeholder="Repeat Password" #password2 />
     <p></p>
     <label> <input type="checkbox" checked="checked" /> Remember me </label>
     <p>{{ feedback }}</p>
     <div class="clearfix">
-      <button type="submit" class="signupbtn"(click) = "signup(username.value, password1.value, password2.value)">Sign Up</button>
+      <button
+        type="submit"
+        class="signupbtn"
+        (click)="signup(username.value, password1.value, password2.value)"
+      >
+        Sign Up
+      </button>
       <button type="button" class="cancelbtn">Cancel</button>
     </div>
   </div>

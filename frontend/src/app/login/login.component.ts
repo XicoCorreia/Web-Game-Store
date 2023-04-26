@@ -12,7 +12,6 @@ export class LoginComponent {
   currentUser: User = {} as User;
   feedback = '';
 
-
   constructor(private authService: AuthService, private router: Router) {}
 
   login(name: string, pass: string): void {
