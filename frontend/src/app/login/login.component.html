@@ -1,15 +1,20 @@
 <div>
   <form id="login">
     <h1>Login</h1>
-    <input type="text" id="username" placeholder="Username" #username/>
+    <input type="text" id="username" placeholder="Username" #username />
     <br /><br />
     <input type="Password" id="Password" placeholder="Password" #password />
     <br /><br />
-    <input type="button" id="button" value="Log In" (click) = "login(username.value, password.value)" />
+    <input
+      type="button"
+      id="button"
+      value="Log In"
+      (click)="login(username.value, password.value)"
+    />
     <br /><br />
     <p>Don't have an account? <a href="signup">Sign Up</a></p>
     <input type="checkbox" id="check" />
     <span>Remember me</span>
   </form>
 </div>
-<p *ngIf="currentUser">{{currentUser.username}}</p>
+<p *ngIf="currentUser">{{ currentUser.username }}</p>

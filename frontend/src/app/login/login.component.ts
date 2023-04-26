@@ -8,11 +8,11 @@ import { User } from '../../user';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  currentUser:User={} as User;
+  currentUser: User = {} as User;
 
-  constructor(private authService:AuthService){}
+  constructor(private authService: AuthService) {}
 
-  login(name:string,pass:string):void{
+  login(name: string, pass: string): void {
     if (name != '' && pass != '') {
       this.authService.login(name, pass).subscribe((user: User) => {
         if (user != null) {
