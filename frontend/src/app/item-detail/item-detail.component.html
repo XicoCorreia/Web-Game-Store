@@ -1,31 +1,42 @@
 <div *ngIf="item" class="main">
   <h2>{{ item.title }}</h2>
-  
+
   <div class="info">
-    <img class="cover" src="{{ item.cover }}"/>
+    <img class="cover" src="{{ item.cover }}" />
     <div class="details">
-    <p>{{ item.type | uppercase}}  {{ item.stars }}&#9733;</p> 
-    <p *ngIf="item.price > 0">Price: {{ item.price }}€</p>
-    <p *ngIf="item.price == 0">Free to Play</p>
-    <p *ngIf="item.platform == 'all'">Platform: PC, XBOX,<br> Playstation, Nintendo Switch</p>
-    <p *ngIf="item.platform != 'all'">Platform: {{ item.platform }}</p>
-  </div>
+      <p>{{ item.type | uppercase }} {{ item.stars }}&#9733;</p>
+      <p *ngIf="item.price > 0">Price: {{ item.price }}€</p>
+      <p *ngIf="item.price == 0">Free to Play</p>
+      <p *ngIf="item.platform == 'all'">
+        Platform: PC, XBOX,<br />
+        Playstation, Nintendo Switch
+      </p>
+      <p *ngIf="item.platform != 'all'">Platform: {{ item.platform }}</p>
+    </div>
   </div>
   <p>{{ item.description }}</p>
-  <video *ngIf="item.video" type="video/mp4" autoplay="true" [muted]="true" [loop]="true" src="{{ item.video }}"> Browser not supported</video>
+  <video
+    *ngIf="item.video"
+    type="video/mp4"
+    autoplay="true"
+    [muted]="true"
+    [loop]="true"
+    src="{{ item.video }}"
+  >
+    Browser not supported
+  </video>
   <br />
   <div class="reel">
     <img class="img-responsive" *ngIf="item.reel[0]" src="{{ item.reel[0] }}" />
     <img class="img-responsive" *ngIf="item.reel[1]" src="{{ item.reel[1] }}" />
   </div>
-  
-  <br>
+
+  <br />
   <p>Available Languages:</p>
   <div class="lang">
     <p *ngFor="let lang of item.language">{{ lang }} &nbsp; &nbsp;&nbsp;</p>
   </div>
 
   <h3>Reviews</h3>
-  <p>There are no reviews yet </p>
-
+  <p>There are no reviews yet</p>
 </div>

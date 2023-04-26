@@ -4,7 +4,7 @@
   max-width: 800px;
 }
 
-.info{
+.info {
   /* flexbox */
   display: flex;
   flex-direction: row;
@@ -13,11 +13,11 @@
   align-content: flex-start;
   align-items: flex-start;
 }
-.details{
-  align-self:center;
+.details {
+  align-self: center;
 }
 
-.lang{
+.lang {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
