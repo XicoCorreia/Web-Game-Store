@@ -36,21 +36,19 @@ export class AuthService {
   }
 
   login(name: string, pass: string): Observable<User> {
-    return this.http
-      .get<User>(
-        `${this.userUrl}/users/login?username=${name}&password=${pass}`
-      )
-      .pipe(
-        tap((user: User) => {
-          this.currentUser = user;
-          this.isloggedIn = true;
-        }),
-        catchError((error) => {
-          console.error(error);
-          this.isloggedIn = false;
-          throw error;
-        })
-      );
+    const body = { username: name, password: pass };
+    const url = `${this.userUrl}/users/login`;
+    return this.http.post<User>(url, body, this.httpOptions).pipe(
+      tap((user: User) => {
+        this.currentUser = user;
+        this.isloggedIn = true;
+      }),
+      catchError((error) => {
+        console.error(error);
+        this.isloggedIn = false;
+        throw error;
+      })
+    );
   }
 
   getCurrentUser(): User {

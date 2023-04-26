@@ -13,7 +13,7 @@ export class LoginComponent {
   constructor(private authService: AuthService) {}
 
   login(name: string, pass: string): void {
-    if (name != '' && pass != '') {
+    if (name !== '' && pass !== '') {
       this.authService.login(name, pass).subscribe((user: User) => {
         if (user != null) {
           this.currentUser = user;
