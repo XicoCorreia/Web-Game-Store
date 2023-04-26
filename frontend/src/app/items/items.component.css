@@ -1,3 +1,31 @@
-ul {
-  list-style: none;
+.center {
+  padding: 0;
+  margin: auto;
+  max-width: 1000px;
+
+  /* flexbox */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: flex-start;
+  align-items: flex-start;
+}
+
+.center2 {
+  padding: 0;
+  margin: auto;
+  max-width: 600px;
+}
+
+.img-responsive {
+  border-radius: 29px;
+}
+
+a {
+  border-style: solid;
+  border-radius: 30px;
+  color: white;
+  text-decoration: none;
+  background-color: #47645c;
 }
