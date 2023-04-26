@@ -14,7 +14,14 @@ export class LoginComponent {
 
   login(name:string,pass:string):void{
     if (name != '' && pass != '') {
-      this.currentUser=this.authService.login(name,pass);
+      this.authService.login(name, pass).subscribe((user: User) => {
+        if (user != null) {
+          this.currentUser = user;
+        }
+      });
     }
+    //if (name != '' && pass != '') {
+    // this.currentUser=this.authService.login(name,pass);
+    //}
   }
 }

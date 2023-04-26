@@ -18,7 +18,7 @@ export class SignupComponent {
       //minimo 8 caracteres alfanumericos, mininmo 1 maiuscula, minuscula e 1 numero
       const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
       if (pass.match(regex)) {
-        this.currentUser = this.authService.signup(name,pass);
+       // this.currentUser = this.authService.signup(name,pass);
       }
     }
   }  

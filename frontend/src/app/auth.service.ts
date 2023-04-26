@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../user';
+import { catchError, Observable, tap } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,20 +20,28 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  signup(name:string,pass:string):User{
-    this.http.post<User>(`${this.userUrl}/users/signup`,{username:name,password:pass},this.httpOptions).subscribe((data)=>this.currentUser=data);
-    return this.currentUser;
+  signup(name: string, pass: string): Observable<User> {
+    return this.http.post<User>(`${this.userUrl}/users/signup`, {username: name, password: pass}, this.httpOptions)
+      .pipe(
+        catchError(error => {
+          console.error(error);
+          throw error;
+        })
+      );
   }
 
-  login(name:string,pass:string):User{
-    this.http.get<User>(`${this.userUrl}/users/login?username=${name}&password=${pass}`).subscribe(((data)=>this.currentUser=data));
-    if (Object.prototype.hasOwnProperty.call(this.currentUser, 'username')) {
-      this.isloggedIn=true;
-      return this.currentUser;
-    }else{
-      this.isloggedIn=false;
-      return {} as User;
-    }
+  login(name: string, pass: string): Observable<User> {
+    return this.http.get<User>(`${this.userUrl}/users/login?username=${name}&password=${pass}`).pipe(
+      tap((user: User) => {
+        this.currentUser = user;
+        this.isloggedIn = true;
+      }),
+      catchError((error) => {
+        console.error(error);
+        this.isloggedIn = false;
+        throw error;
+      })
+    );
   }
 
   getCurrentUser():User{
