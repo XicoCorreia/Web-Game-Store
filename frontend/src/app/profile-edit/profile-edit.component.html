@@ -1,34 +1,36 @@
 <div *ngIf="user">
-  <h2>Edit {{ user.username }} profile</h2>
-  <div>
-    <h1 class="profile">
-      <div *ngIf="user.image != undefined">
-        <img
-          id="profile_picture"
-          src="{{ user.image }}"
-          alt="Profile picture"
-        />
-      </div>
-      <input id="fileInput" type="file" (change)="onselectFile($event)" />
-      Change name:
-      <div>
-        <Input
-          name="username"
-          ngDefaultControl
-          id="profile_name"
-          [(ngModel)]="user.username"
-          placeholder="Username"
-        />
-      </div>
-    </h1>
+  <nav>
+    <h2 id="edit">Edit {{ user.username }} profile</h2>
+  </nav>
+  <div id="profile">
+    <div *ngIf="user.image != undefined">
+      <img id="profile_picture" src="{{ user.image }}" alt="Profile picture" />
+    </div>
+    <div id="changeName">
+      <h2 id="nameText">Change name:</h2>
+      <Input
+        name="username"
+        ngDefaultControl
+        id="profile_name"
+        [(ngModel)]="user.username"
+        placeholder="Username"
+      />
+    </div>
   </div>
-  <button type="button" (click)="save()">Apply changes</button>
-  <button
-    type="button"
-    (click)="goBack()"
-    [routerLink]="['/profile/', user.username]"
-  >
-    Return to profile page
-  </button>
-  <h1 id="feedback">{{ feedback }}</h1>
+  <div>
+    <div id="fileInput">
+      <input type="file" (change)="onselectFile($event)" />
+    </div>
+    <div id="buttons">
+      <button type="button" (click)="save()">Apply changes</button>
+      <button
+        type="button"
+        (click)="goBack()"
+        [routerLink]="['/profile/', user.username]"
+      >
+        Return to profile page
+      </button>
+      <h3 id="feedback">{{ feedback }}</h3>
+    </div>
+  </div>
 </div>

@@ -1,37 +1,13 @@
 <div *ngIf="user">
-  <div>
-    <h1 class="profile">
-      <div *ngIf="user.image != undefined">
-        <img
-          id="profile_picture"
-          src="{{ user.image }}"
-          alt="Profile picture"
-        />
-      </div>
-      <h1 id="profile_name">{{ user.username }}</h1>
-      <a routerLink="/profile/edit/{{ user.username }}"> edit </a>
-    </h1>
-  </div>
   <nav>
-    <a routerLink="/library/{{ user.id }}"> Library </a>
-    <a routerLink="/wishlist/{{ user.id }}"> Wishlist</a>
-
-    <button #followers_button (click)="showFollowers()">
-      {{ followers_b }}
-    </button>
-    <ul *ngIf="followers" id="followers">
-      <li *ngFor="let follower of user.followers">
-        <a routerLink="/profile/follower.id"> follower.name </a>
-      </li>
-    </ul>
-
-    <button #following_button (click)="showFollowing()">
-      {{ following_b }}
-    </button>
-    <ul *ngIf="following" id="following">
-      <li *ngFor="let follow of user.following">
-        <a routerLink="/profile/follow.id"> follow.name </a>
-      </li>
-    </ul>
+    <li><a href="#">FOLLOWING</a></li>
+    <li><a href="#">FOLLOWERS</a></li>
+    <li><a href="#">My LISTS</a></li>
+    <li><a href="#">My LIBRARIES</a></li>
+    <li><a routerLink="/profile/edit/{{ user.username }}">EDIT PROFILE</a></li>
   </nav>
+  <div id="profile" *ngIf="user.image != undefined">
+    <img id="profile_picture" src="{{ user.image }}" alt="Profile picture" />
+    <h1 id="profile_name">{{ user.username }}</h1>
+  </div>
 </div>

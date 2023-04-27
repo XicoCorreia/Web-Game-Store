@@ -1,21 +1,57 @@
-.profile {
-  display: inline-flex;
+#profile {
+  text-align: left;
+  margin-top: 20px;
+  padding-left: 120px;
+  margin-bottom: 120px;
 }
 
 #profile_picture {
+  float: left;
   width: 5cm;
   height: 5cm;
-  padding-right: 35px;
+  margin-right: 30px;
+  margin-left: 0;
+  border: 2px solid #333;
 }
 
 #profile_name {
-  margin: 0px;
-  padding-top: 20px;
-  font-size: 25px;
+  margin-top: 0 px;
+  font-size: 20px;
+  height: 40px;
+  width: 10cm;
 }
 nav button {
   width: 100px;
   margin-bottom: 10px;
   display: block;
   cursor: pointer;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  background-color: #333;
+  padding: 10px;
+}
+
+#edit {
+  color: white;
+  text-decoration: none;
+}
+
+#nameText {
+  margin-bottom: 0px;
+}
+
+#buttons {
+  text-align: right;
+}
+
+#feedback {
+  margin-top: 2px;
+}
+
+#fileInput {
+  padding-left: 120px;
+  text-align: left;
 }
