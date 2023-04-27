@@ -1,5 +1,5 @@
 header {
-  background-color: #333;
+  background-color: #47645c;
   color: #fff;
   display: flex;
   justify-content: space-between;
@@ -71,6 +71,37 @@ nav a:hover {
   background-color: #ddd;
 }
 
+.left-nav {
+  margin-right: auto;
+  left: 0;
+}
+
+.right-nav {
+  margin-left: auto;
+  right: 0;
+}
+
+.login-signup {
+  display: flex;
+  align-items: center;
+}
+
+.login-signup button {
+  background-color: #3498db;
+  color: #fff;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 1rem;
+}
+
+.login-signup button:hover {
+  background-color: #3d7fcc;
+}
+
 main {
   margin: 2rem auto;
   max-width: 800px;
@@ -100,4 +131,14 @@ button {
 
 button:hover {
   background-color: #3d7fcc;
+}
+
+.left-nav {
+  margin-right: auto;
+  left: 0;
+}
+
+.right-nav {
+  margin-left: auto;
+  right: 0;
 }
