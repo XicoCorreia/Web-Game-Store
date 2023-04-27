@@ -13,16 +13,14 @@
 <h2 class="most-popular-title">MOST POPULAR CONTENT</h2>
 
 <div class="most-popular-content">
-  <div class="box-with-game">
-    <h3>BOX WITH GAME 1</h3>
-  </div>
-  <div class="box-with-game">
-    <h3>BOX WITH GAME 2</h3>
-  </div>
-  <div class="box-with-game">
-    <h3>BOX WITH GAME 3</h3>
-  </div>
-  <div class="box-with-game">
-    <h3>BOX WITH GAME 4</h3>
-  </div>
+  <a class="box-with-game" *ngFor="let item of items" routerLink="/detail/{{ item.id }}">
+    <img src="{{item.cover}}" alt="game cover">
+    <br>
+    <p *ngIf="item.price > 0">
+      {{ item.title }} <br /><br />{{ item.price }}€
+    </p>
+    <p *ngIf="item.price == 0">
+      {{ item.title }} <br /><br /> Free to Play
+    </p>
+  </a>
 </div>

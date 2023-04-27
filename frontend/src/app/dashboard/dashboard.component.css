@@ -31,14 +31,28 @@ nav {
   
   .box-with-game {
     width: 300px;
-    height: 300px;
+    height: auto;
     margin: 10px;
-    background-color: lightgray;
-    display: flex;
     justify-content: center;
-    align-items: center;
+    border-style: solid;
+    border-radius: 30px;
+    color: white;
+    text-decoration: none;
+    background-color: #47645c;
+    
   }
-  
-  .box-with-game h3 {
-    font-size: 24px;
-  }
+
+.box-with-game img{
+  border-radius: 30px;
+  max-width: 300px;
+  height: auto;
+  max-width: 300px;
+}
+
+.box-with-game a {
+  border-style: solid;
+  border-radius: 30px;
+  color: white;
+  text-decoration: none;
+  background-color: #47645c;
+}

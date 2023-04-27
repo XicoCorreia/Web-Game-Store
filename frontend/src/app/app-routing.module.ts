@@ -9,6 +9,7 @@ import { SignupComponent } from './signup/signup.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'browse', component: ItemsComponent },
   { path: 'detail/:id', component: ItemDetailComponent },
   { path: 'profile/:username', component: ProfileComponent },

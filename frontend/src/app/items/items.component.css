@@ -10,6 +10,7 @@
   justify-content: space-around;
   align-content: flex-start;
   align-items: flex-start;
+  
 }
 
 .center2 {
@@ -28,4 +29,5 @@ a {
   color: white;
   text-decoration: none;
   background-color: #47645c;
+  margin:10px
 }
