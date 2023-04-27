@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../user';
-import { catchError, Observable, tap } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +9,7 @@ import { catchError, Observable, tap } from 'rxjs';
 export class AuthService {
   private currentUser: User = {} as User;
   private isloggedIn = false;
+  private currentUserName:String = "";
 
   private userUrl = 'http://localhost:3000';
 
@@ -39,6 +40,7 @@ export class AuthService {
     const url = `${this.userUrl}/users/login`;
     return this.http.post<User>(url, body).pipe(
       tap((user: User) => {
+        this.currentUserName=user.username;
         this.currentUser = user;
         this.isloggedIn = true;
       }),
@@ -52,6 +54,14 @@ export class AuthService {
 
   getCurrentUser(): User {
     return this.currentUser;
+  }
+
+  getCurrentUserObservable():Observable<User>{
+    return of(this.currentUser);
+  }
+
+  getCurrentUserName():String{
+    return this.currentUserName
   }
 
   canActivate(): boolean {

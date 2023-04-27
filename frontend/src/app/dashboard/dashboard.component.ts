@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { ItemService } from '../item.service';
+import { AuthService } from '../auth.service';
+import { User } from 'src/user';
 import { Item } from 'src/item';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -12,10 +15,12 @@ export class DashboardComponent {
   username = sessionStorage.getItem('currentUser')!;
 
   items: Item[] = [];
-  constructor(private itemService:ItemService){}
+  user: User | undefined;
+  constructor(private itemService:ItemService,private authService:AuthService){}
 
   ngOnInit(): void {
     this.getItems();
+    this.getUser();
   }
 
   getItems(): void {
@@ -26,6 +31,11 @@ export class DashboardComponent {
           this.items.push(data[i]);
         }
       }
+    });
+  }
+  getUser(): void{
+    this.authService.getCurrentUserObservable().subscribe(elem =>{
+      this.user=elem;
     });
   }
 
