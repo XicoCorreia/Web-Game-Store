@@ -57,7 +57,11 @@ export class AuthService {
   }
 
   getCurrentUserObservable():Observable<User>{
-    return of(this.currentUser);
+    if(this.currentUser.hasOwnProperty('username')){
+      return of(this.currentUser);
+    }else{
+      return of();
+    }
   }
 
   getCurrentUserName():String{

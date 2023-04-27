@@ -1,11 +1,19 @@
 <nav>
   <ul>
     <li><a routerLink="/">HOME</a></li>
-    <li><a routerLink="/profile/{{username}}">PROFILE</a></li>
+    <li *ngIf="username.length==0"><a routerLink="/login">PROFILE</a></li>
+    <li *ngIf="username.length>0"><a routerLink="/profile/{{username}}">PROFILE</a></li>
+    <li *ngIf="username.length==0"><a routerLink="/login">FOLLOWING</a></li>
+
     <li><a href="#">FOLLOWING</a></li>
-    <li><a href="#">FOLLOWERS</a></li>
-    <li><a href="#">LISTS</a></li>
-    <li><a href="#">LIBRARY</a></li>
+    <li *ngIf="username.length==0"><a routerLink="/login">FOLLOWERS</a></li>
+    <li *ngIf="username.length>0"><a href="#">FOLLOWERS</a></li>
+    <li *ngIf="username.length==0"><a routerLink="/login">LISTS</a></li>
+    <li *ngIf="username.length>0"><a href="#">LISTS</a></li>
+    <li *ngIf="username.length==0"><a routerLink="/login">LIBRARY</a></li>
+    <li *ngIf="username.length>0"><a routerLink="/list/{{username}}/library">LIBRARY</a></li>
+    <li *ngIf="username.length==0"><a routerLink="/login">WISHLIST</a></li>
+    <li *ngIf="username.length>0"><a routerLink="/list/{{username}}/wishlist">WISHLIST</a></li>
   </ul>
 </nav>
 

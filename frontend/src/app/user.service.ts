@@ -15,7 +15,7 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getUserByUsername(name: string): Observable<User> {
+  getUserByUsername(name: String): Observable<User> {
     const url = `${this.userUrl}/${name}`;
     return this.http.get<User>(url);
   }

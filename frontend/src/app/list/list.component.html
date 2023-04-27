@@ -1,0 +1,11 @@
+<div *ngIf="user">
+    <h2 *ngIf="listName">{{user.username}}'s&nbsp;{{listName}}</h2>
+    <div *ngIf="listName=='wishlist'">
+        <p>Count:{{user.wishlist.length}}</p>
+        <p *ngFor="let name of user.wishlist">name</p>
+    </div>
+    <div *ngIf="listName=='library'">
+        <p>Count:{{user.library.length}}</p>
+        <p *ngFor="let name of user.library">name</p>
+    </div>
+</div>

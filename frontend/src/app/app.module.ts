@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { ItemSearchComponent } from './item-search/item-search.component';
+import { ListComponent } from './list/list.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ItemSearchComponent } from './item-search/item-search.component';
     LoginComponent,
     SignupComponent,
     ItemSearchComponent,
+    ListComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],

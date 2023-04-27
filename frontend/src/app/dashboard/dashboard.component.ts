@@ -12,15 +12,14 @@ import { Observable } from 'rxjs';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent {
-  username = sessionStorage.getItem('currentUser')!;
+  username:String ="";
 
   items: Item[] = [];
-  user: User | undefined;
   constructor(private itemService:ItemService,private authService:AuthService){}
 
   ngOnInit(): void {
     this.getItems();
-    this.getUser();
+    this.username=String(sessionStorage.getItem('currentUser'));
   }
 
   getItems(): void {
@@ -33,10 +32,9 @@ export class DashboardComponent {
       }
     });
   }
-  getUser(): void{
-    this.authService.getCurrentUserObservable().subscribe(elem =>{
-      this.user=elem;
-    });
+
+  canActivate(): Boolean{
+    return this.authService.canActivate();
   }
 
 }
