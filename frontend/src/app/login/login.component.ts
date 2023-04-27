@@ -21,6 +21,8 @@ export class LoginComponent {
           this.currentUser = user;
           this.feedback = 'Login efetuado com sucesso!';
           this.router.navigate(['/profile', this.currentUser.username]);
+          const name = user.username;
+          sessionStorage.setItem('currentUser',name);
           //TODO quando o login é correto, deve ser redirecionado para o dashboard e nao perfil
         }
       });
