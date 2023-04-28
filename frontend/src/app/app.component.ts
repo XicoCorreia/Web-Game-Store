@@ -6,8 +6,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  username:String ="";
+  username:String =String(sessionStorage.getItem('currentUser')!);
   title = 'G13 Gaming';
+
+  ngDoCheck(){
+    const curr=String(sessionStorage.getItem('currentUser')!);
+    if(this.username!=curr){
+      this.username=curr;
+    }
+  }
 
   ngOnInit():void{
     const name=sessionStorage.getItem('currentUser');

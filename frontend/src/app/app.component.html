@@ -14,8 +14,8 @@
   </nav>
   <nav>
     <div class="right-nav">
-      <b *ngIf="username.length>0">Welcome, {{username}}</b>
-      <a routerLink="/login" *ngIf="!username">Login/Sign Up</a>
+      <b *ngIf="username!='null'">Welcome, {{username}}</b>
+      <a routerLink="/login" *ngIf="username=='null'">Login/Sign Up</a>
     </div>
   </nav>
 </header>

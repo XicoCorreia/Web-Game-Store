@@ -4,6 +4,7 @@ import { AuthService } from '../auth.service';
 import { User } from 'src/user';
 import { Item } from 'src/item';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,17 +13,13 @@ import { Observable } from 'rxjs';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent {
-  username:String ="";
+  username=String(sessionStorage.getItem('currentUser')!);
 
   items: Item[] = [];
   constructor(private itemService:ItemService,private authService:AuthService){}
 
   ngOnInit(): void {
     this.getItems();
-    const name=sessionStorage.getItem('currentUser');
-    if(name!=null){
-      this.username=name;
-    }
   }
 
   getItems(): void {
