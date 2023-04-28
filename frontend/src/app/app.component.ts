@@ -6,7 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  username = sessionStorage.getItem('currentUser')!;
+  username:String ="";
   title = 'G13 Gaming';
+
+  ngOnInit():void{
+    const name=sessionStorage.getItem('currentUser');
+    if(name!=null){
+      this.username=name;
+    }
+  }
 
 }

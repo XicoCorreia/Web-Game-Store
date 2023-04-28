@@ -19,7 +19,10 @@ export class DashboardComponent {
 
   ngOnInit(): void {
     this.getItems();
-    this.username=String(sessionStorage.getItem('currentUser'));
+    const name=sessionStorage.getItem('currentUser');
+    if(name!=null){
+      this.username=name;
+    }
   }
 
   getItems(): void {
