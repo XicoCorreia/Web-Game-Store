@@ -29,14 +29,23 @@
     >
       Browser not supported
     </video>
-    <img class="img-responsive" *ngIf="item.reel[0]" src="{{ item.reel[0] }}" tabindex="0" />
-    <img class="img-responsive" *ngIf="item.reel[1]" src="{{ item.reel[1] }}" tabindex="0"/>
+    <img
+      class="img-responsive"
+      *ngIf="item.reel[0]"
+      src="{{ item.reel[0] }}"
+      tabindex="0"
+    />
+    <img
+      class="img-responsive"
+      *ngIf="item.reel[1]"
+      src="{{ item.reel[1] }}"
+      tabindex="0"
+    />
   </div>
 
   <br />
   <p>Available Languages:</p>
   <div class="lang" tabindex="0">
-    
     <p *ngFor="let lang of item.language">{{ lang }} &nbsp;&nbsp;</p>
   </div>
 

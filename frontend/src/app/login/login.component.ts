@@ -21,7 +21,7 @@ export class LoginComponent {
           this.currentUser = user;
           this.feedback = 'Login efetuado com sucesso!';
           const name = user.username;
-          sessionStorage.setItem('currentUser',name);
+          sessionStorage.setItem('currentUser', name);
           this.router.navigate(['/dashboard']);
         }
       });

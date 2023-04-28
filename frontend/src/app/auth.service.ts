@@ -9,7 +9,7 @@ import { catchError, Observable, of, tap } from 'rxjs';
 export class AuthService {
   private currentUser: User = {} as User;
   private isloggedIn = false;
-  private currentUserName:String = "";
+  private currentUserName = '';
 
   private userUrl = 'http://localhost:3000';
 
@@ -40,7 +40,7 @@ export class AuthService {
     const url = `${this.userUrl}/users/login`;
     return this.http.post<User>(url, body).pipe(
       tap((user: User) => {
-        this.currentUserName=user.username;
+        this.currentUserName = user.username;
         this.currentUser = user;
         this.isloggedIn = true;
       }),
@@ -56,16 +56,16 @@ export class AuthService {
     return this.currentUser;
   }
 
-  getCurrentUserObservable():Observable<User>{
-    if(this.currentUser.hasOwnProperty('username')){
+  getCurrentUserObservable(): Observable<User> {
+    if (this.currentUser.username) {
       return of(this.currentUser);
-    }else{
+    } else {
       return of();
     }
   }
 
-  getCurrentUserName():String{
-    return this.currentUserName
+  getCurrentUserName(): string {
+    return this.currentUserName;
   }
 
   canActivate(): boolean {

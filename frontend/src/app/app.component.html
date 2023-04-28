@@ -15,27 +15,30 @@
     </div>
     -->
     <div class="left-nav">
-        <div class="dropdown-content">
-          <a routerLink="/dashboard"><b>G13 Gaming</b></a>
-          <a routerLink="/browse">Browse</a>
-          <a *ngIf="username!='null'" routerLink="/profile/{{username}}">Profile</a>
-          <a *ngIf="username=='null'" routerLink="/login">Profile</a>
-        </div>
+      <div class="dropdown-content">
+        <a routerLink="/dashboard"><b>G13 Gaming</b></a>
+        <a routerLink="/browse">Browse</a>
+        <a *ngIf="username != 'null'" routerLink="/profile/{{ username }}"
+          >Profile</a
+        >
+        <a *ngIf="username == 'null'" routerLink="/login">Profile</a>
+      </div>
     </div>
   </nav>
-  
+
   <nav>
     <div class="right-nav">
-      <b *ngIf="username!='null'">Welcome, {{username}}</b>
-      <a routerLink="/login" *ngIf="username=='null'">Login/Sign Up</a>
+      <b *ngIf="username != 'null'">Welcome, {{ username }}</b>
+      <a routerLink="/login" *ngIf="username == 'null'">Login/Sign Up</a>
     </div>
   </nav>
 </header>
 
-
-
 <main>
   <h2>Welcome to G13 Gaming</h2>
-  <p>Discover the latest and greatest games, connect with other gamers, and share your experiences!</p>
+  <p>
+    Discover the latest and greatest games, connect with other gamers, and share
+    your experiences!
+  </p>
   <router-outlet></router-outlet>
 </main>
