@@ -42,6 +42,11 @@ nav ul {
 
 nav li {
   margin: 0 10px;
+  transition: transform 100ms ease-in;
+}
+
+nav li:hover {
+  transform: scale(1.1);
 }
 
 nav a {

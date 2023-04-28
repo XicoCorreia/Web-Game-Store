@@ -1,11 +1,15 @@
 <div *ngIf="user">
   <nav>
-    <li><a routerLink="/dashboard">FOLLOWING</a></li>
-    <li><a routerLink="/dashboard">FOLLOWERS</a></li>
-    <li><a routerLink="/dashboard">LISTS</a></li>
-    <li><a routerLink="/list/{{user.username}}/library">LIBRARY</a></li>
-    <li><a routerLink="/list/{{user.username}}/wishlist">WISHLIST</a></li>
-    <li><a routerLink="/profile/edit/{{ user.username }}">EDIT PROFILE</a></li>
+    <ul>
+      <li><a routerLink="/dashboard">FOLLOWING</a></li>
+      <li><a routerLink="/dashboard">FOLLOWERS</a></li>
+      <li><a routerLink="/dashboard">LISTS</a></li>
+      <li><a routerLink="/list/{{ user.username }}/library">LIBRARY</a></li>
+      <li><a routerLink="/list/{{ user.username }}/wishlist">WISHLIST</a></li>
+      <li>
+        <a routerLink="/profile/edit/{{ user.username }}">EDIT PROFILE</a>
+      </li>
+    </ul>
   </nav>
   <div id="profile" *ngIf="user.image != undefined">
     <img id="profile_picture" src="{{ user.image }}" alt="Profile picture" />
