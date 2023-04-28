@@ -1,6 +1,7 @@
 <header>
   <nav>
-    <div class="left-nav">
+    <!--
+      <div class="left-nav">
       <div class="dropdown">
         <a class="dropbtn">&#9776;</a>
         <div class="dropdown-content">
@@ -10,8 +11,19 @@
           <a routerLink="/profile/{{username}}">Profile</a>
         </div>
       </div>
+        <a class="home" routerLink="/dashboard"><b>G13 Gaming</b></a>
+    </div>
+    -->
+    <div class="left-nav">
+        <div class="dropdown-content">
+          <a routerLink="/dashboard"><b>G13 Gaming</b></a>
+          <a routerLink="/browse">Browse</a>
+          <a *ngIf="username!='null'" routerLink="/profile/{{username}}">Profile</a>
+          <a *ngIf="username=='null'" routerLink="/login">Profile</a>
+        </div>
     </div>
   </nav>
+  
   <nav>
     <div class="right-nav">
       <b *ngIf="username!='null'">Welcome, {{username}}</b>

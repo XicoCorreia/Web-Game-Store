@@ -1,18 +1,21 @@
 <nav>
-  <ul>
+  <ul *ngIf="username!='null'">
     <li><a routerLink="/">HOME</a></li>
-    <li *ngIf="username.length==0"><a routerLink="/login">PROFILE</a></li>
-    <li *ngIf="username.length>0"><a routerLink="/profile/{{username}}">PROFILE</a></li>
-    <li *ngIf="username.length==0"><a routerLink="/login">FOLLOWING</a></li>
-    <li *ngIf="username.length>0"><a routerLink="/login">FOLLOWING</a></li>
-    <li *ngIf="username.length==0"><a routerLink="/login">FOLLOWERS</a></li>
-    <li *ngIf="username.length>0"><a routerLink="/login">FOLLOWERS</a></li>
-    <li *ngIf="username.length==0"><a routerLink="/login">LISTS</a></li>
-    <li *ngIf="username.length>0"><a>LISTS</a></li>
-    <li *ngIf="username.length==0"><a routerLink="/login">LIBRARY</a></li>
-    <li *ngIf="username.length>0"><a routerLink="/list/{{username}}/library">LIBRARY</a></li>
-    <li *ngIf="username.length==0"><a routerLink="/login">WISHLIST</a></li>
-    <li *ngIf="username.length>0"><a routerLink="/list/{{username}}/wishlist">WISHLIST</a></li>
+    <li><a routerLink="/profile/{{username}}">PROFILE</a></li>
+    <li><a routerLink="/dashboard">FOLLOWING</a></li>
+    <li><a routerLink="/dashboard">FOLLOWERS</a></li>
+    <li><a routerLink="/dashboard">LISTS</a></li>
+    <li><a routerLink="/list/{{username}}/library">LIBRARY</a></li>
+    <li><a routerLink="/list/{{username}}/wishlist">WISHLIST</a></li>
+  </ul>
+  <ul *ngIf="username=='null'">
+    <li><a routerLink="/">HOME</a></li>
+    <li ><a routerLink="/login">PROFILE</a></li>
+    <li><a routerLink="/login">FOLLOWING</a></li>
+    <li><a routerLink="/login">FOLLOWERS</a></li>
+    <li><a routerLink="/login">LISTS</a></li>
+    <li><a routerLink="/login">LIBRARY</a></li>
+    <li><a routerLink="/login">WISHLIST</a></li>
   </ul>
 </nav>
 
