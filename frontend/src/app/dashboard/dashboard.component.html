@@ -1,16 +1,16 @@
 <nav>
-  <ul *ngIf="username!='null'">
+  <ul *ngIf="username != 'null'">
     <li><a routerLink="/">HOME</a></li>
-    <li><a routerLink="/profile/{{username}}">PROFILE</a></li>
+    <li><a routerLink="/profile/{{ username }}">PROFILE</a></li>
     <li><a routerLink="/dashboard">FOLLOWING</a></li>
     <li><a routerLink="/dashboard">FOLLOWERS</a></li>
     <li><a routerLink="/dashboard">LISTS</a></li>
-    <li><a routerLink="/list/{{username}}/library">LIBRARY</a></li>
-    <li><a routerLink="/list/{{username}}/wishlist">WISHLIST</a></li>
+    <li><a routerLink="/list/{{ username }}/library">LIBRARY</a></li>
+    <li><a routerLink="/list/{{ username }}/wishlist">WISHLIST</a></li>
   </ul>
-  <ul *ngIf="username=='null'">
+  <ul *ngIf="username == 'null'">
     <li><a routerLink="/">HOME</a></li>
-    <li ><a routerLink="/login">PROFILE</a></li>
+    <li><a routerLink="/login">PROFILE</a></li>
     <li><a routerLink="/login">FOLLOWING</a></li>
     <li><a routerLink="/login">FOLLOWERS</a></li>
     <li><a routerLink="/login">LISTS</a></li>
@@ -19,18 +19,20 @@
   </ul>
 </nav>
 
-
 <h2 class="most-popular-title">MOST POPULAR CONTENT</h2>
 
 <div class="most-popular-content">
-  <a class="box-with-game" *ngFor="let item of items" routerLink="/detail/{{ item.id }}">
-    <img src="{{item.cover}}" alt="game cover">
-    <br>
-    <p *ngIf="item.price > 0">
-      {{ item.title }} <br /><br />{{ item.price }}€
-    </p>
+  <a
+    class="box-with-game"
+    *ngFor="let item of items"
+    routerLink="/detail/{{ item.id }}"
+  >
+    <img src="{{ item.cover }}" alt="game cover" />
+    <br />
+    <p *ngIf="item.price > 0">{{ item.title }} <br /><br />{{ item.price }}€</p>
     <p *ngIf="item.price == 0">
-      {{ item.title }} <br /><br /> Free to Play
+      {{ item.title }} <br /><br />
+      Free to Play
     </p>
   </a>
 </div>
