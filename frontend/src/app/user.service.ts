@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { User } from '../user';
+import { catchError, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,17 +17,31 @@ export class UserService {
 
   getUserByUsername(name: String): Observable<User> {
     const url = `${this.userUrl}/${name}`;
-    return this.http.get<User>(url);
+    return this.http.get<User>(url).pipe(
+      catchError((err) => {
+        console.log(err);
+        return of(); 
+      })
+    );
   }
 
   updateUser(user: User): Observable<object> {
-    console.log(user);
     const url = `${this.userUrl}/${user.id}`;
-    return this.http.put(url, user, this.httpOptions);
+    return this.http.put(url, user, this.httpOptions).pipe(
+      catchError((err) => {
+        console.log(err);
+        return of(); 
+      })
+    );
   }
 
-  checkUsername(name: string) {
+  checkUsername(name: String) {
     const url = `${this.userUrl}/${name}`;
-    return this.http.get(url);
+    const user = this.http.get<User>(url).pipe(
+      catchError((err) => {
+        console.log(err);
+        return of(); 
+      })
+    );
   }
 }

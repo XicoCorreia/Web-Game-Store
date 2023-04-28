@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
 })
 export class ProfileEditComponent implements OnInit {
   user: User | undefined;
+  username = '';
   feedback = '';
 
   constructor(
@@ -25,6 +26,7 @@ export class ProfileEditComponent implements OnInit {
 
   getUser(): void {
     const username = this.route.snapshot.paramMap.get('username')!;
+    this.username = username;
     this.userService
       .getUserByUsername(username)
       .subscribe((user) => (this.user = user));
@@ -63,12 +65,16 @@ export class ProfileEditComponent implements OnInit {
         if (res.username) {
           this.feedback = 'Username already exists';
         }
+        return;
       });
 
-      if (this.feedback == '') {
+      if (this.feedback.length == 0) {
         this.userService
           .updateUser(this.user)
           .subscribe(() => (this.feedback = 'Changes applied with success'));
+          const name = this.user.username;
+          sessionStorage.setItem('currentUser',name);
+          this.username = this.user!.username;
       }
     }
   }
