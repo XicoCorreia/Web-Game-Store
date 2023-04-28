@@ -11,7 +11,7 @@ export class AuthService {
   private isloggedIn = false;
   private currentUserName = '';
 
-  private userUrl = 'http://localhost:3000';
+  private userUrl = 'http://localhost:3000/users';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -23,7 +23,7 @@ export class AuthService {
 
   signup(name: string, pass: string): Observable<User> {
     return this.http
-      .post<User>(`${this.userUrl}/users/signup`, {
+      .post<User>(`${this.userUrl}/signup`, {
         username: name,
         password: pass,
       })
@@ -37,7 +37,7 @@ export class AuthService {
 
   login(name: string, pass: string): Observable<User> {
     const body = { username: name, password: pass };
-    const url = `${this.userUrl}/users/login`;
+    const url = `${this.userUrl}/login`;
     return this.http.post<User>(url, body).pipe(
       tap((user: User) => {
         this.currentUserName = user.username;

@@ -22,7 +22,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const startdb = async () => {
   try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/mongoosedb");
+    await mongoose.connect(
+      "mongodb://psi013:psi013@localhost:27017/psi013?retryWrites=true&authSource=psi013"
+    );
   } catch (error) {
     console.error(error);
     process.exit(1);
