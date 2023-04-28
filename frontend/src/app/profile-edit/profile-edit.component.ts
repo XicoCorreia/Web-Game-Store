@@ -54,11 +54,11 @@ export class ProfileEditComponent implements OnInit {
 
     if (this.user) {
       if (name.length < 3) {
-        this.feedback = 'Your name should has more than 3 characters!';
+        this.feedback = 'Your name must have more than 3 characters!';
         return;
       }
       if (!name.match(/^[0-9a-zA-Z]+$/)) {
-        this.feedback = 'Your name should only has numbers and letters!';
+        this.feedback = 'Your name can only have numbers and letters!';
         return;
       }
       this.userService.getUserByUsername(name).subscribe((res) => {
