@@ -34,14 +34,4 @@ export class UserService {
       })
     );
   }
-
-  checkUsername(name: string) {
-    const url = `${this.userUrl}/${name}`;
-    this.http.get<User>(url).pipe(
-      catchError((err) => {
-        console.log(err);
-        return of();
-      })
-    );
-  }
 }
