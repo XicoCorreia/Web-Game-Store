@@ -20,7 +20,7 @@ export class UserService {
     return this.http.get<User>(url).pipe(
       catchError((err) => {
         console.log(err);
-        return of(); 
+        return of();
       })
     );
   }
@@ -30,17 +30,17 @@ export class UserService {
     return this.http.put(url, user, this.httpOptions).pipe(
       catchError((err) => {
         console.log(err);
-        return of(); 
+        return of();
       })
     );
   }
 
-  checkUsername(name: String) {
+  checkUsername(name: string) {
     const url = `${this.userUrl}/${name}`;
-    const user = this.http.get<User>(url).pipe(
+    this.http.get<User>(url).pipe(
       catchError((err) => {
         console.log(err);
-        return of(); 
+        return of();
       })
     );
   }

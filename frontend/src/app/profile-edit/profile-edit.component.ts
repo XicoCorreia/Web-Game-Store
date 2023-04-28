@@ -72,9 +72,9 @@ export class ProfileEditComponent implements OnInit {
         this.userService
           .updateUser(this.user)
           .subscribe(() => (this.feedback = 'Changes applied with success'));
-          const name = this.user.username;
-          sessionStorage.setItem('currentUser',name);
-          this.username = this.user!.username;
+        const name = this.user.username;
+        sessionStorage.setItem('currentUser', name);
+        this.username = this.user.username;
       }
     }
   }
