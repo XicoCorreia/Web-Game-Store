@@ -34,4 +34,18 @@ export class UserService {
       })
     );
   }
+
+  searchUser(term: string): Observable<User> {
+    if (!term.trim()) {
+      // if not search term, return empty Item array.
+      return of();
+    }
+    const url = `${this.userUrl}/${term}`;
+    return this.http.get<User>(url).pipe(
+      catchError((err) => {
+        console.log(err);
+        return of();
+      })
+    );
+  }
 }

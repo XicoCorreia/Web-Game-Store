@@ -15,6 +15,7 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { ItemSearchComponent } from './item-search/item-search.component';
 import { ListComponent } from './list/list.component';
+import { ProfileSearchComponent } from './profile-search/profile-search.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ListComponent } from './list/list.component';
     SignupComponent,
     ItemSearchComponent,
     ListComponent,
+    ProfileSearchComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],

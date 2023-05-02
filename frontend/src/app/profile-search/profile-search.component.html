@@ -1,0 +1,12 @@
+<div id="search-component">
+    <label for="search-box">Profile Search</label>
+    <input
+      #searchBox
+      id="search-box"
+      ngModel
+      placeholder="Search for any profile (min 3 characters)"
+      minlength="3"
+      (input)="search(searchBox.value)"
+
+    />
+</div>
