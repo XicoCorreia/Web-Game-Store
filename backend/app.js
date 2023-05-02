@@ -23,7 +23,7 @@ app.use(express.static(path.join(__dirname, "public")));
 const startdb = async () => {
   try {
     await mongoose.connect(
-      "mongodb+srv://XicoCorreia:Francisco123@cluster0.ik7qm8j.mongodb.net/?retryWrites=true&w=majority"
+"mongodb://localhost:27017/psi013"
     );
   } catch (error) {
     console.error(error);
