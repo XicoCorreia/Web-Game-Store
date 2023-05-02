@@ -16,6 +16,9 @@ h1 {
   background: #47645c;
   border-radius: 15px;
 }
+#requisitos {
+  color:rgb(0, 204, 255);
+}
 p {
   color: white;
   font-size: 17px;

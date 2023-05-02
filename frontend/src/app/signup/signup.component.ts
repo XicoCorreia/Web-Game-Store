@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../auth.service';
 import { User } from '../../user';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
@@ -16,6 +17,7 @@ export class SignupComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   signup(name: string, pass: string, pass2: string): void {
+    this.feedback = '';
     if (pass === pass2) {
       if (name.length >= 3) {
         if (name.match(/^[0-9a-zA-Z]+$/)) {
@@ -26,7 +28,9 @@ export class SignupComponent {
               this.currentUser = user;
               this.feedback = 'Registo efetuado com sucesso!';
               sessionStorage.setItem('currentUser', name);
-              this.router.navigate([`/profile/${name}`]);
+              timer(2000).subscribe(() => {
+                this.router.navigate([`/profile/${name}`]);
+              });
             });
           } else {
             if (!/(?=.*[a-z])/.test(pass)) {
