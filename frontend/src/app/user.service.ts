@@ -35,16 +35,11 @@ export class UserService {
     );
   }
 
-  searchUser(term: string): Observable<User> {
-    if (!term.trim()) {
-      // if not search term, return empty Item array.
-      return of();
-    }
-    const url = `${this.userUrl}/${term}`;
-    return this.http.get<User>(url).pipe(
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.userUrl).pipe(
       catchError((err) => {
         console.log(err);
-        return of();
+        return of([]);
       })
     );
   }

@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, map, startWith } from 'rxjs';
 import { User } from '../../user';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
+
 
 
 @Component({
@@ -11,18 +13,29 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile-search.component.css']
 })
 export class ProfileSearchComponent {
-  currentUser: User = {} as User;
-  hasResults = true;
+  users: User[] = [];
+  userFormControl = new FormControl();
+  filteredUsers: Observable<User[]> | undefined;
 
-  private searchTerms = new Subject<string>();
 
 
   constructor(private userService: UserService, private router: Router) {}
 
-  search(term: string): void {
-    this.userService.searchUser(term).subscribe((user: User) => {
-      this.currentUser = user;
-      this.router.navigate([`/profile/${term}`]);
+ 
+  ngOnInit(): void {
+    this.userService.getUsers().subscribe(users => {
+      this.users = users;
+      this.filteredUsers = this.userFormControl.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
     });
+  }
+  private _filter(value: string): User[] {
+    const filterValue = value.toLowerCase();
+    return this.users.filter(user => user.username.toLowerCase().includes(filterValue));
+  }
+  goToUser(user: User): void {
+    this.router.navigate([`/profile/${user.username}`]);
   }
 }
