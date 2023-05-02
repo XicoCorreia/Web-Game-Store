@@ -24,6 +24,8 @@ const ITEMS = [
       "Spanish - Spain",
       "Japanese",
     ],
+    reviews: [
+    ],
   },
   {
     id: 2,
@@ -50,6 +52,8 @@ const ITEMS = [
       "Spanish - Spain",
       "Japanese",
       "Simplified Chinese",
+    ],
+    reviews: [
     ],
   },
   {
@@ -87,6 +91,8 @@ const ITEMS = [
       "Thai",
       "Traditional Chinese",
       "Turkish",
+    ],
+    reviews: [
     ],
   },
   {
@@ -135,6 +141,8 @@ const ITEMS = [
       "Spanish - Latin America",
       "Vietnamese",
     ],
+    reviews: [
+    ],
   },
   {
     id: 5,
@@ -164,6 +172,8 @@ const ITEMS = [
       "Simplified Chinese",
       "Polish",
       "Japanese",
+    ],
+    reviews: [
     ],
   },
   {
@@ -198,6 +208,8 @@ const ITEMS = [
       "Turkish",
       "Spanish - Latin America",
     ],
+    reviews: [
+    ],
   },
   {
     id: 7,
@@ -216,6 +228,8 @@ const ITEMS = [
       "https://cdn.akamai.steamstatic.com/steam/apps/801860/ss_f0e1914a3c9ec95fd64230bf080c663c759cb251.600x338.jpg?t=1665771437",
     ],
     language: ["English"],
+    reviews: [
+    ],
   },
   {
     id: 8,
@@ -247,6 +261,8 @@ const ITEMS = [
       "Simplified Chinese",
       "Spanish - Latin America",
       "Traditional Chinese",
+    ],
+    reviews: [
     ],
   },
   {
@@ -284,6 +300,8 @@ const ITEMS = [
       "Traditional Chinese",
       "Turkish",
     ],
+    reviews: [
+    ],
   },
   {
     id: 10,
@@ -316,6 +334,8 @@ const ITEMS = [
       "Simplified Chinese",
       "Traditional Chinese",
       "Turkish",
+    ],
+    reviews: [
     ],
   },
   {
@@ -350,6 +370,8 @@ const ITEMS = [
       "Simplified Chinese",
       "Portuguese - Brazil",
     ],
+    reviews: [
+    ],
   },
   {
     id: 12,
@@ -382,6 +404,8 @@ const ITEMS = [
       "Arabic",
       "Simplified Chinese",
       "Portuguese - Brazil",
+    ],
+    reviews: [
     ],
   },
   {
@@ -416,6 +440,8 @@ const ITEMS = [
       "Thai",
       "Traditional Chinese",
     ],
+    reviews: [
+    ],
   },
   {
     id: 14,
@@ -447,6 +473,8 @@ const ITEMS = [
       "Japanese",
       "Korean",
     ],
+    reviews: [
+    ],
   },
   {
     id: 15,
@@ -475,6 +503,8 @@ const ITEMS = [
       "Traditional Chinese",
       "Japanese",
       "Korean",
+    ],
+    reviews: [
     ],
   },
   {
@@ -507,6 +537,8 @@ const ITEMS = [
       "Japanese",
       "Korean",
     ],
+    reviews: [
+    ],
   },
   {
     id: 17,
@@ -537,6 +569,8 @@ const ITEMS = [
       "Traditional Chinese",
       "Japanese",
       "Korean",
+    ],
+    reviews: [
     ],
   },
   {
@@ -569,6 +603,8 @@ const ITEMS = [
       "Korean",
       "Turkish",
     ],
+    reviews: [
+    ],
   },
   {
     id: 19,
@@ -600,6 +636,8 @@ const ITEMS = [
       "Simplified Chinese",
       "Swedish",
     ],
+    reviews: [
+    ],
   },
   {
     id: 20,
@@ -628,6 +666,8 @@ const ITEMS = [
       "Korean",
       "Russian",
       "Simplified Chinese",
+    ],
+    reviews: [
     ],
   },
 ];

@@ -51,6 +51,30 @@
 
   <div tabindex="0">
     <h3>Reviews</h3>
-    <p>There are no reviews yet</p>
+    <div *ngIf = "item.reviews.length == 0"> 
+      <p>Be the first to review this item: </p>
+    </div>
+    <div class="reviewItem">
+      This game has a total of {{item.reviews.length}} reviews
+      <textarea name="Review" maxlength="5000" id="description" placeholder="Write your review here"> </textarea>
+      Rate the game: 
+        <select name="classification" id="classification">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      <button (click) = createReview()> Send review </button>
+    </div>
+    <div class="reviews" *ngFor="let review of item.reviews">
+      <div id ="reviewHeader">
+        <span id="reviewer">{{review.username}}</span>
+        <span id="stars">{{review.classification}} &star;</span>
+    </div>
+      <p id="desc">{{review.description}} </p>
+      <button>Reply</button>
+      <button>Like</button>
+    </div>
   </div>
 </div>

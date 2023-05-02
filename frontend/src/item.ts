@@ -1,3 +1,5 @@
+import { Review } from "./review";
+
 export interface Item {
   id: number;
   title: string;
@@ -10,4 +12,5 @@ export interface Item {
   reel: string[];
   video: string;
   stars: number;
+  reviews: Review[];
 }

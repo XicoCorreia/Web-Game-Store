@@ -28,4 +28,20 @@ router.get("/:id", async function (req, res, next) {
   }
 });
 
+/* UPDATE item */
+router.put("/:id", async function (req, res, next) {
+  const id = req.params.id;
+  const item_update = req.body;
+  Item.updateOne({ id: id }, item_update)
+    .then((item) => {
+      if (!item) {
+        return res.status(400).json("Item doesn't exist");
+      }
+      res.sendStatus(204);
+    })
+    .catch((err) => {
+      return next(err);
+    });
+});
+
 module.exports = router;
