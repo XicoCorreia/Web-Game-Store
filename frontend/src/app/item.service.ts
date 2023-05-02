@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, of } from 'rxjs';
 
 import { Item } from '../item';
-import { Review } from 'src/review';
+import { Review } from '../review';
 
 @Injectable({
   providedIn: 'root',
