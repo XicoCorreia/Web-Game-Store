@@ -1,5 +1,12 @@
 const mongoose = require("mongoose");
 
+
+const ReviewSchema = new mongoose.Schema({
+  description: {type: String, required: true},
+  classification: {type: Number, required: true, min: 1, max: 5 },
+  username: {type: String, required: true }
+});
+
 const ItemSchema = new mongoose.Schema({
   id: { type: Number, required: true, unique: true },
   title: { type: String, required: true },
@@ -28,9 +35,12 @@ const ItemSchema = new mongoose.Schema({
   reel: { type: [String], required: false, default: [] },
   video: { type: String, required: false, default: "" },
   stars: { type: Number, required: true, min: 1, max: 5 },
-  reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'Review' }]
+  reviews: [ReviewSchema]
 });
 
+const Review = mongoose.model("Review", ReviewSchema);
 const Item = mongoose.model("Item", ItemSchema);
 
+module.exports = { Review };
 module.exports = { Item };
+
