@@ -28,7 +28,7 @@ const ItemSchema = new mongoose.Schema({
   reel: { type: [String], required: false, default: [] },
   video: { type: String, required: false, default: "" },
   stars: { type: Number, required: true, min: 1, max: 5 },
-  reviews: {type: [mongoose.Schema.Types.ObjectId], ref: 'Review' }
+  reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'Review' }]
 });
 
 const Item = mongoose.model("Item", ItemSchema);

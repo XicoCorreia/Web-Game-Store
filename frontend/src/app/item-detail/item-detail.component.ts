@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Item } from '../../item';
 import { ItemService } from '../item.service';
+import { Review } from 'src/review';
 
 @Component({
   selector: 'app-item-detail',
@@ -28,6 +29,19 @@ export class ItemDetailComponent {
   }
 
   createReview() {
-    throw new Error('Method not implemented.');
+    const inputDesc = document.getElementById('description') as HTMLInputElement;
+    const description = inputDesc.value;
+    const inputClas = document.getElementById('classification') as HTMLInputElement;
+    const classification = parseInt(inputClas.value);
+    const username = sessionStorage.getItem('currentUser');
+    if(username != null){
+      let review = {
+        description: description,
+        classification: classification,
+        username: username
+      } 
+      this.item?.reviews.push(review);
+      this.itemservice.updateReview(this.item!).subscribe();
     }
+  }
 }

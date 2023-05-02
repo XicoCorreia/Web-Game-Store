@@ -54,13 +54,13 @@
     <div *ngFor="let review of item.reviews">
       {{review.username}}
       {{review.description}} 
-      {{review.starts}}
+      {{review.classification}}
     </div>
     <div *ngIf = "item.reviews.length == 0"> 
       <p>Be the first to review this item: </p>
     </div>
-    <Input name="Review" />
-      <select name="classification">
+    <Input name="Review" id="description" />
+      <select name="classification" id="classification">
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>

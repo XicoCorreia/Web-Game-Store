@@ -1,16 +1,22 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { catchError, Observable, of } from 'rxjs';
 
 import { Item } from '../item';
+import { Review } from 'src/review';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ItemService {
   private itemsUrl = 'http://localhost:3000/items';
+
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
 
   constructor(private http: HttpClient) {}
 
@@ -52,4 +58,15 @@ export class ItemService {
       })
     );
   }
+
+  updateReview(item: Item): Observable<object>  {
+    const url = `${this.itemsUrl}/${item.id}`;
+    return this.http.put(url, item, this.httpOptions).pipe(
+      catchError((err) => {
+        console.log(err);
+        return of();
+      })
+    );
+  }
+
 }

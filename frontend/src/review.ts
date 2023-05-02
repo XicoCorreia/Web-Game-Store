@@ -1,5 +1,5 @@
 export interface Review {
     description: string;
-    starts: number;
+    classification: number;
     username: string;
     }

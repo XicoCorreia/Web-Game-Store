@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const ReviewSchema = new mongoose.Schema({
-    description: {type: string, required: true},
-    stars: {type: number, required: true, min: 1, max: 5 },
-    username: {type: string, required: true }
+    description: {type: String, required: true},
+    classification: {type: Number, required: true, min: 1, max: 5 },
+    username: {type: String, required: true }
  });
 
 const Review = mongoose.model("Review", ReviewSchema);
