@@ -51,6 +51,24 @@
 
   <div tabindex="0">
     <h3>Reviews</h3>
-    <p>There are no reviews yet</p>
+    <div *ngFor="let review of item.reviews">
+      {{review.username}}
+      {{review.description}} 
+      {{review.starts}}
+    </div>
+    <div *ngIf = "item.reviews.length == 0"> 
+      <p>Be the first to review this item: </p>
+    </div>
+    <Input name="Review" />
+      <select name="classification">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      <button (click) = createReview()> Send review </button>
+
+
   </div>
 </div>
