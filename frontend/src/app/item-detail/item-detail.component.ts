@@ -30,10 +30,11 @@ export class ItemDetailComponent {
 
   createReview() {
     const inputDesc = document.getElementById('description') as HTMLInputElement;
-    const description = inputDesc.value;
+    const description = inputDesc.value.length == 0? "-": inputDesc.value;
     const inputClas = document.getElementById('classification') as HTMLInputElement;
     const classification = parseInt(inputClas.value);
     const username = sessionStorage.getItem('currentUser');
+
     if(username != null){
       let review = {
         description: description,
@@ -42,6 +43,9 @@ export class ItemDetailComponent {
       } 
       this.item?.reviews.push(review);
       this.itemservice.updateReview(this.item!).subscribe();
+      inputDesc.value = '';
     }
+
   }
+
 }
