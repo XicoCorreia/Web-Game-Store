@@ -51,13 +51,17 @@
 
   <div tabindex="0">
     <h3>Reviews</h3>
-    <div *ngIf = "item.reviews.length == 0"> 
-      <p>Be the first to review this item: </p>
-    </div>
-    <div class="reviewItem">
-      This game has a total of {{item.reviews.length}} reviews
-      <textarea name="Review" maxlength="5000" id="description" placeholder="Write your review here"> </textarea>
-      Rate the game: 
+    <div *ngIf="username">
+      <div class="reviewItem">
+        This game has a total of {{ item.reviews.length }} reviews
+        <textarea
+          name="Review"
+          maxlength="5000"
+          id="description"
+          placeholder="Write your review here"
+        >
+        </textarea>
+        Rate the game:
         <select name="classification" id="classification">
           <option value="1">1</option>
           <option value="2">2</option>
@@ -65,16 +69,21 @@
           <option value="4">4</option>
           <option value="5">5</option>
         </select>
-      <button (click) = createReview()> Send review </button>
+        <button (click)="createReview()">Send review</button>
+      </div>
+      <div *ngIf="item.reviews.length == 0">
+        <p>Be the first to review this item</p>
+      </div>
+      <div class="reviews" *ngFor="let review of item.reviews">
+        <div id="reviewHeader">
+          <span id="reviewer">{{ review.username }}</span>
+          <span id="stars">{{ review.classification }} &star;</span>
+        </div>
+        <p id="desc">{{ review.description }}</p>
+        <button>Reply</button>
+        <button (click)="like(review)">{{ review.like }} &#x2764;</button>
+      </div>
     </div>
-    <div class="reviews" *ngFor="let review of item.reviews">
-      <div id ="reviewHeader">
-        <span id="reviewer">{{review.username}}</span>
-        <span id="stars">{{review.classification}} &star;</span>
-    </div>
-      <p id="desc">{{review.description}} </p>
-      <button>Reply</button>
-      <button>Like</button>
-    </div>
+    <div *ngIf="!username">You need to be logged in to review a game</div>
   </div>
 </div>
