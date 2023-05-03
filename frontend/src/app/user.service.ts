@@ -16,7 +16,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getUserByUsername(name: string): Observable<User> {
-    const url = `${this.userUrl}/${name}`;
+    const url = `${this.userUrl}/search/${name}`;
     return this.http.get<User>(url).pipe(
       catchError((err) => {
         console.log(err);
@@ -26,7 +26,7 @@ export class UserService {
   }
 
   updateUser(user: User): Observable<object> {
-    const url = `${this.userUrl}/${user.id}`;
+    const url = `${this.userUrl}/update/${user.id}`;
     return this.http.put(url, user, this.httpOptions).pipe(
       catchError((err) => {
         console.log(err);

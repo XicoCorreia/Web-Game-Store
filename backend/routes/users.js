@@ -10,7 +10,7 @@ router.get("/", async function (req, res, next) {
 });
 
 /* GET user by username*/
-router.get("/:username", async function (req, res, next) {
+router.get("search/:username", async function (req, res, next) {
   const username = req.url.substring(1);
   const user = await User.find({ username: username }).select(
     "-_id -__v -password"
@@ -22,7 +22,7 @@ router.get("/:username", async function (req, res, next) {
 });
 
 /* UPDATE user */
-router.put("/:id", async function (req, res, next) {
+router.put("update/:id", async function (req, res, next) {
   const id = req.params.id;
   const user_update = req.body;
   User.updateOne({ id: id }, user_update)
@@ -174,6 +174,19 @@ router.put("/library", async function (req, res, next) {
   }
 });
 
+router.get("/wishlist",async function(req,res,next){
+  query=req.query;
+  if(!Object.prototype.hasOwnProperty.call(query, "username")){
+    return res.status(400).json({ message: "Bad Request" });
+  }
+  const findUser = await User.find({ username: query.username });
+  console.log(findUser);
+  if (findUser[0].length==0) {
+    return res.status(404).json({ message: "Not found" });
+  }
+  const list=await Item.find({title:findUser[0].wishlist}).select("-_id -__v");
+  return res.status(200).json(list);
+});
 /*
 Add item to wishlist give body with username and title of game
 Content-type must be x-www-form-urlencoded
@@ -188,16 +201,19 @@ router.put("/wishlist", async function (req, res, next) {
   }
   const findUser = await User.findOne({ username: content.username });
   const findItem = await Item.findOne({ title: content.title });
+  console.log(findUser);
+  console.log(findItem);
   if (!findUser || !findItem) {
     return res.status(404).json({ message: "Not found" });
   }
-  if (!findUser[0].wishlist.includes(findItem[0].title)) {
-    findUser[0].wishlist.push(findItem[0].title);
+  if (!findUser.wishlist.includes(findItem.title)) {
+    findUser.wishlist.push(findItem.title);
   } else {
     return res.status(400).json({ message: "Item already in wishlist" });
   }
+  
   try {
-    await findUser[0].save();
+    await findUser.save();
     return res.status(200).json({ message: "Item added to wishlist" });
   } catch (error) {
     return res.status(500).json({ message: "Internal Server Error" });
