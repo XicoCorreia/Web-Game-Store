@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/user';
+import { Item } from 'src/item';
 import { UserService } from '../user.service';
 import { ItemService } from '../item.service';
 
@@ -13,6 +14,7 @@ export class ListComponent {
   userName = '';
   user: User | undefined;
   listName = '';
+  itemList:Item[]=[];
 
   constructor(
     private userService: UserService,
@@ -25,6 +27,15 @@ export class ListComponent {
     this.userName = String(this.route.snapshot.paramMap.get('username'));
     this.listName = String(this.route.snapshot.paramMap.get('listname'));
     this.getUser(this.userName);
+    if(this.listName=='wishlist'){
+      this.getWishlist(this.userName);
+    }
+  }
+
+  getWishlist(name:string):void{
+    this.userService.getWishlist(name).subscribe((data) =>{
+      this.itemList=data;
+    })
   }
 
   getUser(name: string): void {
