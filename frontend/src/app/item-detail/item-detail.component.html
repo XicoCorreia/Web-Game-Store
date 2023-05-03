@@ -12,8 +12,13 @@
         Playstation, Nintendo Switch
       </p>
       <p *ngIf="item.platform != 'all'">Platform: {{ item.platform }}</p>
-      <button *ngIf="username!=null" (click)=" addToWishlist(username,item.title)">Add to Wishlist</button>
-      <span>{{message}}</span>
+      <button
+        *ngIf="username != null"
+        (click)="addToWishlist(username, item.title)"
+      >
+        Add to Wishlist
+      </button>
+      <span>{{ message }}</span>
     </div>
   </div>
   <p>{{ item.description }}</p>
@@ -53,7 +58,7 @@
 
   <div tabindex="0">
     <h3>Reviews</h3>
-    <div *ngIf="username">
+    <div *ngIf="username != null">
       <div class="reviewItem">
         This game has a total of {{ item.reviews.length }} reviews
         <textarea
@@ -86,6 +91,8 @@
         <button (click)="like(review)">{{ review.like }} &#x2764;</button>
       </div>
     </div>
-    <div *ngIf="!username">You need to be logged in to review a game</div>
+    <div *ngIf="username == null">
+      You need to be logged in to review a game
+    </div>
   </div>
 </div>

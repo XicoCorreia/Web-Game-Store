@@ -3,4 +3,5 @@ export interface Review {
   classification: number;
   username: string;
   like: number;
+  userLiked: string[];
 }

@@ -5,6 +5,7 @@ const ReviewSchema = new mongoose.Schema({
   classification: { type: Number, required: true, min: 1, max: 5 },
   username: { type: String, required: true },
   like: { type: Number, require: true, default: 0 },
+  userLiked: { type: [String], require: true, default: [] },
 });
 
 const ItemSchema = new mongoose.Schema({
