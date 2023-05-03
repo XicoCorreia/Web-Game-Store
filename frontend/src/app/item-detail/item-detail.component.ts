@@ -6,8 +6,6 @@ import { ItemService } from '../item.service';
 import { Review } from 'src/review';
 import { UserService } from '../user.service';
 import { AuthService } from '../auth.service';
-import { User } from 'src/user';
-
 
 @Component({
   selector: 'app-item-detail',
@@ -15,41 +13,34 @@ import { User } from 'src/user';
   styleUrls: ['./item-detail.component.css'],
 })
 export class ItemDetailComponent {
-  username= String(sessionStorage.getItem('currentUser')!);
-  message="";
+  username = String(sessionStorage.getItem('currentUser')!);
+  message = '';
 
   item: Item | undefined;
   constructor(
     private route: ActivatedRoute,
-    private location: Location,
     private itemservice: ItemService,
-    private userService:UserService,
-    private authService:AuthService
+    private userService: UserService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.getItem();
-    this.username =
-      sessionStorage.getItem('currentUser') == null
-        ? ''
-        : sessionStorage.getItem('currentUser')!;
-    console.log(this.username);
-    console.log(sessionStorage.getItem('currentUser'));
   }
 
   ngDoCheck() {
-    const curr = String(sessionStorage.getItem('currentUser')!);
+    const curr = sessionStorage.getItem('currentUser')!;
     if (this.username != curr) {
       this.username = curr;
     }
   }
 
-  addToWishlist(name:string,title:string):void{
-    this.userService.addItemToWishlist(name,title).subscribe((data)=>{
-      if(data.wishlist.includes(title)){
-        this.message='Item added to wishlist';
-      }else{
-        this.message='Error adding item';
+  addToWishlist(name: string, title: string): void {
+    this.userService.addItemToWishlist(name, title).subscribe((data) => {
+      if (data.wishlist.includes(title)) {
+        this.message = 'Item added to wishlist';
+      } else {
+        this.message = 'Error adding item';
       }
     });
   }
@@ -72,13 +63,15 @@ export class ItemDetailComponent {
     if (this.userAlreadyVoted()) {
       return;
     }
-    //o username ou eh null ou tem o nome do utilizador, vou mudar para !=null
-    if (this.username!= null) {
+
+    if (this.username != null) {
       const review = {
         description: description,
         classification: classification,
         username: this.username,
         like: 0,
+        userLiked: [],
+        comments: [],
       };
       this.item?.reviews.push(review);
       this.itemservice.updateReview(this.item!).subscribe();
@@ -87,8 +80,23 @@ export class ItemDetailComponent {
   }
 
   like(review: Review) {
-    review.like++;
-    this.itemservice.updateReview(this.item!).subscribe();
+    if (!this.userAlreadyLike(review)) {
+      review.like++;
+      review.userLiked.push(this.username);
+      this.itemservice.updateReview(this.item!).subscribe();
+    }
+  }
+
+  userAlreadyLike(review: Review) {
+    const userLikes = review.userLiked;
+    const user = this.username;
+    let already = false;
+    userLikes?.forEach(function (value) {
+      if (value == user) {
+        already = true;
+      }
+    });
+    return already;
   }
 
   userAlreadyVoted() {
@@ -102,4 +110,21 @@ export class ItemDetailComponent {
     });
     return already;
   }
+
+  showComment( review : Review) {
+    const inputDesc = document.getElementById('comment-'+ review.username) as HTMLInputElement;
+    if(inputDesc.style.display != "none") {
+      inputDesc.style.display = "none";
+    }
+    else{
+      inputDesc.style.display="block";
+    }
+  }
+  addComment(review: Review) {
+    const inputDesc = document.getElementById("comment-area-"+ review.username) as HTMLInputElement;
+    const comment = inputDesc.value;
+    review.comments.push(this.username + " : " + comment);
+    this.itemservice.updateReview(this.item!).subscribe();
+    }
+
 }

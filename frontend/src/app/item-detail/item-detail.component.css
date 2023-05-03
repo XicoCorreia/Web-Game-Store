@@ -81,3 +81,11 @@ h3 {
 .reviewItem button {
   display: block;
 }
+
+.comment-area{
+  margin-top: 5px;
+  min-height: 30px;
+  max-height: 50px;
+  min-width: 100%;
+  max-width: 100%;
+}

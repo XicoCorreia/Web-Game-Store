@@ -12,8 +12,13 @@
         Playstation, Nintendo Switch
       </p>
       <p *ngIf="item.platform != 'all'">Platform: {{ item.platform }}</p>
-      <button *ngIf="username!=null" (click)=" addToWishlist(username,item.title)">Add to Wishlist</button>
-      <span>{{message}}</span>
+      <button
+        *ngIf="username != null"
+        (click)="addToWishlist(username, item.title)"
+      >
+        Add to Wishlist
+      </button>
+      <span>{{ message }}</span>
     </div>
   </div>
   <p>{{ item.description }}</p>
@@ -53,7 +58,7 @@
 
   <div tabindex="0">
     <h3>Reviews</h3>
-    <div *ngIf="username">
+    <div *ngIf="username != null">
       <div class="reviewItem">
         This game has a total of {{ item.reviews.length }} reviews
         <textarea
@@ -61,8 +66,7 @@
           maxlength="5000"
           id="description"
           placeholder="Write your review here"
-        >
-        </textarea>
+        ></textarea>
         Rate the game:
         <select name="classification" id="classification">
           <option value="1">1</option>
@@ -82,10 +86,24 @@
           <span id="stars">{{ review.classification }} &star;</span>
         </div>
         <p id="desc">{{ review.description }}</p>
-        <button>Reply</button>
+        <button (click)="showComment(review)">Reply</button>
         <button (click)="like(review)">{{ review.like }} &#x2764;</button>
+        <div id = "comment-{{review.username}}" style="display:none;">
+          <textarea
+          name="comment"
+          class="comment-area"
+          id="comment-area-{{review.username}}"
+          placeholder="Write your comment here"
+          ></textarea>
+          <button id="send" (click)="addComment(review)" >Send</button>
+        </div>
+        <div class="answers" *ngFor="let comment of review.comments">
+          <p>{{ comment }}</p>
+        </div>
       </div>
     </div>
-    <div *ngIf="!username">You need to be logged in to review a game</div>
+    <div *ngIf="username == null">
+      You need to be logged in to review a game
+    </div>
   </div>
 </div>
