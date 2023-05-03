@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
-
 const ReviewSchema = new mongoose.Schema({
-  description: {type: String, required: true},
-  classification: {type: Number, required: true, min: 1, max: 5 },
-  username: {type: String, required: true }
+  description: { type: String, required: true },
+  classification: { type: Number, required: true, min: 1, max: 5 },
+  username: { type: String, required: true },
+  like: { type: Number, require: true, default: 0 },
 });
 
 const ItemSchema = new mongoose.Schema({
@@ -35,7 +35,7 @@ const ItemSchema = new mongoose.Schema({
   reel: { type: [String], required: false, default: [] },
   video: { type: String, required: false, default: "" },
   stars: { type: Number, required: true, min: 1, max: 5 },
-  reviews: [ReviewSchema]
+  reviews: [ReviewSchema],
 });
 
 const Review = mongoose.model("Review", ReviewSchema);
@@ -43,4 +43,3 @@ const Item = mongoose.model("Item", ItemSchema);
 
 module.exports = { Review };
 module.exports = { Item };
-

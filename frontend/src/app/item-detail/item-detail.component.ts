@@ -6,6 +6,8 @@ import { ItemService } from '../item.service';
 import { Review } from 'src/review';
 import { UserService } from '../user.service';
 import { AuthService } from '../auth.service';
+import { User } from 'src/user';
+
 
 @Component({
   selector: 'app-item-detail',
@@ -27,6 +29,12 @@ export class ItemDetailComponent {
 
   ngOnInit(): void {
     this.getItem();
+    this.username =
+      sessionStorage.getItem('currentUser') == null
+        ? ''
+        : sessionStorage.getItem('currentUser')!;
+    console.log(this.username);
+    console.log(sessionStorage.getItem('currentUser'));
   }
 
   ngDoCheck() {
@@ -52,23 +60,46 @@ export class ItemDetailComponent {
   }
 
   createReview() {
-    const inputDesc = document.getElementById('description') as HTMLInputElement;
-    const description = inputDesc.value.length == 0? "-": inputDesc.value;
-    const inputClas = document.getElementById('classification') as HTMLInputElement;
+    const inputDesc = document.getElementById(
+      'description'
+    ) as HTMLInputElement;
+    const description = inputDesc.value.length == 0 ? '-' : inputDesc.value;
+    const inputClas = document.getElementById(
+      'classification'
+    ) as HTMLInputElement;
     const classification = parseInt(inputClas.value);
-    const username = sessionStorage.getItem('currentUser');
 
-    if(username != null){
+    if (this.userAlreadyVoted()) {
+      return;
+    }
+    //o username ou eh null ou tem o nome do utilizador, vou mudar para !=null
+    if (this.username!= null) {
       const review = {
         description: description,
         classification: classification,
-        username: username
-      } 
+        username: this.username,
+        like: 0,
+      };
       this.item?.reviews.push(review);
       this.itemservice.updateReview(this.item!).subscribe();
       inputDesc.value = '';
     }
-
   }
 
+  like(review: Review) {
+    review.like++;
+    this.itemservice.updateReview(this.item!).subscribe();
+  }
+
+  userAlreadyVoted() {
+    const reviews = this.item?.reviews;
+    const user = this.username;
+    let already = false;
+    reviews?.forEach(function (value) {
+      if (value.username == user) {
+        already = true;
+      }
+    });
+    return already;
+  }
 }
