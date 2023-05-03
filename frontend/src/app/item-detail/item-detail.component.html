@@ -86,8 +86,17 @@
           <span id="stars">{{ review.classification }} &star;</span>
         </div>
         <p id="desc">{{ review.description }}</p>
-        <button>Reply</button>
+        <button (click)="showComment(review)">Reply</button>
         <button (click)="like(review)">{{ review.like }} &#x2764;</button>
+        <div id = "comment-{{review.username}}" style="display:none;">
+          <textarea
+          name="comment"
+          class="comment-area"
+          id="comment-area-{{review.username}}"
+          placeholder="Write your comment here"
+          ></textarea>
+          <button id="send" (click)="addComment(review)" >Send</button>
+        </div>
         <div class="answers" *ngFor="let comment of review.comments">
           <p>{{ comment }}</p>
         </div>

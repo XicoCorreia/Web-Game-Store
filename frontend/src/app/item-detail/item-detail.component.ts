@@ -110,4 +110,21 @@ export class ItemDetailComponent {
     });
     return already;
   }
+
+  showComment( review : Review) {
+    const inputDesc = document.getElementById('comment-'+ review.username) as HTMLInputElement;
+    if(inputDesc.style.display != "none") {
+      inputDesc.style.display = "none";
+    }
+    else{
+      inputDesc.style.display="block";
+    }
+  }
+  addComment(review: Review) {
+    const inputDesc = document.getElementById("comment-area-"+ review.username) as HTMLInputElement;
+    const comment = inputDesc.value;
+    review.comments.push(this.username + " : " + comment);
+    this.itemservice.updateReview(this.item!).subscribe();
+    }
+
 }
