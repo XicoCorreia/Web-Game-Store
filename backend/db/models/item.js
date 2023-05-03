@@ -6,6 +6,7 @@ const ReviewSchema = new mongoose.Schema({
   username: { type: String, required: true },
   like: { type: Number, require: true, default: 0 },
   userLiked: { type: [String], require: true, default: [] },
+  comments: { type: [String], require: true, default: [] },
 });
 
 const ItemSchema = new mongoose.Schema({

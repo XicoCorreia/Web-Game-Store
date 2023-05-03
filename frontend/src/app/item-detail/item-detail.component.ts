@@ -71,6 +71,7 @@ export class ItemDetailComponent {
         username: this.username,
         like: 0,
         userLiked: [],
+        comments: [],
       };
       this.item?.reviews.push(review);
       this.itemservice.updateReview(this.item!).subscribe();
