@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../user';
+import { Item } from '../item';
 import { catchError, Observable, of } from 'rxjs';
 
 @Injectable({
@@ -29,6 +30,26 @@ export class UserService {
     const url = `${this.userUrl}/update/${user.id}`;
     return this.http.put(url, user, this.httpOptions).pipe(
       catchError((err) => {
+        console.log(err);
+        return of();
+      })
+    );
+  }
+
+  addItemToWishlist(name:string,title:string):Observable<User>{
+    const url =`${this.userUrl}/wishlist`;
+    return this.http.put<User>(url,{username:name,title:title}).pipe(
+      catchError((err) => {
+        console.log(err);
+        return of();
+      })
+      );
+  }
+
+  getWishlist(name:string):Observable<Item[]>{
+    const url =`${this.userUrl}/wishlist?username=${name}`;
+    return this.http.get<Item[]>(url).pipe(
+      catchError((err) =>{
         console.log(err);
         return of();
       })

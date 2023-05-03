@@ -10,8 +10,9 @@ router.get("/", async function (req, res, next) {
 });
 
 /* GET user by username*/
-router.get("search/:username", async function (req, res, next) {
-  const username = req.url.substring(1);
+router.get("/search/:username", async function (req, res, next) {
+  const username = req.url.substring(8);
+  console.log(username)
   const user = await User.find({ username: username }).select(
     "-_id -__v -password"
   );
@@ -22,7 +23,7 @@ router.get("search/:username", async function (req, res, next) {
 });
 
 /* UPDATE user */
-router.put("update/:id", async function (req, res, next) {
+router.put("/update/:id", async function (req, res, next) {
   const id = req.params.id;
   const user_update = req.body;
   User.updateOne({ id: id }, user_update)
@@ -175,7 +176,7 @@ router.put("/library", async function (req, res, next) {
 });
 
 router.get("/wishlist",async function(req,res,next){
-  query=req.query;
+  const query=req.query;
   if(!Object.prototype.hasOwnProperty.call(query, "username")){
     return res.status(400).json({ message: "Bad Request" });
   }
@@ -214,7 +215,7 @@ router.put("/wishlist", async function (req, res, next) {
   
   try {
     await findUser.save();
-    return res.status(200).json({ message: "Item added to wishlist" });
+    return res.status(200).json(findUser);
   } catch (error) {
     return res.status(500).json({ message: "Internal Server Error" });
   }
