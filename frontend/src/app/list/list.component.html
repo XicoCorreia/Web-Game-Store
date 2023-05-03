@@ -1,7 +1,7 @@
 <div *ngIf="user">
   <h2 *ngIf="listName">{{ user.username }}'s&nbsp;{{ listName }}</h2>
   <div *ngIf="listName == 'wishlist'">
-    <p *ngFor="let name of user.wishlist">name</p>
+    <p *ngFor="let name of user.wishlist">{{name}}</p>
     <div *ngIf="user.wishlist.length == 0">
       <h2>No items on wishlist</h2>
     </div>

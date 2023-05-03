@@ -181,7 +181,6 @@ router.get("/wishlist",async function(req,res,next){
     return res.status(400).json({ message: "Bad Request" });
   }
   const findUser = await User.find({ username: query.username });
-  console.log(findUser);
   if (findUser[0].length==0) {
     return res.status(404).json({ message: "Not found" });
   }

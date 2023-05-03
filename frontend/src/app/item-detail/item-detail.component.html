@@ -12,6 +12,8 @@
         Playstation, Nintendo Switch
       </p>
       <p *ngIf="item.platform != 'all'">Platform: {{ item.platform }}</p>
+      <button *ngIf="username!=null" (click)=" addToWishlist(username,item.title)">Add to Wishlist</button>
+      <span>{{message}}</span>
     </div>
   </div>
   <p>{{ item.description }}</p>

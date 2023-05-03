@@ -4,6 +4,8 @@ import { Location } from '@angular/common';
 import { Item } from '../../item';
 import { ItemService } from '../item.service';
 import { Review } from 'src/review';
+import { UserService } from '../user.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-item-detail',
@@ -11,16 +13,37 @@ import { Review } from 'src/review';
   styleUrls: ['./item-detail.component.css'],
 })
 export class ItemDetailComponent {
+  username= String(sessionStorage.getItem('currentUser')!);
+  message="";
 
   item: Item | undefined;
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private itemservice: ItemService
+    private itemservice: ItemService,
+    private userService:UserService,
+    private authService:AuthService
   ) {}
 
   ngOnInit(): void {
     this.getItem();
+  }
+
+  ngDoCheck() {
+    const curr = String(sessionStorage.getItem('currentUser')!);
+    if (this.username != curr) {
+      this.username = curr;
+    }
+  }
+
+  addToWishlist(name:string,title:string):void{
+    this.userService.addItemToWishlist(name,title).subscribe((data)=>{
+      if(data.wishlist.includes(title)){
+        this.message='Item added to wishlist';
+      }else{
+        this.message='Error adding item';
+      }
+    });
   }
 
   getItem() {
@@ -36,7 +59,7 @@ export class ItemDetailComponent {
     const username = sessionStorage.getItem('currentUser');
 
     if(username != null){
-      let review = {
+      const review = {
         description: description,
         classification: classification,
         username: username
