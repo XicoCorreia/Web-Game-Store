@@ -9,7 +9,7 @@ import { Item } from 'src/item';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  username = String(sessionStorage.getItem('currentUser'));
+  username = sessionStorage.getItem('currentUser') ?? '';
 
   items: Item[] = [];
   constructor(

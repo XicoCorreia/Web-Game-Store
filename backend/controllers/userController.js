@@ -118,30 +118,28 @@ exports.addItemToLibrary = async (req, res, _next) => {
  * `following` and `followers` lists, respectively.
  */
 exports.addFollower = async (req, res, _next) => {
-  const username = req.params.username;
-  const { followerName } = req.body;
-  const newFollower = await User.findOne({ username: followerName });
+  const usernameToFollow = req.params.username;
+  const { username } = req.body;
 
-  if (!newFollower) {
-    res.status(404).json({ message: "Follower does not exist." });
+  const user = await User.findOne({ username: username });
+
+  if (!user) {
+    res.status(404).json(`User '${username}' not found.`);
   }
 
-  const user = await User.findOneAndUpdate(
-    { username: username },
+  const userToFollow = await User.findOneAndUpdate(
+    { username: usernameToFollow },
     {
       $addToSet: {
-        followers: newFollower,
+        followers: user,
       },
     }
   );
 
-  await User.findOneAndUpdate(
-    { username: followerName },
-    {
-      $addToSet: {
-        following: user,
-      },
-    }
-  );
+  if (!userToFollow) {
+    res.status(404).json(`User '${usernameToFollow}' not found.`);
+  }
+
+  await user?.updateOne({ $addToSet: { following: userToFollow } });
   res.status(204).json();
 };

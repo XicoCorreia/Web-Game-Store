@@ -14,7 +14,7 @@ import { User } from '../../user';
 })
 export class ItemDetailComponent implements DoCheck, OnInit {
   user!: User;
-  username: string = sessionStorage.getItem('currentUser') ?? '';
+  username = sessionStorage.getItem('currentUser') ?? '';
   message = '';
   item!: Item;
 
@@ -28,7 +28,7 @@ export class ItemDetailComponent implements DoCheck, OnInit {
   ngOnInit(): void {
     this.getItem();
     this.userService
-      .getUserByUsername(this.username)
+      .getUser(this.username)
       .subscribe((user) => (this.user = user));
   }
 
@@ -41,7 +41,6 @@ export class ItemDetailComponent implements DoCheck, OnInit {
 
   addToWishlist(name: string, title: string): void {
     this.userService.addItemToWishlist(name, title).subscribe((data) => {
-      console.log(data);
       if (data?.wishlist?.includes(title)) {
         this.message = 'Item added to wishlist';
       }
@@ -103,7 +102,7 @@ export class ItemDetailComponent implements DoCheck, OnInit {
     const inputDesc = document.getElementById(
       'comment-' + review.author
     ) as HTMLInputElement;
-    if (inputDesc.style.display != 'none') {
+    if (inputDesc.style.display !== 'none') {
       inputDesc.style.display = 'none';
     } else {
       inputDesc.style.display = 'block';

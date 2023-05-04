@@ -12,7 +12,7 @@ import { ItemService } from '../item.service';
 })
 export class ListComponent implements OnInit {
   userName = '';
-  user: User | undefined;
+  user!: User;
   listName = '';
   itemList: Item[] = [];
 
@@ -38,7 +38,7 @@ export class ListComponent implements OnInit {
   }
 
   getUser(name: string): void {
-    this.userService.getUserByUsername(name).subscribe((elem) => {
+    this.userService.getUser(name).subscribe((elem) => {
       this.user = elem;
     });
   }

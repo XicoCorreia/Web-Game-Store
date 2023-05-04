@@ -9,10 +9,10 @@ import { UserService } from '../user.service';
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
-  user: User | undefined;
-  currentUser: string | null | undefined;
-  followers_b = 'Show followers';
-  following_b = 'Show following';
+  user!: User;
+  sessionUsername!: string;
+  followersMsg = 'Show followers';
+  followingMsg = 'Show following';
   followers = false;
   following = false;
 
@@ -26,45 +26,36 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUser();
-    this.currentUser = sessionStorage.getItem('currentUser');
-
-    console.log(this.currentUser);
+    this.sessionUsername = sessionStorage.getItem('currentUser') ?? '';
   }
 
   getUser(): void {
     const username = this.route.snapshot.paramMap.get('username') ?? '';
-    this.userService
-      .getUserByUsername(username)
-      .subscribe((user) => (this.user = user));
+    this.userService.getUser(username).subscribe((user) => (this.user = user));
   }
 
   showFollowing() {
     if (this.following) {
       this.following = false;
-      this.following_b = 'Show following';
+      this.followingMsg = 'Show following';
     } else {
       this.following = true;
-      this.following_b = 'Hide following';
+      this.followingMsg = 'Hide following';
     }
   }
 
   showFollowers() {
     if (this.followers) {
       this.followers = false;
-      this.followers_b = 'Show followers';
+      this.followersMsg = 'Show followers';
     } else {
       this.followers = true;
-      this.followers_b = 'Hide followers';
+      this.followersMsg = 'Hide followers';
     }
   }
-  follow(username: string): void {
-    this.userService.follow(this.currentUser!, username).subscribe(
-      (response) => {
-        console.log(response); // log da resposta do backend
-      },
-      (error) => {
-        console.error(error); // log do erro detalhado
-      }
-    );
+  follow(usernameToFollow: string): void {
+    this.userService
+      .follow(this.sessionUsername, usernameToFollow)
+      .subscribe({ error: console.error });
   }
 }

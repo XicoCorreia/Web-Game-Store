@@ -1,35 +1,27 @@
 <header>
   <nav>
-    <!--
-      <div class="left-nav">
-      <div class="dropdown">
-        <a class="dropbtn">&#9776;</a>
-        <div class="dropdown-content">
-          <a routerLink="/">Home</a>
-          <a routerLink="/browse">Search</a>
-          <a routerLink="/dashboard">Dashboard</a>
-          <a routerLink="/profile/{{username}}">Profile</a>
-        </div>
-      </div>
-        <a class="home" routerLink="/dashboard"><b>G13 Gaming</b></a>
-    </div>
-    -->
     <div class="left-nav">
       <div class="dropdown-content">
         <a routerLink="/dashboard"><b>G13 Gaming</b></a>
         <a routerLink="/browse">Browse</a>
-        <a *ngIf="username != 'null'" routerLink="/profile/{{ username }}"
+        <a
+          *ngIf="username; else loginRedirection"
+          routerLink="/profile/{{ username }}"
           >Profile</a
         >
-        <a *ngIf="username == 'null'" routerLink="/login">Profile</a>
+        <ng-template #loginRedirection>
+          <a routerLink="/login">Profile</a>
+        </ng-template>
       </div>
     </div>
   </nav>
 
   <nav>
     <div class="right-nav">
-      <b *ngIf="username != 'null'">Welcome, {{ username }}</b>
-      <a routerLink="/login" *ngIf="username == 'null'">Login/Sign Up</a>
+      <b *ngIf="username; else loginPrompt">Welcome, {{ username }}</b>
+      <ng-template #loginPrompt>
+        <a routerLink="/login">Login/Sign Up</a>
+      </ng-template>
     </div>
   </nav>
 </header>

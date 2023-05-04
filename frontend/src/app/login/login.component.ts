@@ -17,7 +17,7 @@ export class LoginComponent {
   login(name: string, pass: string): void {
     if (name !== '' && pass !== '') {
       this.authService.login(name, pass).subscribe((user: User) => {
-        if (user != null) {
+        if (user !== null) {
           this.currentUser = user;
           this.feedback = 'Login efetuado com sucesso!';
           const name = user.username;
