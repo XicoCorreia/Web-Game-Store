@@ -16,41 +16,41 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getUserByUsername(name: string): Observable<User> {
-    const url = `${this.userUrl}/search/${name}`;
+  getUser(username: string): Observable<User> {
+    const url = `${this.userUrl}/${username}`;
     return this.http.get<User>(url).pipe(
       catchError((err) => {
-        console.log(err);
+        console.error(err);
         return of();
       })
     );
   }
 
-  updateUser(user: User): Observable<object> {
-    const url = `${this.userUrl}/update/${user.id}`;
-    return this.http.put(url, user, this.httpOptions).pipe(
+  updateUser(username: string, updatedUser: User): Observable<object> {
+    const url = `${this.userUrl}/${username}`;
+    return this.http.put(url, updatedUser, this.httpOptions).pipe(
       catchError((err) => {
-        console.log(err);
+        console.error(err);
         return of();
       })
     );
   }
 
-  addItemToWishlist(name:string,title:string):Observable<User>{
-    const url =`${this.userUrl}/wishlist`;
-    return this.http.put<User>(url,{username:name,title:title}).pipe(
+  addItemToWishlist(username: string, title: string): Observable<User> {
+    const url = `${this.userUrl}/wishlist`;
+    return this.http.put<User>(url, { username: username, title: title }).pipe(
       catchError((err) => {
-        console.log(err);
+        console.error(err);
         return of();
       })
-      );
+    );
   }
 
-  getWishlist(name:string):Observable<Item[]>{
-    const url =`${this.userUrl}/wishlist?username=${name}`;
+  getWishlist(username: string): Observable<Item[]> {
+    const url = `${this.userUrl}/wishlist?username=${username}`;
     return this.http.get<Item[]>(url).pipe(
-      catchError((err) =>{
-        console.log(err);
+      catchError((err) => {
+        console.error(err);
         return of();
       })
     );
@@ -59,19 +59,18 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.userUrl).pipe(
       catchError((err) => {
-        console.log(err);
+        console.error(err);
         return of([]);
       })
     );
   }
 
-  follow(username: string, follow: string): Observable<any> {
-    const body = { username: username, follow: follow };
-    const url = `${this.userUrl}/follow`;
-    return this.http.put<any>(url, body).pipe(
-      catchError((error) => {
-        console.error(error);
-        return error;
+  follow(username: string, usernameToFollow: string): Observable<User> {
+    const url = `${this.userUrl}/follow/${usernameToFollow}`;
+    return this.http.put<User>(url, { username }).pipe(
+      catchError((err) => {
+        console.error(err);
+        throw err;
       })
     );
   }

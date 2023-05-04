@@ -11,7 +11,7 @@ export class AuthService {
   private isloggedIn = false;
   private currentUserName = '';
 
-  private userUrl = 'http://localhost:3000/users';
+  private usersUrl = 'http://localhost:3000/users';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -23,31 +23,31 @@ export class AuthService {
 
   signup(name: string, pass: string): Observable<User> {
     return this.http
-      .post<User>(`${this.userUrl}/signup`, {
+      .post<User>(`${this.usersUrl}/signup`, {
         username: name,
         password: pass,
       })
       .pipe(
-        catchError((error) => {
-          console.error(error);
-          throw error;
+        catchError((err) => {
+          console.error(err);
+          throw err;
         })
       );
   }
 
   login(name: string, pass: string): Observable<User> {
     const body = { username: name, password: pass };
-    const url = `${this.userUrl}/login`;
+    const url = `${this.usersUrl}/login`;
     return this.http.post<User>(url, body).pipe(
       tap((user: User) => {
         this.currentUserName = user.username;
         this.currentUser = user;
         this.isloggedIn = true;
       }),
-      catchError((error) => {
-        console.error(error);
+      catchError((err) => {
+        console.error(err);
         this.isloggedIn = false;
-        throw error;
+        throw err;
       })
     );
   }

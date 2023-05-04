@@ -1,7 +1,7 @@
-import { Review } from "./review";
+import { Review } from './review';
 
 export interface Item {
-  id: number;
+  id: string;
   title: string;
   description: string;
   type: string;

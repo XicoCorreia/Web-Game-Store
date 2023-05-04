@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Item } from '../../item';
 import { ItemService } from '../item.service';
@@ -24,7 +24,7 @@ import {
   templateUrl: './item-search.component.html',
   styleUrls: ['./item-search.component.css'],
 })
-export class ItemSearchComponent {
+export class ItemSearchComponent implements OnInit {
   items$!: Observable<Item[]>;
   hasResults = true;
 

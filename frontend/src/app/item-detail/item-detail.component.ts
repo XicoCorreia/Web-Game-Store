@@ -1,53 +1,58 @@
-import { Component } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Item } from '../../item';
 import { ItemService } from '../item.service';
 import { Review } from 'src/review';
 import { UserService } from '../user.service';
 import { AuthService } from '../auth.service';
+import { User } from '../../user';
 
 @Component({
   selector: 'app-item-detail',
   templateUrl: './item-detail.component.html',
   styleUrls: ['./item-detail.component.css'],
 })
-export class ItemDetailComponent {
-  username = String(sessionStorage.getItem('currentUser')!);
+export class ItemDetailComponent implements DoCheck, OnInit {
+  user!: User;
+  username = sessionStorage.getItem('currentUser') ?? '';
   message = '';
+  item!: Item;
 
-  item: Item | undefined;
   constructor(
     private route: ActivatedRoute,
-    private itemservice: ItemService,
+    private itemService: ItemService,
     private userService: UserService,
     private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.getItem();
+    this.userService
+      .getUser(this.username)
+      .subscribe((user) => (this.user = user));
   }
 
   ngDoCheck() {
-    const curr = sessionStorage.getItem('currentUser')!;
-    if (this.username != curr) {
-      this.username = curr;
+    const newUsername = sessionStorage.getItem('currentUser') ?? '';
+    if (this.username !== newUsername) {
+      this.username = newUsername;
     }
   }
 
   addToWishlist(name: string, title: string): void {
     this.userService.addItemToWishlist(name, title).subscribe((data) => {
-      if (data.wishlist.includes(title)) {
+      if (data?.wishlist?.includes(title)) {
         this.message = 'Item added to wishlist';
-      } 
+      }
     });
-    if(this.message.length==0){
-        this.message = 'Error adding item';
+    if (this.message.length == 0) {
+      this.message = 'Error adding item';
     }
   }
 
   getItem() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.itemservice.getItem(id).subscribe((elem) => (this.item = elem));
+    const id = this.route.snapshot.paramMap.get('id') ?? '';
+    this.itemService.getItem(id).subscribe((elem) => (this.item = elem));
   }
 
   createReview() {
@@ -64,67 +69,52 @@ export class ItemDetailComponent {
       return;
     }
 
-    if (this.username != null) {
-      const review = {
+    if (this.user) {
+      const review: Review = {
         description: description,
         classification: classification,
-        username: this.username,
-        like: 0,
-        userLiked: [],
+        author: this.username,
+        likes: [],
         comments: [],
       };
-      this.item?.reviews.push(review);
-      this.itemservice.updateReview(this.item!).subscribe();
+      this.item.reviews.push(review);
+      this.itemService.updateReview(this.item).subscribe();
       inputDesc.value = '';
     }
   }
 
   like(review: Review) {
-    if (!this.userAlreadyLike(review)) {
-      review.like++;
-      review.userLiked.push(this.username);
-      this.itemservice.updateReview(this.item!).subscribe();
+    if (!this.userAlreadyLikes(review)) {
+      review.likes.push(this.username);
+      this.itemService.updateReview(this.item).subscribe();
     }
   }
 
-  userAlreadyLike(review: Review) {
-    const userLikes = review.userLiked;
-    const user = this.username;
-    let already = false;
-    userLikes?.forEach(function (value) {
-      if (value == user) {
-        already = true;
-      }
-    });
-    return already;
+  userAlreadyLikes(review: Review) {
+    return !!review.likes.find((u) => u === this.username); // this works because usernames can't be nullish
   }
 
   userAlreadyVoted() {
-    const reviews = this.item?.reviews;
-    const user = this.username;
-    let already = false;
-    reviews?.forEach(function (value) {
-      if (value.username == user) {
-        already = true;
-      }
-    });
-    return already;
+    return !!this.item.reviews.find((r) => r.author === this.username);
   }
 
-  showComment( review : Review) {
-    const inputDesc = document.getElementById('comment-'+ review.username) as HTMLInputElement;
-    if(inputDesc.style.display != "none") {
-      inputDesc.style.display = "none";
-    }
-    else{
-      inputDesc.style.display="block";
+  showComment(review: Review) {
+    const inputDesc = document.getElementById(
+      'comment-' + review.author
+    ) as HTMLInputElement;
+    if (inputDesc.style.display !== 'none') {
+      inputDesc.style.display = 'none';
+    } else {
+      inputDesc.style.display = 'block';
     }
   }
+
   addComment(review: Review) {
-    const inputDesc = document.getElementById("comment-area-"+ review.username) as HTMLInputElement;
+    const inputDesc = document.getElementById(
+      'comment-area-' + review.author
+    ) as HTMLInputElement;
     const comment = inputDesc.value;
-    review.comments.push(this.username + " : " + comment);
-    this.itemservice.updateReview(this.item!).subscribe();
-    }
-
+    review.comments.push(this.username + ' : ' + comment);
+    this.itemService.updateReview(this.item).subscribe();
+  }
 }

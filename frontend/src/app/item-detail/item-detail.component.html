@@ -7,15 +7,12 @@
       <p>{{ item.type | uppercase }} {{ item.stars }}&#9733;</p>
       <p *ngIf="item.price > 0">Price: {{ item.price }}€</p>
       <p *ngIf="item.price == 0">Free to Play</p>
-      <p *ngIf="item.platform == 'all'">
+      <p *ngIf="item.platform === 'all'">
         Platform: PC, XBOX,<br />
         Playstation, Nintendo Switch
       </p>
-      <p *ngIf="item.platform != 'all'">Platform: {{ item.platform }}</p>
-      <button
-        *ngIf="username != null"
-        (click)="addToWishlist(username, item.title)"
-      >
+      <p *ngIf="item.platform !== 'all'">Platform: {{ item.platform }}</p>
+      <button *ngIf="username" (click)="addToWishlist(username, item.title)">
         Add to Wishlist
       </button>
       <span>{{ message }}</span>
@@ -58,7 +55,7 @@
 
   <div tabindex="0">
     <h3>Reviews</h3>
-    <div *ngIf="username != null">
+    <div *ngIf="username; else disabledReviews">
       <div class="reviewItem">
         This game has a total of {{ item.reviews.length }} reviews
         <textarea
@@ -71,7 +68,7 @@
         <select name="classification" id="classification">
           <option value="1">1</option>
           <option value="2">2</option>
-          <option value="3">3</option>
+          <option selected value="3">3</option>
           <option value="4">4</option>
           <option value="5">5</option>
         </select>
@@ -82,28 +79,30 @@
       </div>
       <div class="reviews" *ngFor="let review of item.reviews">
         <div id="reviewHeader">
-          <span id="reviewer">{{ review.username }}</span>
+          <span id="reviewer">{{ review.author }}</span>
           <span id="stars">{{ review.classification }} &star;</span>
         </div>
         <p id="desc">{{ review.description }}</p>
         <button (click)="showComment(review)">Reply</button>
-        <button (click)="like(review)">{{ review.like }} &#x2764;</button>
-        <div id = "comment-{{review.username}}" style="display:none;">
+        <button (click)="like(review)">
+          {{ review.likes.length }} &#x2764;
+        </button>
+        <div id="comment-{{ review.author }}" style="display: none">
           <textarea
-          name="comment"
-          class="comment-area"
-          id="comment-area-{{review.username}}"
-          placeholder="Write your comment here"
+            name="comment"
+            class="comment-area"
+            id="comment-area-{{ review.author }}"
+            placeholder="Write your comment here"
           ></textarea>
-          <button id="send" (click)="addComment(review)" >Send</button>
+          <button id="send" (click)="addComment(review)">Send</button>
         </div>
         <div class="answers" *ngFor="let comment of review.comments">
           <p>{{ comment }}</p>
         </div>
       </div>
     </div>
-    <div *ngIf="username == null">
-      You need to be logged in to review a game
-    </div>
+    <ng-template #disabledReviews>
+      <div>You need to be logged in to review a game</div>
+    </ng-template>
   </div>
 </div>

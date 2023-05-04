@@ -3,7 +3,7 @@
     <h2 id="edit">Edit {{ user.username }} profile</h2>
   </nav>
   <div id="profile">
-    <div *ngIf="user.image != undefined">
+    <div *ngIf="user.image">
       <img id="profile_picture" src="{{ user.image }}" alt="Profile picture" />
     </div>
     <div id="changeName">
@@ -19,7 +19,7 @@
   </div>
   <div>
     <div id="fileInput">
-      <input type="file" (change)="onselectFile($event)" />
+      <input type="file" (change)="onSelectFile($event)" />
     </div>
     <div id="buttons">
       <button type="button" (click)="save()">Apply changes</button>
