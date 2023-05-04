@@ -1,12 +1,15 @@
-  <input
-    matInput
-    placeholder="Search for any profile"
-    matInput 
-    [formControl] = "userFormControl"
-    [matAutocomplete]="auto"
-  />
-  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="goToUser($event.option.value)">
-    <mat-option *ngFor="let user of filteredUsers | async" [value]="user">
-      {{ user.username }}
-    </mat-option>
-  </mat-autocomplete>
+<input
+  matInput
+  placeholder="Search for any profile"
+  matInput
+  [formControl]="userFormControl"
+  [matAutocomplete]="auto"
+/>
+<mat-autocomplete
+  #auto="matAutocomplete"
+  (optionSelected)="goToUser($event.option.value)"
+>
+  <mat-option *ngFor="let user of filteredUsers | async" [value]="user">
+    {{ user.username }}
+  </mat-option>
+</mat-autocomplete>

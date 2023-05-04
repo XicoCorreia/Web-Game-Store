@@ -1,5 +1,5 @@
 {
-  "ignorePatterns": [".angular", "node_modules"],
+  "ignorePatterns": [".angular", "dist", "node_modules"],
   "env": {
     "browser": true,
     "es2021": true

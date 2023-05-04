@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { AppComponent } from './app.component';
 import { ItemsComponent } from './items/items.component';
@@ -24,8 +24,6 @@ import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,8 +38,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ListComponent,
     ProfileSearchComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, FormsModule,
-    ReactiveFormsModule, MatFormFieldModule, CommonModule, MatInputModule, MatAutocompleteModule, BrowserAnimationsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    CommonModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    BrowserAnimationsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

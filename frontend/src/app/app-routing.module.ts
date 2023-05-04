@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'list/:username/:listname', component: ListComponent },
-  { path: 'profilesearch', component: ProfileSearchComponent}
+  { path: 'profilesearch', component: ProfileSearchComponent },
 ];
 
 @NgModule({
