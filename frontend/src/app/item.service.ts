@@ -21,7 +21,7 @@ export class ItemService {
   getItems(): Observable<Item[]> {
     return this.http.get<Item[]>(this.itemsUrl).pipe(
       catchError((err) => {
-        console.log(err);
+        console.error(err);
         return of();
       })
     );
@@ -30,7 +30,7 @@ export class ItemService {
   getItem(id: string): Observable<Item> {
     return this.http.get<Item>(`${this.itemsUrl}/${id}`).pipe(
       catchError((err) => {
-        console.log(err);
+        console.error(err);
         return of();
       })
     );
@@ -51,7 +51,7 @@ export class ItemService {
 
     return this.http.get<Item[]>(url).pipe(
       catchError((err) => {
-        console.log(err);
+        console.error(err);
         return of();
       })
     );
@@ -61,7 +61,7 @@ export class ItemService {
     const url = `${this.itemsUrl}/${item.id}`;
     return this.http.put(url, item, this.httpOptions).pipe(
       catchError((err) => {
-        console.log(err);
+        console.error(err);
         return of();
       })
     );

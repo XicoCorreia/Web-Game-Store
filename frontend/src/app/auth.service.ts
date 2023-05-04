@@ -28,9 +28,9 @@ export class AuthService {
         password: pass,
       })
       .pipe(
-        catchError((error) => {
-          console.error(error);
-          throw error;
+        catchError((err) => {
+          console.error(err);
+          throw err;
         })
       );
   }
@@ -44,10 +44,10 @@ export class AuthService {
         this.currentUser = user;
         this.isloggedIn = true;
       }),
-      catchError((error) => {
-        console.error(error);
+      catchError((err) => {
+        console.error(err);
         this.isloggedIn = false;
-        throw error;
+        throw err;
       })
     );
   }

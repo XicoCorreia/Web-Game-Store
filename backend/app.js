@@ -43,5 +43,4 @@ const errorHandler = (err, req, res, _next) => {
 };
 
 app.use(errorHandler);
-console.log(process.env);
 module.exports = app;
