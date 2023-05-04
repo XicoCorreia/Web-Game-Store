@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
@@ -18,9 +20,12 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+const mongodb_uri =
+  process.env.MONGODB_URI || "mongodb://localhost:27017/psi013";
+
 const startdb = async () => {
   try {
-    await mongoose.connect("mongodb://localhost:27017/psi013");
+    await mongoose.connect(mongodb_uri);
   } catch (error) {
     console.error(error);
     process.exit(1);
@@ -38,5 +43,5 @@ const errorHandler = (err, req, res, _next) => {
 };
 
 app.use(errorHandler);
-
+console.log(process.env);
 module.exports = app;
