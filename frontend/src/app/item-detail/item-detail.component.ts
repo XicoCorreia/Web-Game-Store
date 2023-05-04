@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
 import { Item } from '../../item';
 import { ItemService } from '../item.service';
 import { Review } from 'src/review';
@@ -39,10 +38,11 @@ export class ItemDetailComponent {
     this.userService.addItemToWishlist(name, title).subscribe((data) => {
       if (data.wishlist.includes(title)) {
         this.message = 'Item added to wishlist';
-      } else {
-        this.message = 'Error adding item';
-      }
+      } 
     });
+    if(this.message.length==0){
+        this.message = 'Error adding item';
+    }
   }
 
   getItem() {
