@@ -64,4 +64,15 @@ export class UserService {
       })
     );
   }
+
+  follow(username: string, follow: string): Observable<any> {
+    const body = { username: username, follow: follow };
+    const url = `${this.userUrl}/follow`;
+    return this.http.put<any>(url, body).pipe(
+      catchError((error) => {
+        console.error(error);
+        return error;
+      })
+    );
+  }
 }
