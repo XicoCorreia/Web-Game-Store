@@ -12,7 +12,6 @@ import { Item } from '../item';
 export class ItemService {
   private itemsUrl = 'http://localhost:3000/items';
 
-
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
@@ -28,7 +27,7 @@ export class ItemService {
     );
   }
 
-  getItem(id: number): Observable<Item> {
+  getItem(id: string): Observable<Item> {
     return this.http.get<Item>(`${this.itemsUrl}/${id}`).pipe(
       catchError((err) => {
         console.log(err);
@@ -58,7 +57,7 @@ export class ItemService {
     );
   }
 
-  updateReview(item: Item): Observable<object>  {
+  updateReview(item: Item): Observable<object> {
     const url = `${this.itemsUrl}/${item.id}`;
     return this.http.put(url, item, this.httpOptions).pipe(
       catchError((err) => {
@@ -67,5 +66,4 @@ export class ItemService {
       })
     );
   }
-
 }

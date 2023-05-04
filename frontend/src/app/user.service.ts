@@ -17,7 +17,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getUserByUsername(name: string): Observable<User> {
-    const url = `${this.userUrl}/search/${name}`;
+    const url = `${this.userUrl}/${name}`;
     return this.http.get<User>(url).pipe(
       catchError((err) => {
         console.log(err);
@@ -27,7 +27,7 @@ export class UserService {
   }
 
   updateUser(user: User): Observable<object> {
-    const url = `${this.userUrl}/update/${user.id}`;
+    const url = `${this.userUrl}/${user.username}`;
     return this.http.put(url, user, this.httpOptions).pipe(
       catchError((err) => {
         console.log(err);
@@ -36,20 +36,20 @@ export class UserService {
     );
   }
 
-  addItemToWishlist(name:string,title:string):Observable<User>{
-    const url =`${this.userUrl}/wishlist`;
-    return this.http.put<User>(url,{username:name,title:title}).pipe(
+  addItemToWishlist(name: string, title: string): Observable<User> {
+    const url = `${this.userUrl}/wishlist`;
+    return this.http.put<User>(url, { username: name, title: title }).pipe(
       catchError((err) => {
         console.log(err);
         return of();
       })
-      );
+    );
   }
 
-  getWishlist(name:string):Observable<Item[]>{
-    const url =`${this.userUrl}/wishlist?username=${name}`;
+  getWishlist(name: string): Observable<Item[]> {
+    const url = `${this.userUrl}/wishlist?username=${name}`;
     return this.http.get<Item[]>(url).pipe(
-      catchError((err) =>{
+      catchError((err) => {
         console.log(err);
         return of();
       })

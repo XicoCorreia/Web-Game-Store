@@ -27,12 +27,12 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.getUser();
     this.currentUser = sessionStorage.getItem('currentUser');
-  
+
     console.log(this.currentUser);
   }
 
   getUser(): void {
-    const username = this.route.snapshot.paramMap.get('username')!;
+    const username = this.route.snapshot.paramMap.get('username') ?? '';
     this.userService
       .getUserByUsername(username)
       .subscribe((user) => (this.user = user));
@@ -58,11 +58,13 @@ export class ProfileComponent implements OnInit {
     }
   }
   follow(username: string): void {
-    this.userService.follow(this.currentUser!, username).subscribe( response => {
-    console.log(response); // log da resposta do backend
-  },
-  error => {
-    console.error(error); // log do erro detalhado
-  });
+    this.userService.follow(this.currentUser!, username).subscribe(
+      (response) => {
+        console.log(response); // log da resposta do backend
+      },
+      (error) => {
+        console.error(error); // log do erro detalhado
+      }
+    );
   }
 }

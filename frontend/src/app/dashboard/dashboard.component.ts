@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ItemService } from '../item.service';
 import { AuthService } from '../auth.service';
 import { Item } from 'src/item';
@@ -8,7 +8,7 @@ import { Item } from 'src/item';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   username = String(sessionStorage.getItem('currentUser'));
 
   items: Item[] = [];

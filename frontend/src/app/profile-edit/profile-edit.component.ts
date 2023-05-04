@@ -10,7 +10,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./profile-edit.component.css'],
 })
 export class ProfileEditComponent implements OnInit {
-  user: User | undefined;
+  user!: User;
   username = '';
   feedback = '';
 
@@ -25,7 +25,7 @@ export class ProfileEditComponent implements OnInit {
   }
 
   getUser(): void {
-    const username = this.route.snapshot.paramMap.get('username')!;
+    const username = this.route.snapshot.paramMap.get('username') ?? '';
     this.username = username;
     this.userService
       .getUserByUsername(username)
@@ -42,7 +42,7 @@ export class ProfileEditComponent implements OnInit {
       const reader = new FileReader();
       reader.readAsDataURL(file[0]);
       reader.onload = (event) => {
-        this.user!.image = event.target?.result as string;
+        this.user.image = event.target?.result as string;
       };
     }
   }

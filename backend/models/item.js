@@ -3,14 +3,12 @@ const mongoose = require("mongoose");
 const ReviewSchema = new mongoose.Schema({
   description: { type: String, required: true },
   classification: { type: Number, required: true, min: 1, max: 5 },
-  username: { type: String, required: true },
-  like: { type: Number, require: true, default: 0 },
-  userLiked: { type: [String], require: true, default: [] },
-  comments: { type: [String], require: true, default: [] },
+  author: { type: String, required: true },
+  likes: { type: [String], required: true, default: [] },
+  comments: { type: [String], required: true, default: [] },
 });
 
 const ItemSchema = new mongoose.Schema({
-  id: { type: Number, required: true, unique: true },
   title: { type: String, required: true },
   description: { type: String, required: true, maxLength: 1000 },
   type: {
@@ -40,8 +38,15 @@ const ItemSchema = new mongoose.Schema({
   reviews: [ReviewSchema],
 });
 
+ItemSchema.set("toJSON", {
+  transform: function (_doc, ret, _options) {
+    ret.id = ret._id;
+    delete ret._id;
+    delete ret.__v;
+  },
+});
+
 const Review = mongoose.model("Review", ReviewSchema);
 const Item = mongoose.model("Item", ItemSchema);
 
-module.exports = { Review };
-module.exports = { Item };
+module.exports = { Item, Review };

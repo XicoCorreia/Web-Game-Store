@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/user';
 import { Item } from 'src/item';
@@ -10,11 +10,11 @@ import { ItemService } from '../item.service';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
 })
-export class ListComponent {
+export class ListComponent implements OnInit {
   userName = '';
   user: User | undefined;
   listName = '';
-  itemList:Item[]=[];
+  itemList: Item[] = [];
 
   constructor(
     private userService: UserService,
@@ -22,20 +22,19 @@ export class ListComponent {
     private route: ActivatedRoute
   ) {}
 
-  //route=/list/username/listname
   ngOnInit(): void {
-    this.userName = String(this.route.snapshot.paramMap.get('username'));
-    this.listName = String(this.route.snapshot.paramMap.get('listname'));
+    this.userName = this.route.snapshot.paramMap.get('username') ?? '';
+    this.listName = this.route.snapshot.paramMap.get('listname') ?? '';
     this.getUser(this.userName);
-    if(this.listName=='wishlist'){
+    if (this.listName === 'wishlist') {
       this.getWishlist(this.userName);
     }
   }
 
-  getWishlist(name:string):void{
-    this.userService.getWishlist(name).subscribe((data) =>{
-      this.itemList=data;
-    })
+  getWishlist(name: string): void {
+    this.userService.getWishlist(name).subscribe((data) => {
+      this.itemList = data;
+    });
   }
 
   getUser(name: string): void {

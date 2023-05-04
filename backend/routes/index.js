@@ -1,9 +1,9 @@
-var express = require("express");
-var router = express.Router();
+const asyncHandler = require("express-async-handler");
+const express = require("express");
+const init = require("../controllers/initController");
 
-/* GET home page. */
-router.get("/", function (req, res, next) {
-  res.render("index", { title: "Express" });
-});
+const router = express.Router();
+
+router.get("/init", asyncHandler(init.initDatabase));
 
 module.exports = router;

@@ -1,6 +1,28 @@
+const mongoose = require("mongoose");
+const { Item } = require("../models/item");
+const { User } = require("../models/user");
+
+/** @type {import("express").RequestHandler} */
+exports.initDatabase = async (_req, res, _next) => {
+  const db = mongoose.connection.db;
+  await db
+    .collections()
+    .then((collections) => Promise.all(collections.map((c) => c.drop())));
+  await Promise.all(USERS.map((u) => User.create(u)));
+  await Promise.all(ITEMS.map((i) => Item.create(i)));
+  res.json(
+    `Database initialized with ${USERS.length} users and ${ITEMS.length} items.`
+  );
+};
+
+const USERS = [
+  { username: "utilizador1", password: "Password1" },
+  { username: "utilizador2", password: "Password2" },
+  { username: "utilizador3", password: "Password3" },
+];
+
 const ITEMS = [
   {
-    id: 1,
     title: "Path of Exile",
     description:
       "You are an Exile, struggling to survive on the dark continent of Wraeclast, as you fight to earn power that will allow you to exact your revenge against those who wronged you. Created by hardcore gamers, Path of Exile is an online Action RPG set in a dark fantasy world.",
@@ -24,11 +46,9 @@ const ITEMS = [
       "Spanish - Spain",
       "Japanese",
     ],
-    reviews: [
-    ],
+    reviews: [],
   },
   {
-    id: 2,
     title: "Vampire Survivors",
     description:
       "Mow down thousands of night creatures and survive until dawn! Vampire Survivors is a gothic horror casual game with rogue-lite elements, where your choices can allow you to quickly snowball against the hundreds of monsters that get thrown at you. ",
@@ -53,11 +73,9 @@ const ITEMS = [
       "Japanese",
       "Simplified Chinese",
     ],
-    reviews: [
-    ],
+    reviews: [],
   },
   {
-    id: 3,
     title: "Cyberpunk 2077",
     description:
       "Cyberpunk 2077 is an open-world, action-adventure RPG set in the dark future of Night City — a dangerous megalopolis obsessed with power, glamor, and ceaseless body modification.",
@@ -92,11 +110,9 @@ const ITEMS = [
       "Traditional Chinese",
       "Turkish",
     ],
-    reviews: [
-    ],
+    reviews: [],
   },
   {
-    id: 4,
     title: "Counter-Strike: Global Offensive",
     description:
       "Counter-Strike: Global Offensive (CS: GO) expands upon the team-based action gameplay that it pioneered when it was launched 19 years ago. CS: GO features new maps, characters, weapons, and game modes, and delivers updated versions of the classic CS content (de_dust2, etc.).",
@@ -141,11 +157,9 @@ const ITEMS = [
       "Spanish - Latin America",
       "Vietnamese",
     ],
-    reviews: [
-    ],
+    reviews: [],
   },
   {
-    id: 5,
     title: "Hades",
     description:
       "Defy the god of the dead as you hack and slash out of the Underworld in this rogue-like dungeon crawler from the creators of Bastion, Transistor, and Pyre.",
@@ -173,11 +187,9 @@ const ITEMS = [
       "Polish",
       "Japanese",
     ],
-    reviews: [
-    ],
+    reviews: [],
   },
   {
-    id: 6,
     title: "Deep Rock Galactic",
     description:
       "Deep Rock Galactic is a 1-4 player co-op FPS featuring badass space Dwarves, 100% destructible environments, procedurally-generated caves, and endless hordes of alien monsters.",
@@ -208,11 +220,9 @@ const ITEMS = [
       "Turkish",
       "Spanish - Latin America",
     ],
-    reviews: [
-    ],
+    reviews: [],
   },
   {
-    id: 7,
     title: "Deep Rock Galactic - Supporter Upgrade",
     description:
       "So you like Deep Rock Galactic, but it’s just not enough? You want more? Well, then the Supporter Upgrade is for you! Help fuel further development of the game, while getting your grubby mining-gloves on this tasty bag of exclusive treats",
@@ -228,11 +238,9 @@ const ITEMS = [
       "https://cdn.akamai.steamstatic.com/steam/apps/801860/ss_f0e1914a3c9ec95fd64230bf080c663c759cb251.600x338.jpg?t=1665771437",
     ],
     language: ["English"],
-    reviews: [
-    ],
+    reviews: [],
   },
   {
-    id: 8,
     title: "Red Dead Redemption 2",
     description:
       "Winner of over 175 Game of the Year Awards and recipient of over 250 perfect scores, RDR2 is the epic tale of outlaw Arthur Morgan and the infamous Van der Linde gang, on the run across America at the dawn of the modern age. Also includes access to the shared living world of Red Dead Online. ",
@@ -262,11 +270,9 @@ const ITEMS = [
       "Spanish - Latin America",
       "Traditional Chinese",
     ],
-    reviews: [
-    ],
+    reviews: [],
   },
   {
-    id: 9,
     title: "Dying Light 2 Stay Human",
     description:
       "The virus won and civilization has fallen back to the Dark Ages. The City, one of the last human settlements, is on the brink of collapse. Use your agility and combat skills to survive, and reshape the world. Your choices matter.",
@@ -300,11 +306,9 @@ const ITEMS = [
       "Traditional Chinese",
       "Turkish",
     ],
-    reviews: [
-    ],
+    reviews: [],
   },
   {
-    id: 10,
     title: "Dying Light 2 Stay Human - Rais Bundle",
     description:
       "It is time to live by your own rules and become the most feared man in The City. Satisfy your hunger for power and wealth as Rais, a powerful warlord who strikes fear in the hearts of all survivors. Don the Rais’ Outfit, take pleasure in slicing your enemies (both human and Infected) with the Wolfclaw machete, and use the Rais Paraglider skin to reside high above anyone else as only the true ruler should.",
@@ -335,11 +339,9 @@ const ITEMS = [
       "Traditional Chinese",
       "Turkish",
     ],
-    reviews: [
-    ],
+    reviews: [],
   },
   {
-    id: 11,
     title: "Call of Duty: Modern Warfare II",
     description:
       "Call of Duty®: Modern Warfare® II drops players into an unprecedented global conflict that features the return of the iconic Operators of Task Force 141.",
@@ -370,11 +372,9 @@ const ITEMS = [
       "Simplified Chinese",
       "Portuguese - Brazil",
     ],
-    reviews: [
-    ],
+    reviews: [],
   },
   {
-    id: 12,
     title: "Call of Duty: Modern Warfare II - BlackCell (Season 03)",
     description:
       "Offering includes: Battle Pass for Season 03, 20 Battle Token Tier Skips\nExclusive BlackCell Sector on the Battle Map: 1100 Call of Duty® Points, BlackCell Operator, Pro-Tuned Weapon Blueprint, Vehicle Skin, Finishing Move",
@@ -405,11 +405,9 @@ const ITEMS = [
       "Simplified Chinese",
       "Portuguese - Brazil",
     ],
-    reviews: [
-    ],
+    reviews: [],
   },
   {
-    id: 13,
     title: "ELDEN RING",
     description:
       "THE NEW FANTASY ACTION RPG. Rise, Tarnished, and be guided by grace to brandish the power of the Elden Ring and become an Elden Lord in the Lands Between. ",
@@ -440,11 +438,9 @@ const ITEMS = [
       "Thai",
       "Traditional Chinese",
     ],
-    reviews: [
-    ],
+    reviews: [],
   },
   {
-    id: 14,
     title: "DARK SOULS III",
     description:
       "Dark Souls continues to push the boundaries with the latest, ambitious chapter in the critically-acclaimed and genre-defining series. Prepare yourself and Embrace The Darkness!",
@@ -473,11 +469,9 @@ const ITEMS = [
       "Japanese",
       "Korean",
     ],
-    reviews: [
-    ],
+    reviews: [],
   },
   {
-    id: 15,
     title: "DARK SOULS III - Season Pass",
     description:
       'Winner of gamescom award 2015 "Best RPG" and over 35 E3 2015 Awards and Nominations, DARK SOULS™ III leads you once again into a challenging world of ruin and despair. Expand your DARK SOULS™ III experience with the Season Pass and gain access to 2 epic DLC packs at a discounted price. Challenge yourself with new maps, bosses, enemies and additional weapon and armor sets. Prepare yourself once more and embrace the darkness.',
@@ -504,11 +498,9 @@ const ITEMS = [
       "Japanese",
       "Korean",
     ],
-    reviews: [
-    ],
+    reviews: [],
   },
   {
-    id: 16,
     title: "DARK SOULS III - Ashes of Ariandel",
     description:
       "You, are the unkindled. As part of the Dark Souls™ III Season Pass, expand your Dark Souls™ III experience with the Ashes of Ariandel™ DLC pack. Journey to the snowy world of Ariandel and encounter new areas, bosses, enemies, weapons, armor set, magic spells and more. Will you accept the challenge and embrace the darkness once more?",
@@ -537,11 +529,9 @@ const ITEMS = [
       "Japanese",
       "Korean",
     ],
-    reviews: [
-    ],
+    reviews: [],
   },
   {
-    id: 17,
     title: "DARK SOULS III - The Ringed City",
     description:
       "Fear not, the dark, ashen one. The Ringed City is the final DLC pack for Dark Souls III – an award-winning, genre-defining Golden Joystick Awards 2016 Game of the year RPG. Journey to the world’s end to search for the Ringed City and encounter new lands, new bosses, new enemies with new armor, magic and items. Experience the epic final chapter of a dark world that could only be created by the mind of Hidetaka Miyazaki. A New World. One Last Journey.",
@@ -570,11 +560,9 @@ const ITEMS = [
       "Japanese",
       "Korean",
     ],
-    reviews: [
-    ],
+    reviews: [],
   },
   {
-    id: 18,
     title: "Stardew Valley",
     description:
       "You have inherited your grandfathers old farm plot in Stardew Valley. Armed with hand-me-down tools and a few coins, you set out to begin your new life. Can you learn to live off the land and turn these overgrown fields into a thriving home?",
@@ -603,11 +591,9 @@ const ITEMS = [
       "Korean",
       "Turkish",
     ],
-    reviews: [
-    ],
+    reviews: [],
   },
   {
-    id: 19,
     title: "Raft",
     description:
       "aft throws you and your friends into an epic oceanic adventure! Alone or together, players battle to survive a perilous voyage across a vast sea! Gather debris, scavenge reefs and build your own floating home, but be wary of the man-eating sharks!",
@@ -636,11 +622,9 @@ const ITEMS = [
       "Simplified Chinese",
       "Swedish",
     ],
-    reviews: [
-    ],
+    reviews: [],
   },
   {
-    id: 20,
     title: "Rain World",
     description:
       " You are a nomadic slugcat, both predator and prey in a broken ecosystem. Grab your spear and brave the industrial wastes, hunting enough food to survive, but be wary— other, bigger creatures have the same plan... and slugcats look delicious.",
@@ -667,9 +651,6 @@ const ITEMS = [
       "Russian",
       "Simplified Chinese",
     ],
-    reviews: [
-    ],
+    reviews: [],
   },
 ];
-
-exports.ITEMS = ITEMS;

@@ -1,8 +1,7 @@
 export interface Review {
   description: string;
   classification: number;
-  username: string;
-  like: number;
-  userLiked: string[];
+  author: string;
+  likes: string[];
   comments: string[];
 }
