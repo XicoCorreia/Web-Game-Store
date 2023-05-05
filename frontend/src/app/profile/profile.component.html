@@ -19,10 +19,11 @@
     <img id="profile_picture" src="{{ user.image }}" alt="Profile picture" />
     <h1 id="profile_name">{{ user.username }}</h1>
     <button
-      *ngIf="user.username !== sessionUsername"
-      (click)="follow(user.username)"
+      *ngIf="user.username !== sessionUsername && !isfollowing" 
+      (click)="follow(user.username); isfollowing = true"
     >
       Follow
     </button>
+    <p *ngIf="isfollowing">Following!</p>
   </div>
 </div>

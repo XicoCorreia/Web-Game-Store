@@ -9,8 +9,16 @@
           routerLink="/profile/{{ username }}"
           >Profile</a
         >
+        <a
+          *ngIf="username; else loginRedirection2"
+          routerLink="/profilesearch"
+          >ProfileSearch</a
+        >
         <ng-template #loginRedirection>
           <a routerLink="/login">Profile</a>
+        </ng-template>
+        <ng-template #loginRedirection2>
+          <a routerLink="/login">ProfileSearch</a>
         </ng-template>
       </div>
     </div>
