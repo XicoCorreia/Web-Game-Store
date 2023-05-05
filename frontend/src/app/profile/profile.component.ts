@@ -10,11 +10,13 @@ import { UserService } from '../user.service';
 })
 export class ProfileComponent implements OnInit {
   user!: User;
+  sessionUser!: User;
   sessionUsername!: string;
   followersMsg = 'Show followers';
   followingMsg = 'Show following';
   followers = false;
   following = false;
+  isfollowing = false;
 
   constructor(
     private router: Router,
@@ -27,6 +29,11 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.getUser();
     this.sessionUsername = sessionStorage.getItem('currentUser') ?? '';
+    this.userService.getUser(this.sessionUsername).subscribe((user) => {
+      this.sessionUser = user;
+      const isFollowing = this.sessionUser.following.find(followingUser => followingUser.username === this.user.username);
+      this.isfollowing = !!isFollowing;
+    });
   }
 
   getUser(): void {
