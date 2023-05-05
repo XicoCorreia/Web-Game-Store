@@ -37,8 +37,8 @@ export class UserService {
   }
 
   addItemToWishlist(username: string, title: string): Observable<User> {
-    const url = `${this.userUrl}/wishlist`;
-    return this.http.put<User>(url, { username: username, title: title }).pipe(
+    const url = `${this.userUrl}/wishlist/${username}`;
+    return this.http.put<User>(url, {title: title }).pipe(
       catchError((err) => {
         console.error(err);
         return of();

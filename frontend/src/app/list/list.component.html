@@ -1,7 +1,7 @@
 <div *ngIf="user">
   <h2 *ngIf="listName">{{ user.username }}'s&nbsp;{{ listName }}</h2>
   <div *ngIf="listName === 'wishlist'">
-    <a *ngFor="let item of itemList" routerLink="/detail/{{ item.id }}"
+    <a *ngFor="let item of user.wishlist" routerLink="/detail/{{ item.id }}"
       >{{ item.title }} <br
     /></a>
     <div *ngIf="user.wishlist.length == 0">

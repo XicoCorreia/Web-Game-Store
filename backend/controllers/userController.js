@@ -77,7 +77,6 @@ exports.addItemToWishlist = async (req, res, _next) => {
     res.status(400).json();
   }
   const item = await Item.findOne({ title: title });
-
   await User.findOneAndUpdate(
     { username: username },
     {
@@ -86,7 +85,9 @@ exports.addItemToWishlist = async (req, res, _next) => {
       },
     }
   );
+
   res.status(204).json();
+  
 };
 
 /**
