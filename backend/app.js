@@ -25,7 +25,7 @@ const mongodb_uri =
 
 const startdb = async () => {
   try {
-    await mongoose.connect(mongodb_uri);
+    await mongoose.connect("mongodb+srv://isabel-baena:Isabel123456789@cluster0.vlva2cs.mongodb.net/");//mongodb_uri);
   } catch (error) {
     console.error(error);
     process.exit(1);

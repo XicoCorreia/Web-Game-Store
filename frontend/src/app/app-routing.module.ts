@@ -9,6 +9,7 @@ import { SignupComponent } from './signup/signup.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { ListComponent } from './list/list.component';
 import { ProfileSearchComponent } from './profile-search/profile-search.component';
+import { FollowersComponent } from './followers/followers.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'list/:username/:listname', component: ListComponent },
   { path: 'profilesearch', component: ProfileSearchComponent },
+  { path: 'followers/:username', component: FollowersComponent },
 ];
 
 @NgModule({
