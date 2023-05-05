@@ -35,7 +35,7 @@ exports.signup = async (req, res, _next) => {
 exports.getUser = async (req, res, _next) => {
   console.log(req.params);
   const username = req.params.username;
-  const users = await User.findOne({ username: username });
+  const users = await User.findOne({ username: username }).populate(['wishlist','library','following','followers']);
   res.status(200).json(users);
 };
 

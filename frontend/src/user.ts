@@ -1,8 +1,10 @@
+import { Item } from "./item";
+
 export interface User {
   username: string;
   image: string;
   following: User[];
   followers: User[];
-  library: string[];
-  wishlist: string[];
+  library: Item[];
+  wishlist: Item[];
 }

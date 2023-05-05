@@ -36,7 +36,7 @@ const UserSchema = new mongoose.Schema({
   following: { type: [ObjectId], ref: "User", default: [] },
   followers: { type: [ObjectId], ref: "User", default: [] },
   library: { type: [ObjectId], ref: "Item", default: [] },
-  wishlist: { type: [ObjectId], ref: "User", default: [] },
+  wishlist: { type: [ObjectId], ref: "Item", default: [] },
 });
 
 UserSchema.set("toJSON", {
