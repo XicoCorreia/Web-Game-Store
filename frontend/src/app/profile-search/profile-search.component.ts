@@ -14,6 +14,7 @@ export class ProfileSearchComponent {
   users: User[] = [];
   userFormControl = new FormControl();
   filteredUsers!: Observable<User[]>;
+  empty = false;
 
   constructor(private userService: UserService, private router: Router) {}
 
@@ -28,9 +29,11 @@ export class ProfileSearchComponent {
   }
   private _filter(value: string): User[] {
     const filterValue = value.toLowerCase();
-    return this.users.filter((user) =>
+    const filteredUsers = this.users.filter((user) =>
       user.username.toLowerCase().includes(filterValue)
     );
+    this.empty = filteredUsers.length === 0;
+    return filteredUsers;
   }
   goToUser(user: User): void {
     this.router.navigate([`/profile/${user.username}`]);
