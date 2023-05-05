@@ -47,7 +47,7 @@ nav a {
 
 main {
   margin: 2rem auto;
-  max-width: 800px;
+  max-width: 80vw;
   text-align: center;
 }
 
@@ -84,4 +84,10 @@ button:hover {
 .right-nav {
   margin-left: auto;
   right: 0;
+}
+
+@media only screen and (max-width: 600px) {
+  main {
+    max-width: 95vw;
+  }
 }

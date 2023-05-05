@@ -1,22 +1,65 @@
-<div>
+<div class="cart-container">
   <h3>Cart</h3>
   <mat-list>
-    <mat-list-item *ngFor="let item of items">
-      <img matListItemAvatar src="{{ item.cover }}" alt="Item cover" />
-      <h3 matListItemTitle>{{ item.title }}</h3>
-      <p>
-        <span>
+    <mat-divider></mat-divider>
+    <mat-list-item *ngFor="let li of lineItems" [@slideInOut]>
+      <img
+        matListItemAvatar
+        class="item-cover"
+        [src]="li.item.cover"
+        alt="Cover art for {{ li.item.title }}"
+      />
+      <span matListItemLine class="grid-container">
+        <div matListItemTitle class="grid-title">
+          <h4>
+            {{ li.item.title }}
+          </h4>
+        </div>
+        <div class="grid-details">
           <mat-icon
             aria-hidden="false"
-            [attr.aria-label]="item.type"
-            class="{{ item.type }}-icon"
+            [attr.aria-label]="li.item.type"
+            class="{{ li.item.type | lowercase }}-icon"
           >
-            {{ getIcon(item.type) }}
+            {{ getIcon(li.item.type) }}
           </mat-icon>
-        </span>
-        <span matListItemLine>({{ item.type }})</span>
-      </p>
-      <span matListItemLine>{{ item.price | currency: "EUR" }}</span>
+          <div class="item-type">{{ getLabel(li.item.type) }}</div>
+          <div class="item-price">{{ li.item.price | currency: "EUR" }}</div>
+        </div>
+        <div class="grid-action">
+          <div class="btn-label">Quantity: {{ li.count }}</div>
+          <button
+            class="btn-cart-update"
+            (click)="add(li)"
+            mat-fab
+            extended
+            color="primary"
+            aria-label="Add one to cart"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+          <button
+            class="btn-cart-update"
+            (click)="remove(li)"
+            mat-fab
+            extended
+            color="primary"
+            aria-label="Remove one from cart"
+          >
+            <mat-icon>remove</mat-icon>
+          </button>
+        </div>
+      </span>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+      <div *ngIf="lineItems; else emptyCart" matListItemLine class="cart-total">
+        <h4>Total:</h4>
+        <span class="item-price">{{ sum() | currency: "EUR" }}</span>
+      </div>
+      <ng-template #emptyCart matListItemLine>
+        Your cart is empty.
+      </ng-template>
     </mat-list-item>
   </mat-list>
 </div>
