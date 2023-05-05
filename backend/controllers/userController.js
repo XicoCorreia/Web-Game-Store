@@ -155,3 +155,14 @@ exports.getFollowers = async (req, res, _next) => {
   } 
 };
 
+exports.getFollowing = async (req, res, _next) => {
+  const username = req.params.username;
+  const user = await User.findOne({ username: username }).populate('following');
+  if (!user) {
+    res.status(404).json(`User '${username}' not found.`);
+  } else {
+    const following = user.following;
+    res.status(200).json(following);
+  } 
+};
+

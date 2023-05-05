@@ -24,6 +24,7 @@ import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FollowersComponent } from './followers/followers.component';
+import { FollowingComponent } from './following/following.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { FollowersComponent } from './followers/followers.component';
     ListComponent,
     ProfileSearchComponent,
     FollowersComponent,
+    FollowingComponent,
   ],
   imports: [
     BrowserModule,

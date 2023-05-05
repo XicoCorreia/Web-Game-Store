@@ -1,7 +1,7 @@
 <div *ngIf="user">
   <nav>
     <ul>
-      <li><a routerLink="/dashboard">FOLLOWING</a></li>
+      <li><a routerLink="/following/{{user.username}}">FOLLOWING</a></li>
       <li><a routerLink="/followers/{{user.username}}">FOLLOWERS</a></li>
       <li><a routerLink="/dashboard">LISTS</a></li>
       <li><a routerLink="/list/{{ user.username }}/library">LIBRARY</a></li>

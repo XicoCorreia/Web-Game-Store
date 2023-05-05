@@ -11,6 +11,7 @@ router.post("/signup", asyncHandler(user.signup));
 router.get("/", asyncHandler(user.getUsers));
 router.get("/:username", asyncHandler(user.getUser));
 router.get("/followers/:username", asyncHandler(user.getFollowers));
+router.get("/following/:username", asyncHandler(user.getFollowing));
 /* PUT */
 router.put("/:username", asyncHandler(user.update));
 router.put("/follow/:username", asyncHandler(user.addFollower));

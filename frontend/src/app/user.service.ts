@@ -83,4 +83,13 @@ export class UserService {
       })
     );
   }
+  getFollowing (username:string): Observable<User[]> {
+    const url = `${this.userUrl}/following/${username}`;
+    return this.http.get<User[]>(url).pipe(
+      catchError((err) => {
+        console.error(err);
+        return of([]);
+      })
+    );
+  }
 }

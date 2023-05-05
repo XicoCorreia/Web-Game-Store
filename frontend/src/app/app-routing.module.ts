@@ -10,6 +10,7 @@ import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { ListComponent } from './list/list.component';
 import { ProfileSearchComponent } from './profile-search/profile-search.component';
 import { FollowersComponent } from './followers/followers.component';
+import { FollowingComponent } from './following/following.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'list/:username/:listname', component: ListComponent },
   { path: 'profilesearch', component: ProfileSearchComponent },
   { path: 'followers/:username', component: FollowersComponent },
+  { path: 'following/:username', component: FollowingComponent },
 ];
 
 @NgModule({

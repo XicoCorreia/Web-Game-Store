@@ -4,13 +4,12 @@ import { UserService } from '../user.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-followers',
-  templateUrl: './followers.component.html',
-  styleUrls: ['./followers.component.css']
+  selector: 'app-following',
+  templateUrl: './following.component.html',
+  styleUrls: ['./following.component.css']
 })
-
-export class FollowersComponent implements OnInit {
-  followers!: User[];
+export class FollowingComponent implements OnInit{
+  following!: User[];
   user!: User;
 
   constructor(
@@ -21,18 +20,17 @@ export class FollowersComponent implements OnInit {
   ngOnInit(): void {
     this.getUser();
   }
-  
   getUser(): void {
     const username = this.route.snapshot.paramMap.get('username') ?? '';
     this.userService.getUser(username).subscribe((user) => {
       this.user = user;
-      this.getFollowers(user.username);
+      
+      this.getFollowing(user.username);
     });
   }
-
-  getFollowers(username: string): void {
-    this.userService.getFollowers(username).subscribe((followers: User[]) => {
-      this.followers = followers;
+  getFollowing(username: string): void {
+    this.userService.getFollowing(username).subscribe((following: User[]) => {
+      this.following = following;
     });
   }
 }
