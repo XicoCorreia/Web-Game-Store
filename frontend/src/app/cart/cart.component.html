@@ -1,0 +1,22 @@
+<div>
+  <h3>Cart</h3>
+  <mat-list>
+    <mat-list-item *ngFor="let item of items">
+      <img matListItemAvatar src="{{ item.cover }}" alt="Item cover" />
+      <h3 matListItemTitle>{{ item.title }}</h3>
+      <p>
+        <span>
+          <mat-icon
+            aria-hidden="false"
+            [attr.aria-label]="item.type"
+            class="{{ item.type }}-icon"
+          >
+            {{ getIcon(item.type) }}
+          </mat-icon>
+        </span>
+        <span matListItemLine>({{ item.type }})</span>
+      </p>
+      <span matListItemLine>{{ item.price | currency: "EUR" }}</span>
+    </mat-list-item>
+  </mat-list>
+</div>

@@ -21,8 +21,11 @@ import { ProfileSearchComponent } from './profile-search/profile-search.componen
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ItemSearchComponent,
     ListComponent,
     ProfileSearchComponent,
+    CartComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +54,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatInputModule,
     MatAutocompleteModule,
     BrowserAnimationsModule,
+    MatListModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
