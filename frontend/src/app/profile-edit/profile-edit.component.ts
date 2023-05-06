@@ -3,6 +3,7 @@ import { User } from '../../user';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../user.service';
 import { Location } from '@angular/common';
+import { Observable, async } from 'rxjs';
 
 @Component({
   selector: 'app-profile-edit',
@@ -13,6 +14,8 @@ export class ProfileEditComponent implements OnInit {
   user!: User;
   username = '';
   feedback = '';
+  userExists!: boolean;
+  sleep = (ms: number | undefined) => new Promise((r) => setTimeout(r, ms));
 
   constructor(
     private route: ActivatedRoute,
@@ -45,7 +48,7 @@ export class ProfileEditComponent implements OnInit {
     }
   }
 
-  save(): void {
+  async save(): Promise<void> {
     const input = document.getElementById('profile_name') as HTMLInputElement;
     const username = input.value;
     this.feedback = '';
@@ -60,19 +63,26 @@ export class ProfileEditComponent implements OnInit {
         return;
       }
 
-      this.userService.getUser(username).subscribe((res) => {
-        if (res.username) {
-          this.feedback = 'Username already exists';
-        }
-      });
+      this.usernameExists(username);
+      await this.sleep(400);
 
-      if (this.feedback.length == 0) {
+      if (!this.userExists) {
         this.userService
           .updateUser(this.username, this.user)
           .subscribe(() => (this.feedback = 'Changes applied with success'));
-        sessionStorage.setItem('currentUser', this.user.username);
         this.username = this.user.username;
+        sessionStorage.setItem('currentUser', this.user.username);
+      } else {
+        this.feedback = 'Username already exists';
       }
     }
+  }
+
+  usernameExists(username: string): void {
+    const exists = this.userService.usernameExists(username);
+    exists.subscribe((res) => {
+      if (res) this.userExists = true;
+      else this.userExists = false;
+    });
   }
 }
