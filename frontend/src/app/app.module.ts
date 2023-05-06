@@ -27,7 +27,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FollowersComponent } from './followers/followers.component';
+import { FollowingComponent } from './following/following.component';
 import { CartComponent } from './cart/cart.component';
+
 
 @NgModule({
   declarations: [
@@ -42,6 +45,8 @@ import { CartComponent } from './cart/cart.component';
     ItemSearchComponent,
     ListComponent,
     ProfileSearchComponent,
+    FollowersComponent,
+    FollowingComponent,
     CartComponent,
   ],
   imports: [

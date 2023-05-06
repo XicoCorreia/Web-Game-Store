@@ -33,7 +33,6 @@ exports.signup = async (req, res, _next) => {
  * Gets the user with the given `username`.
  */
 exports.getUser = async (req, res, _next) => {
-  console.log(req.params);
   const username = req.params.username;
   const users = await User.findOne({ username: username }).populate(['wishlist','library','following','followers']);
   res.status(200).json(users);
@@ -144,3 +143,26 @@ exports.addFollower = async (req, res, _next) => {
   await user?.updateOne({ $addToSet: { following: userToFollow } });
   res.status(204).json();
 };
+
+exports.getFollowers = async (req, res, _next) => {
+  const username = req.params.username;
+  const user = await User.findOne({ username: username }).populate('followers');
+  if (!user) {
+    res.status(404).json(`User '${username}' not found.`);
+  } else {
+    const followers = user.followers;
+    res.status(200).json(followers);
+  } 
+};
+
+exports.getFollowing = async (req, res, _next) => {
+  const username = req.params.username;
+  const user = await User.findOne({ username: username }).populate('following');
+  if (!user) {
+    res.status(404).json(`User '${username}' not found.`);
+  } else {
+    const following = user.following;
+    res.status(200).json(following);
+  } 
+};
+

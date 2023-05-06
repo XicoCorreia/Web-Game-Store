@@ -13,3 +13,6 @@
     {{ user.username }}
   </mat-option>
 </mat-autocomplete>
+<div *ngIf="empty" >
+  No users found. Please try again.
+</div>

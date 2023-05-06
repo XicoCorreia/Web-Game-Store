@@ -75,6 +75,26 @@ export class UserService {
     );
   }
 
+  getFollowers (username:string): Observable<User[]> {
+    const url = `${this.userUrl}/followers/${username}`;
+    return this.http.get<User[]>(url).pipe(
+      catchError((err) => {
+        console.error(err);
+        return of([]);
+      })
+    );
+  }
+  getFollowing (username:string): Observable<User[]> {
+    const url = `${this.userUrl}/following/${username}`;
+    return this.http.get<User[]>(url).pipe(
+      catchError((err) => {
+        console.error(err);
+        return of([]);
+        
+      })
+    );
+  }
+
   usernameExists(username: string): Observable<boolean> {
     const url = `${this.userUrl}/${username}`;
     return this.http.get<User>(url).pipe(
@@ -84,6 +104,7 @@ export class UserService {
         } else {
           return false;
         }
+
       })
     );
   }
