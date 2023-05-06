@@ -12,17 +12,19 @@
         Playstation, Nintendo Switch
       </p>
       <p *ngIf="item.platform !== 'all'">Platform: {{ item.platform }}</p>
-      <button mat-fab aria-label="Add item to cart" (click)="addToCart(item)">
-        <mat-icon>add_shopping_cart</mat-icon>
-      </button>
-      <button
-        mat-raised-button
-        *ngIf="username"
-        (click)="addToWishlist(username, item.title)"
-      >
-        Add to Wishlist
-      </button>
-      <span>{{ message }}</span>
+      <div class="item-buttons">
+        <button mat-fab aria-label="Add item to cart" (click)="addToCart(item)">
+          <mat-icon>add_shopping_cart</mat-icon>
+        </button>
+        <button
+          mat-raised-button
+          *ngIf="username"
+          (click)="addToWishlist(username, item.title)"
+        >
+          Add to Wishlist
+        </button>
+        <div id="feedback-message">{{ message }}</div>
+      </div>
     </div>
   </div>
   <p>{{ item.description }}</p>

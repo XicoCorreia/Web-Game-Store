@@ -125,7 +125,9 @@ export class ItemDetailComponent implements DoCheck, OnInit {
   }
 
   addToCart(item: Item) {
+    const message = `Item "${item.title} added to Cart!`;
     this.cartService.addItem(item);
-    this.snackBar.open(`Item "${item.title} added to Cart!`, 'Close');
+    this.message = message;
+    // TODO: use MatSnackBar this.snackBar.open(message, 'Close');
   }
 }

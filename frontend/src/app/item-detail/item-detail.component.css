@@ -20,6 +20,7 @@ img.cover {
 }
 .details {
   align-self: center;
+  min-width: 50%;
 }
 
 .lang {
@@ -105,4 +106,16 @@ h3 {
   max-height: 50px;
   min-width: 100%;
   max-width: 100%;
+}
+
+.item-buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-flow: wrap;
+  justify-content: center;
+}
+
+#feedback-message {
+  width: 100%;
 }
