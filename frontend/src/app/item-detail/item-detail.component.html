@@ -12,7 +12,12 @@
         Playstation, Nintendo Switch
       </p>
       <p *ngIf="item.platform !== 'all'">Platform: {{ item.platform }}</p>
-      <button *ngIf="username" (click)="addToWishlist(username, item.title)">
+      <button mat-button (click)="addToCart(item)">Add to Cart</button>
+      <button
+        mat-button
+        *ngIf="username"
+        (click)="addToWishlist(username, item.title)"
+      >
         Add to Wishlist
       </button>
       <span>{{ message }}</span>

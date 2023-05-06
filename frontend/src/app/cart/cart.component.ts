@@ -1,10 +1,8 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ItemService } from '../item.service';
-import { UserService } from '../user.service';
-import { LineItem } from '../../line-item';
+import { Component, OnDestroy } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Title } from '@angular/platform-browser';
+import { LineItem } from '../../line-item';
+import { CartService } from '../cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -25,10 +23,9 @@ import { Title } from '@angular/platform-browser';
     ]),
   ],
 })
-export class CartComponent implements OnInit, OnDestroy {
-  @Input() lineItems!: Set<LineItem>;
+export class CartComponent implements OnDestroy {
+  cart!: LineItem[];
   private previousTitle!: string;
-
   private iconMap: { [key: string]: { [key: string]: string } } = {
     game: {
       icon: 'sports_esports',
@@ -44,58 +41,43 @@ export class CartComponent implements OnInit, OnDestroy {
     },
   };
 
-  constructor(
-    private route: ActivatedRoute,
-    private itemService: ItemService,
-    private userService: UserService,
-    private titleService: Title
-  ) {
+  constructor(private cartService: CartService, private titleService: Title) {
     this.previousTitle = this.titleService.getTitle();
     this.titleService.setTitle(this.previousTitle + ' - Cart');
   }
 
   ngOnInit(): void {
-    // TODO: store cart items in sessionStorage
-    this.itemService.getItems().subscribe((items) => {
-      this.lineItems = new Set(
-        items
-          .filter((item) => item.price > 0)
-          .map((item) => {
-            return { item, count: ~~(Math.random() * 5) + 1 };
-          })
-          .slice(0, 6)
-      );
-    });
+    this.cartService.cartSubject.subscribe(
+      (cart) => (this.cart = [...cart.values()])
+    );
+    this.cartService.loadCart();
   }
 
   ngOnDestroy(): void {
     this.titleService.setTitle(this.previousTitle);
   }
 
-  getIcon(itemType: string) {
+  getIcon(itemType: string): string {
     return this.iconMap[itemType]['icon'];
   }
 
-  getLabel(itemType: string) {
+  getLabel(itemType: string): string {
     return this.iconMap[itemType]['label'];
   }
 
-  getSubTotal(li: LineItem): number {
-    return li.count * li.item.price;
-  }
-
   add(li: LineItem) {
-    li.count++;
+    this.cartService.add(li);
   }
 
   remove(li: LineItem) {
-    if (li.count > 1) {
-      li.count--;
-    } else {
-      this.lineItems.delete(li);
-    }
+    this.cartService.remove(li);
   }
 
-  sum = () =>
-    [...this.lineItems].reduce((acc, li) => acc + li.count * li.item.price, 0);
+  getSubTotal(li: LineItem) {
+    return this.cartService.getSubTotal(li);
+  }
+
+  getTotal() {
+    return this.cartService.getTotal();
+  }
 }

@@ -6,6 +6,7 @@ import { Review } from 'src/review';
 import { UserService } from '../user.service';
 import { AuthService } from '../auth.service';
 import { User } from '../../user';
+import { CartService } from '../cart.service';
 
 @Component({
   selector: 'app-item-detail',
@@ -22,8 +23,11 @@ export class ItemDetailComponent implements DoCheck, OnInit {
     private route: ActivatedRoute,
     private itemService: ItemService,
     private userService: UserService,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private cartService: CartService
+  ) {
+    this.cartService.loadCart();
+  }
 
   ngOnInit(): void {
     this.getItem();
@@ -116,5 +120,9 @@ export class ItemDetailComponent implements DoCheck, OnInit {
     const comment = inputDesc.value;
     review.comments.push(this.username + ' : ' + comment);
     this.itemService.updateReview(this.item).subscribe();
+  }
+
+  addToCart(item: Item) {
+    return this.cartService.addItem(item);
   }
 }

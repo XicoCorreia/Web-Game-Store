@@ -2,7 +2,7 @@
   <h3 class="cart-heading">Your cart</h3>
   <mat-list>
     <mat-divider></mat-divider>
-    <mat-list-item *ngFor="let li of lineItems" [@slideInOut]>
+    <mat-list-item *ngFor="let li of cart" [@slideInOut]>
       <img
         matListItemAvatar
         class="item-cover"
@@ -73,11 +73,15 @@
     </mat-list-item>
     <mat-divider></mat-divider>
     <mat-list-item>
-      <div *ngIf="lineItems; else emptyCart" matListItemLine class="cart-total">
+      <div
+        *ngIf="cart.length; else emptyCart"
+        matListItemLine
+        class="cart-total"
+      >
         <h4>Total:</h4>
-        <span class="item-price">{{ sum() | currency: "EUR" }}</span>
+        <span class="item-price">{{ getTotal() | currency: "EUR" }}</span>
         <a
-          [routerLink]="['/checkout', lineItems]"
+          routerLink="/checkout"
           mat-raised-button
           color="accent"
           class="checkout-btn"
