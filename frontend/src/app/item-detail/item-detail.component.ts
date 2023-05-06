@@ -40,15 +40,14 @@ export class ItemDetailComponent implements DoCheck, OnInit {
   }
 
   addToWishlist(name: string, title: string): void {
-    if(!this.user.wishlist.map(x=>x.id).includes(this.item.id)){
-      this.userService.addItemToWishlist(name, title).subscribe(data => {
+    if (!this.user.wishlist.map((x) => x.id).includes(this.item.id)) {
+      this.userService.addItemToWishlist(name, title).subscribe(() => {
         this.message = 'Item added to wishlist';
         this.user.wishlist.push(this.item);
       });
-    }else{
+    } else {
       this.message = 'Item already in wishlist';
     }
-    
   }
 
   getItem() {

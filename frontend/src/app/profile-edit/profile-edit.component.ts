@@ -3,7 +3,6 @@ import { User } from '../../user';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../user.service';
 import { Location } from '@angular/common';
-import { Observable, async } from 'rxjs';
 
 @Component({
   selector: 'app-profile-edit',
