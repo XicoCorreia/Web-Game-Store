@@ -1,6 +1,11 @@
 .main {
   margin: auto;
-  max-width: 800px;
+  max-width: 60vw;
+}
+
+img.cover {
+  max-width: fit-content;
+  width: 100%;
 }
 
 .info {
@@ -11,9 +16,11 @@
   justify-content: space-around;
   align-content: flex-start;
   align-items: flex-start;
+  margin: 0 auto;
 }
 .details {
   align-self: center;
+  min-width: 50%;
 }
 
 .lang {
@@ -23,6 +30,13 @@
   justify-content: space-around;
   align-content: flex-start;
   align-items: flex-start;
+  max-width: 50%;
+  margin: 0 auto;
+}
+
+.lang > p {
+  margin: 0.2rem;
+  padding: 0;
 }
 
 .reel {
@@ -31,8 +45,12 @@
   align-items: center;
 }
 
+.reel video {
+  width: 100%;
+}
+
 .reel img {
-  width: 600px;
+  width: 100%;
 }
 
 p,
@@ -88,4 +106,16 @@ h3 {
   max-height: 50px;
   min-width: 100%;
   max-width: 100%;
+}
+
+.item-buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-flow: wrap;
+  justify-content: center;
+}
+
+#feedback-message {
+  width: 100%;
 }

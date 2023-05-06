@@ -1,0 +1,141 @@
+.cart-heading {
+  font-size: x-large;
+}
+
+.dlc-icon {
+  color: purple;
+}
+
+.game-icon {
+  color: orangered;
+}
+
+.subscription-icon {
+  color: mediumseagreen;
+}
+
+mat-icon {
+  vertical-align: middle;
+}
+
+mat-list-item {
+  padding: 0.4rem;
+  transition: 200ms linear;
+}
+
+img.item-cover {
+  height: 100%;
+  min-width: 0;
+  max-width: 20%;
+  width: auto;
+  margin: 0 !important;
+  border-radius: 0.2rem;
+  align-self: center !important;
+  border: 1px solid black;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(6, 2fr);
+  grid-column-gap: 1rem;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  align-content: stretch;
+  justify-content: space-between;
+}
+
+.grid-title {
+  grid-area: 1 / 2 / 1 / 5;
+  text-decoration: inherit;
+  display: flex !important;
+  margin: 0 auto !important;
+  height: fit-content;
+  align-items: center;
+  overflow: hidden;
+  white-space: break-spaces;
+  transition: 75ms ease-out;
+}
+
+.grid-title > h4 {
+  display: flex;
+  width: fit-content;
+  margin: 0 auto;
+  overflow: hidden;
+  white-space: break-spaces;
+  font-size: large;
+  text-overflow: ellipsis;
+}
+
+.grid-title:hover {
+  filter: drop-shadow(0.2rem 0.2rem 0.1rem gainsboro);
+  transition: 75ms ease-in;
+}
+
+.grid-details {
+  grid-area: 1 / 5 / 1 / 6;
+  justify-self: end;
+  min-width: 8rem;
+  width: fit-content;
+  justify-self: end;
+}
+
+.grid-action {
+  grid-area: 1 / 6 / 1 / 7;
+  min-width: fit-content;
+}
+
+.item-type {
+  font-style: italic;
+}
+
+.item-price {
+  font-weight: bold;
+}
+
+.btn-cart-update {
+  line-height: 100%;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.btn-cart-update + .btn-cart-update {
+  margin-left: 0.5rem;
+}
+
+.btn-label {
+  margin-bottom: 0.5rem;
+}
+
+.cart-total {
+  font-size: x-large;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkout-btn {
+  text-decoration: inherit;
+  font-size: large;
+  position: absolute;
+  right: 5%;
+}
+
+@media only screen and (max-width: 1200px) {
+  .grid-title {
+    grid-area: 1 / 1 / 1 / 4;
+  }
+  .grid-details {
+    grid-area: 1 / 4 / 1 / 5;
+  }
+
+  .grid-action {
+    grid-area: 1 / 5 / 1 / 7;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  img.item-cover {
+    display: none;
+  }
+}

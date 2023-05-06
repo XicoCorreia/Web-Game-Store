@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LineItem } from '../line-item';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   username = sessionStorage.getItem('currentUser') ?? '';
+  cart = sessionStorage.getItem('cart') ?? new Map<string, LineItem>();
   title = 'G13 Gaming';
 
   ngDoCheck() {
@@ -16,7 +18,13 @@ export class AppComponent {
     }
   }
 
+  ngOnDestroy(): void {
+    sessionStorage.setItem('cart', JSON.stringify([...this.cart]));
+  }
+
   ngOnInit(): void {
+    //const cart = JSON.parse(sessionStorage.getItem('cart') ?? '[]');
+    //this.cart = new Map(Object.entries(JSON.parse(sessionStorage.getItem('cart') ?? '[]')));
     this.username = sessionStorage.getItem('currentUser') ?? '';
   }
 }

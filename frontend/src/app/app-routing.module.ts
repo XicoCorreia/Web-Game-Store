@@ -11,6 +11,7 @@ import { ListComponent } from './list/list.component';
 import { ProfileSearchComponent } from './profile-search/profile-search.component';
 import { FollowersComponent } from './followers/followers.component';
 import { FollowingComponent } from './following/following.component';
+import { CartComponent } from './cart/cart.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'profilesearch', component: ProfileSearchComponent },
   { path: 'followers/:username', component: FollowersComponent },
   { path: 'following/:username', component: FollowingComponent },
+  { path: 'cart', component: CartComponent },
 ];
 
 @NgModule({
