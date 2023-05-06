@@ -44,6 +44,7 @@ ul.search-result {
 }
 
 ul.search-result img {
+  float: left;
   height: 3em;
   vertical-align: middle;
   padding-right: 0.5em;
