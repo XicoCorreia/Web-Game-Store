@@ -9,9 +9,7 @@
           routerLink="/profile/{{ username }}"
           >Profile</a
         >
-        <a
-          *ngIf="username; else loginRedirection2"
-          routerLink="/profilesearch"
+        <a *ngIf="username; else loginRedirection2" routerLink="/profilesearch"
           >ProfileSearch</a
         >
         <ng-template #loginRedirection>
@@ -26,6 +24,7 @@
 
   <nav>
     <div class="right-nav">
+      <a routerLink="/cart">Cart</a>
       <b *ngIf="username; else loginPrompt">Welcome, {{ username }}</b>
       <ng-template #loginPrompt>
         <a routerLink="/login">Login/Sign Up</a>

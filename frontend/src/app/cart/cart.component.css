@@ -1,3 +1,7 @@
+.cart-heading {
+  font-size: x-large;
+}
+
 .dlc-icon {
   color: purple;
 }
@@ -22,11 +26,11 @@ mat-list-item {
 img.item-cover {
   height: 100%;
   min-width: 0;
-  max-width: 25%;
+  max-width: 20%;
   width: auto;
   margin: 0 !important;
   border-radius: 0.2rem;
-  align-self: center;
+  align-self: center !important;
   border: 1px solid black;
 }
 
@@ -37,21 +41,35 @@ img.item-cover {
   height: 100%;
   width: 100%;
   align-items: center;
-  align-content: center;
+  align-content: stretch;
   justify-content: space-between;
 }
 
 .grid-title {
   grid-area: 1 / 2 / 1 / 5;
+  text-decoration: inherit;
+  display: flex !important;
+  margin: 0 auto !important;
+  height: fit-content;
+  align-items: center;
   overflow: hidden;
   white-space: break-spaces;
+  transition: 75ms ease-out;
 }
 
 .grid-title > h4 {
+  display: flex;
+  width: fit-content;
   margin: 0 auto;
   overflow: hidden;
+  white-space: break-spaces;
   font-size: large;
   text-overflow: ellipsis;
+}
+
+.grid-title:hover {
+  filter: drop-shadow(0.2rem 0.2rem 0.1rem gainsboro);
+  transition: 75ms ease-in;
 }
 
 .grid-details {
@@ -90,14 +108,29 @@ img.item-cover {
 }
 
 .cart-total {
+  font-size: x-large;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
 }
 
+.checkout-btn {
+  text-decoration: inherit;
+  font-size: large;
+  position: absolute;
+  right: 5%;
+}
+
 @media only screen and (max-width: 1200px) {
   .grid-title {
-    white-space: nowrap;
+    grid-area: 1 / 1 / 1 / 4;
+  }
+  .grid-details {
+    grid-area: 1 / 4 / 1 / 5;
+  }
+
+  .grid-action {
+    grid-area: 1 / 5 / 1 / 7;
   }
 }
 

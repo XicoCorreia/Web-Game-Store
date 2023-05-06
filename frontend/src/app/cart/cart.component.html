@@ -1,5 +1,5 @@
 <div class="cart-container">
-  <h3>Cart</h3>
+  <h3 class="cart-heading">Your cart</h3>
   <mat-list>
     <mat-divider></mat-divider>
     <mat-list-item *ngFor="let li of lineItems" [@slideInOut]>
@@ -10,41 +10,61 @@
         alt="Cover art for {{ li.item.title }}"
       />
       <span matListItemLine class="grid-container">
-        <div matListItemTitle class="grid-title">
+        <a
+          [attr.aria-label]="li.item.title"
+          matListItemTitle
+          class="grid-title"
+          routerLink="/detail/{{ li.item.id }}"
+        >
           <h4>
             {{ li.item.title }}
           </h4>
-        </div>
-        <div class="grid-details">
+        </a>
+        <div class="grid-details" tabindex="0">
           <mat-icon
-            aria-hidden="false"
-            [attr.aria-label]="li.item.type"
+            aria-hidden="true"
             class="{{ li.item.type | lowercase }}-icon"
           >
             {{ getIcon(li.item.type) }}
           </mat-icon>
-          <div class="item-type">{{ getLabel(li.item.type) }}</div>
-          <div class="item-price">{{ li.item.price | currency: "EUR" }}</div>
+          <div
+            attr.aria-label="Type: {{ getLabel(li.item.type) }}"
+            class="item-type"
+          >
+            {{ getLabel(li.item.type) }}
+          </div>
+          <div>
+            Price:
+            <span class="item-price">{{
+              li.item.price | currency: "EUR"
+            }}</span>
+          </div>
+          <div>
+            Subtotal:
+            <span class="item-price">{{
+              getSubTotal(li) | currency: "EUR"
+            }}</span>
+          </div>
         </div>
         <div class="grid-action">
           <div class="btn-label">Quantity: {{ li.count }}</div>
           <button
             class="btn-cart-update"
             (click)="add(li)"
-            mat-fab
+            mat-mini-fab
             extended
             color="primary"
-            aria-label="Add one to cart"
+            attr.aria-label="Add {{ li.item.title }} to cart"
           >
             <mat-icon>add</mat-icon>
           </button>
           <button
             class="btn-cart-update"
             (click)="remove(li)"
-            mat-fab
+            mat-mini-fab
             extended
             color="primary"
-            aria-label="Remove one from cart"
+            attr.aria-label="Remove {{ li.item.title }} from cart"
           >
             <mat-icon>remove</mat-icon>
           </button>
@@ -56,6 +76,15 @@
       <div *ngIf="lineItems; else emptyCart" matListItemLine class="cart-total">
         <h4>Total:</h4>
         <span class="item-price">{{ sum() | currency: "EUR" }}</span>
+        <a
+          [routerLink]="['/checkout', lineItems]"
+          mat-raised-button
+          color="accent"
+          class="checkout-btn"
+          aria-label="Go to checkout"
+        >
+          To checkout
+        </a>
       </div>
       <ng-template #emptyCart matListItemLine>
         Your cart is empty.

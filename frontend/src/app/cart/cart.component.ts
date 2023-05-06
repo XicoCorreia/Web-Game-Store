@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ItemService } from '../item.service';
 import { UserService } from '../user.service';
 import { LineItem } from '../../line-item';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-cart',
@@ -24,8 +25,9 @@ import { animate, style, transition, trigger } from '@angular/animations';
     ]),
   ],
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, OnDestroy {
   @Input() lineItems!: Set<LineItem>;
+  private previousTitle!: string;
 
   private iconMap: { [key: string]: { [key: string]: string } } = {
     game: {
@@ -45,8 +47,12 @@ export class CartComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private itemService: ItemService,
-    private userService: UserService
-  ) {}
+    private userService: UserService,
+    private titleService: Title
+  ) {
+    this.previousTitle = this.titleService.getTitle();
+    this.titleService.setTitle(this.previousTitle + ' - Cart');
+  }
 
   ngOnInit(): void {
     // TODO: store cart items in sessionStorage
@@ -62,12 +68,20 @@ export class CartComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this.titleService.setTitle(this.previousTitle);
+  }
+
   getIcon(itemType: string) {
     return this.iconMap[itemType]['icon'];
   }
 
   getLabel(itemType: string) {
     return this.iconMap[itemType]['label'];
+  }
+
+  getSubTotal(li: LineItem): number {
+    return li.count * li.item.price;
   }
 
   add(li: LineItem) {
