@@ -7,6 +7,7 @@ import { UserService } from '../user.service';
 import { AuthService } from '../auth.service';
 import { User } from '../../user';
 import { CartService } from '../cart.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-item-detail',
@@ -24,7 +25,8 @@ export class ItemDetailComponent implements DoCheck, OnInit {
     private itemService: ItemService,
     private userService: UserService,
     private authService: AuthService,
-    private cartService: CartService
+    private cartService: CartService,
+    private snackBar: MatSnackBar
   ) {
     this.cartService.loadCart();
   }
@@ -123,6 +125,7 @@ export class ItemDetailComponent implements DoCheck, OnInit {
   }
 
   addToCart(item: Item) {
-    return this.cartService.addItem(item);
+    this.cartService.addItem(item);
+    this.snackBar.open(`Item "${item.title} added to Cart!`, 'Close');
   }
 }
