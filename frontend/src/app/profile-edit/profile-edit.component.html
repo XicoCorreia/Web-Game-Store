@@ -19,7 +19,20 @@
   </div>
   <div>
     <div id="fileInput">
-      <input type="file" (change)="onSelectFile($event)" />
+      <ul class = "image-list">
+        <li>
+          <img id="profile_pictures" src="{{ dog }}" alt="Dog" (click)="changeImage(dog)"/>
+        </li>
+        <li>
+          <img id="profile_pictures" src="{{ cat }}" alt="Cat" (click)="changeImage(cat)"/>
+        </li>
+        <li>
+          <img id="profile_pictures" src="{{ gamer }}" alt="Gamer" (click)="changeImage(gamer)"/>
+        </li>
+        <li>
+          <img id="profile_pictures" src="{{ default }}" alt="Default" (click)="changeImage(default)"/>
+        </li>
+      </ul>
     </div>
     <div id="buttons">
       <button type="button" (click)="save()">Apply changes</button>

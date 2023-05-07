@@ -10,10 +10,15 @@ import { Location } from '@angular/common';
   styleUrls: ['./profile-edit.component.css'],
 })
 export class ProfileEditComponent implements OnInit {
+
   user!: User;
   username = '';
   feedback = '';
   userExists!: boolean;
+  dog = "../../assets/dog.jpg";
+  cat = "../../assets/cat.jpg";
+  gamer = "../../assets/gamer.jpg";
+  default = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
   sleep = (ms: number | undefined) => new Promise((r) => setTimeout(r, ms));
 
   constructor(
@@ -34,17 +39,6 @@ export class ProfileEditComponent implements OnInit {
 
   goBack(): void {
     this.feedback = '';
-  }
-
-  onSelectFile(event: Event) {
-    const file = (<HTMLInputElement>event.target).files;
-    if (file && file[0]) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file[0]);
-      reader.onload = (event) => {
-        this.user.image = event.target?.result as string;
-      };
-    }
   }
 
   async save(): Promise<void> {
@@ -84,4 +78,10 @@ export class ProfileEditComponent implements OnInit {
       else this.userExists = false;
     });
   }
+
+  changeImage(image: string) {
+    this.user.image = image;
+    this.userService.updateUser(this.username, this.user).subscribe(() =>
+      (this.feedback = 'Profile picture change with success'));
+    }
 }

@@ -7,14 +7,15 @@
 
 #profile_picture {
   float: left;
-  width: 5cm;
-  height: 5cm;
+  width: 190px;
+  height: 190px;
   margin-right: 30px;
   margin-left: 0;
   border: 2px solid #333;
 }
 
 #profile_name {
+  display: absolute;
   margin-top: 0 px;
   font-size: 20px;
   height: 40px;
@@ -52,6 +53,26 @@ nav {
 }
 
 #fileInput {
-  padding-left: 120px;
+  display: table;
+  padding-left: 0px;
   text-align: left;
+}
+
+.image-list{
+  list-style-type: none;
+  overflow: auto;
+  white-space: nowrap;
+  padding: 0;
+  margin-left: 100px;
+  width: 240px;
+}
+
+.image-list li {
+  display: inline-block;
+}
+
+#profile_pictures {
+  width: 90px;
+  height: 90px;
+  border: 1px solid #333;
 }
