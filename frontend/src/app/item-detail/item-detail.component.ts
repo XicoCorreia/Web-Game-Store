@@ -8,6 +8,7 @@ import { AuthService } from '../auth.service';
 import { User } from '../../user';
 import { CartService } from '../cart.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-item-detail',
@@ -54,6 +55,14 @@ export class ItemDetailComponent implements DoCheck, OnInit {
     } else {
       this.message = 'Item already in wishlist';
     }
+  }
+
+  isInWishlist(): boolean {
+    return !!this.user?.wishlist.find((x) => x.id === this.item.id);
+  }
+
+  isInCart() {
+    return this.cartService.contains(this.item);
   }
 
   getItem() {
@@ -124,10 +133,13 @@ export class ItemDetailComponent implements DoCheck, OnInit {
     this.itemService.updateReview(this.item).subscribe();
   }
 
-  addToCart(item: Item) {
+  addToCart(item: Item, el: MatButton) {
     const message = `Item "${item.title} added to Cart!`;
+    const prevState = el.disabled;
+    el.disabled = true;
     this.cartService.addItem(item);
     this.message = message;
+    setTimeout(() => (el.disabled = prevState), 1000);
     // TODO: use MatSnackBar this.snackBar.open(message, 'Close');
   }
 }

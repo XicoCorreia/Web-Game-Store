@@ -55,4 +55,8 @@ export class CartService {
       (acc, li) => acc + li.count * li.item.price,
       0
     );
+
+  contains(item: Item) {
+    return this.cart.has(item.id);
+  }
 }

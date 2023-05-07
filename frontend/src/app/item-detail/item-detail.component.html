@@ -13,15 +13,24 @@
       </p>
       <p *ngIf="item.platform !== 'all'">Platform: {{ item.platform }}</p>
       <div class="item-buttons">
-        <button mat-fab aria-label="Add item to cart" (click)="addToCart(item)">
-          <mat-icon>add_shopping_cart</mat-icon>
+        <button
+          #addItemBtn
+          mat-raised-button
+          (click)="addToCart(item, addItemBtn)"
+        >
+          <mat-icon aria-hidden="true">add_shopping_cart</mat-icon>
+          Add to cart
         </button>
         <button
           mat-raised-button
           *ngIf="username"
+          [disabled]="isInWishlist()"
           (click)="addToWishlist(username, item.title)"
         >
-          Add to Wishlist
+          <mat-icon aria-hidden="true">{{
+            isInWishlist() ? "playlist_add_check" : "playlist_add"
+          }}</mat-icon>
+          {{ isInWishlist() ? "Already in wishlist" : "Add to wishlist" }}
         </button>
         <div id="feedback-message">{{ message }}</div>
       </div>
