@@ -5,7 +5,7 @@
   margin-bottom: 120px;
 }
 
-#profile_picture {
+img.profile-picture {
   float: left;
   width: 190px;
   height: 190px;
@@ -53,26 +53,30 @@ nav {
 }
 
 #fileInput {
+  margin: 0 auto;
   display: table;
   padding-left: 0px;
   text-align: left;
 }
 
-.image-list{
+.image-list {
   list-style-type: none;
   overflow: auto;
   white-space: nowrap;
   padding: 0;
-  margin-left: 100px;
-  width: 240px;
+  width: 60%;
 }
 
 .image-list li {
   display: inline-block;
 }
 
-#profile_pictures {
+#profile-pictures {
   width: 90px;
   height: 90px;
   border: 1px solid #333;
+}
+
+.pending {
+  filter: brightness(50%);
 }

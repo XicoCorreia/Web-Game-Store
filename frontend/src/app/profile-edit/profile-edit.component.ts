@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { User } from '../../user';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { Location } from '@angular/common';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-profile-edit',
@@ -10,19 +11,23 @@ import { Location } from '@angular/common';
   styleUrls: ['./profile-edit.component.css'],
 })
 export class ProfileEditComponent implements OnInit {
-
   user!: User;
-  username = '';
+  username!: string;
   feedback = '';
   userExists!: boolean;
-  dog = "../../assets/dog.jpg";
-  cat = "../../assets/cat.jpg";
-  gamer = "../../assets/gamer.jpg";
-  default = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
+  selectedImage!: string;
+  profilePictures = {
+    dog: '../../assets/dog.jpg',
+    cat: '../../assets/cat.jpg',
+    gamer: '../../assets/gamer.jpg',
+    default: '../../assets/default.webp',
+  };
+
   sleep = (ms: number | undefined) => new Promise((r) => setTimeout(r, ms));
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private location: Location,
     private userService: UserService
   ) {}
@@ -34,7 +39,10 @@ export class ProfileEditComponent implements OnInit {
   getUser(): void {
     const username = this.route.snapshot.paramMap.get('username') ?? '';
     this.username = username;
-    this.userService.getUser(username).subscribe((user) => (this.user = user));
+    this.userService.getUser(username).subscribe((user) => {
+      this.user = user;
+      this.selectedImage = this.user?.image;
+    });
   }
 
   goBack(): void {
@@ -42,46 +50,56 @@ export class ProfileEditComponent implements OnInit {
   }
 
   async save(): Promise<void> {
-    const input = document.getElementById('profile_name') as HTMLInputElement;
-    const username = input.value;
     this.feedback = '';
 
+    const updatedUser = {
+      ...this.user,
+      image: this.selectedImage,
+      username: this.username,
+    };
+
     if (this.user) {
-      if (username.length < 3) {
+      if (updatedUser.username.length < 3) {
         this.feedback = 'Your name must have more than 3 characters!';
         return;
       }
-      if (!username.match(/^[0-9a-zA-Z]+$/)) {
+      if (!updatedUser.username.match(/^[0-9a-zA-Z]+$/)) {
         this.feedback = 'Your name can only have numbers and letters!';
         return;
       }
 
-      this.usernameExists(username);
-      await this.sleep(400);
-
-      if (!this.userExists) {
+      const hasChanged = !this.isUnchanged();
+      const usernameAvailable = !(await firstValueFrom(
+        this.userService.usernameExists(updatedUser.username)
+      ));
+      if (usernameAvailable || hasChanged) {
         this.userService
-          .updateUser(this.username, this.user)
-          .subscribe(() => (this.feedback = 'Changes applied with success'));
-        this.username = this.user.username;
-        sessionStorage.setItem('currentUser', this.user.username);
+          .updateUser(this.user.username, updatedUser)
+          .subscribe(() => {
+            sessionStorage.setItem('currentUser', updatedUser.username);
+            this.router.navigateByUrl(
+              this.router.url.replace(this.user.username, updatedUser.username)
+            );
+            this.user = updatedUser;
+            this.feedback = 'Changes applied with success';
+          });
       } else {
         this.feedback = 'Username already exists';
       }
     }
   }
 
-  usernameExists(username: string): void {
-    const exists = this.userService.usernameExists(username);
-    exists.subscribe((res) => {
-      if (res) this.userExists = true;
-      else this.userExists = false;
-    });
+  isUnchanged(): boolean {
+    return (
+      this.user.username === this.username &&
+      this.user.image === this.selectedImage
+    );
   }
 
-  changeImage(image: string) {
-    this.user.image = image;
-    this.userService.updateUser(this.username, this.user).subscribe(() =>
-      (this.feedback = 'Profile picture change with success'));
+  @HostListener('keydown', ['$event'])
+  onKeyDown($event: KeyboardEvent, el: HTMLImageElement) {
+    if ($event.key === 'Enter' && el) {
+      this.selectedImage = el.src;
     }
+  }
 }

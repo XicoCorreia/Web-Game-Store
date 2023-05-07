@@ -31,7 +31,9 @@ export class ProfileComponent implements OnInit {
     this.sessionUsername = sessionStorage.getItem('currentUser') ?? '';
     this.userService.getUser(this.sessionUsername).subscribe((user) => {
       this.sessionUser = user;
-      const isFollowing = this.sessionUser.following.find(followingUser => followingUser.username === this.user.username);
+      const isFollowing = this.sessionUser?.following.find(
+        (followingUser) => followingUser.username === this.user.username
+      );
       this.isfollowing = !!isFollowing;
     });
   }

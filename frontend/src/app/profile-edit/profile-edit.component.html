@@ -1,42 +1,55 @@
 <div *ngIf="user">
   <nav>
-    <h2 id="edit">Edit {{ user.username }} profile</h2>
+    <h2 id="edit">
+      Edit {{ user.username }} profile{{ isUnchanged() ? "" : "*" }}
+    </h2>
   </nav>
   <div id="profile">
     <div *ngIf="user.image">
-      <img id="profile_picture" src="{{ user.image }}" alt="Profile picture" />
+      <img
+        class="profile-picture"
+        [ngClass]="{ pending: selectedImage !== user.image }"
+        [src]="selectedImage"
+        alt="Profile picture"
+      />
     </div>
     <div id="changeName">
       <h2 id="nameText">Change name:</h2>
-      <Input
+      <input
         name="username"
-        ngDefaultControl
         id="profile_name"
-        [(ngModel)]="user.username"
+        [(ngModel)]="username"
         placeholder="Username"
       />
     </div>
   </div>
   <div>
     <div id="fileInput">
-      <ul class = "image-list">
-        <li>
-          <img id="profile_pictures" src="{{ dog }}" alt="Dog" (click)="changeImage(dog)"/>
-        </li>
-        <li>
-          <img id="profile_pictures" src="{{ cat }}" alt="Cat" (click)="changeImage(cat)"/>
-        </li>
-        <li>
-          <img id="profile_pictures" src="{{ gamer }}" alt="Gamer" (click)="changeImage(gamer)"/>
-        </li>
-        <li>
-          <img id="profile_pictures" src="{{ default }}" alt="Default" (click)="changeImage(default)"/>
+      <ul class="image-list">
+        <li *ngFor="let entry of profilePictures | keyvalue">
+          <img
+            #selectedImageElement
+            tabindex="0"
+            class="profile-picture"
+            src="{{ entry.value }}"
+            alt="{{ entry.key }}"
+            (click)="selectedImage = entry.value"
+            (keydown)="onKeyDown($event, selectedImageElement)"
+          />
         </li>
       </ul>
     </div>
     <div id="buttons">
-      <button type="button" (click)="save()">Apply changes</button>
       <button
+        mat-raised-button
+        type="button"
+        [disabled]="isUnchanged()"
+        (click)="save()"
+      >
+        Apply changes
+      </button>
+      <button
+        mat-raised-button
         type="button"
         (click)="goBack()"
         [routerLink]="['/profile/', username]"

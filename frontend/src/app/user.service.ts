@@ -75,7 +75,7 @@ export class UserService {
     );
   }
 
-  getFollowers (username:string): Observable<User[]> {
+  getFollowers(username: string): Observable<User[]> {
     const url = `${this.userUrl}/followers/${username}`;
     return this.http.get<User[]>(url).pipe(
       catchError((err) => {
@@ -84,28 +84,20 @@ export class UserService {
       })
     );
   }
-  getFollowing (username:string): Observable<User[]> {
+  getFollowing(username: string): Observable<User[]> {
     const url = `${this.userUrl}/following/${username}`;
     return this.http.get<User[]>(url).pipe(
       catchError((err) => {
         console.error(err);
         return of([]);
-        
       })
     );
   }
 
   usernameExists(username: string): Observable<boolean> {
     const url = `${this.userUrl}/${username}`;
-    return this.http.get<User>(url).pipe(
-      map((res) => {
-        if (res !== null && res.username) {
-          return true;
-        } else {
-          return false;
-        }
-
-      })
-    );
+    return this.http
+      .get<User>(url)
+      .pipe(map((res) => (res?.username ? true : false)));
   }
 }
