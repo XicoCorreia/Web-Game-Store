@@ -23,10 +23,11 @@ export class CheckoutComponent {
   paymentMethods: string[] = ['MBWay', 'Debit or Credit card'];
 
   firstFormGroup: FormGroup = this.formBuilder.group({
-    firstCtrl: ['', Validators.required],
+    firstCtrlAddress: [''],
+    firstCtrlPostal: [''],
   });
   secondFormGroup: FormGroup = this.formBuilder.group({
-    secondCtrl: ['', Validators.compose([this.nifValidator])],
+    secondCtrl: ['', this.nifValidator],
   });
   thirdFormGroup: FormGroup = this.formBuilder.group({
     thirdCtrl: ['', Validators.required],
@@ -95,5 +96,9 @@ export class CheckoutComponent {
   confirmPurchase() {
     this.completed = true;
     this.state = 'done';
+  }
+
+  isEmptyFormGroup(fg: FormGroup<object>) {
+    return Object.values(fg.value).find((field) => field !== '') === undefined;
   }
 }

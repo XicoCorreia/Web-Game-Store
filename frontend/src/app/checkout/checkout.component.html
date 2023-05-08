@@ -1,31 +1,52 @@
 <mat-stepper #stepper linear [orientation]="(stepperOrientation$ | async)!">
-  <mat-step [stepControl]="firstFormGroup" errorMessage="Name is required.">
-    <form [formGroup]="firstFormGroup">
+  <mat-step
+    [stepControl]="firstFormGroup"
+    errorMessage="Invalid address."
+    optional
+  >
+    <form [formGroup]="firstFormGroup" id="address-form">
       <ng-template matStepLabel>Fill out your address</ng-template>
       <mat-form-field id="address-field" appearance="fill">
-        <mat-label>Address</mat-label>
+        <mat-label>Street address</mat-label>
         <input
           matInput
           placeholder="Alameda da Universidade"
-          formControlName="firstCtrl"
-          required
+          formControlName="firstCtrlAddress"
+        />
+      </mat-form-field>
+      <mat-form-field id="postal-code-field" appearance="fill">
+        <mat-label>Postal Code</mat-label>
+        <input
+          matInput
+          placeholder="1000-000"
+          formControlName="firstCtrlPostal"
         />
       </mat-form-field>
       <div class="step-buttons">
-        <button mat-raised-button matStepperNext>Next</button>
+        <button mat-raised-button matStepperNext>
+          {{ isEmptyFormGroup(firstFormGroup) ? "Skip" : "Next" }}
+        </button>
       </div>
     </form>
   </mat-step>
   <mat-step
     [stepControl]="secondFormGroup"
-    errorMessage="Invalid NIF (VAT number)."
-    [optional]="secondFormGroup.valid"
+    [errorMessage]="
+      isEmptyFormGroup(secondFormGroup)
+        ? 'NIF (VAT number) required.'
+        : 'Invalid NIF (VAT number).'
+    "
   >
     <form [formGroup]="secondFormGroup">
       <ng-template matStepLabel>Fill out your NIF (VAT number)</ng-template>
       <mat-form-field appearance="fill">
         <mat-label>NIF (VAT number)</mat-label>
-        <input matInput placeholder="200400800" formControlName="secondCtrl" />
+        <input
+          matInput
+          placeholder="200400800"
+          formControlName="secondCtrl"
+          required
+        />
       </mat-form-field>
       <div class="step-buttons">
         <button mat-raised-button matStepperPrevious>Back</button>
@@ -70,7 +91,7 @@
         <input
           matInput
           placeholder="Alameda da Universidade"
-          formControlName="firstCtrl"
+          formControlName="fourthCtrl"
           required
         />
       </mat-form-field>

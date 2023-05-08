@@ -1,15 +1,24 @@
-mat-form-field {
-  margin: 1rem auto;
+#address-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-gap: 0.5rem;
 }
 
 #address-field {
-  width: 60vw;
+  width: 80%;
+  grid-row: 1 / 2;
+  grid-column: span 2;
 }
 
-@media only screen and (max-width: 600px) {
-  #address-field {
-    width: 100%;
-  }
+#postal-code-field {
+  width: 30%;
+  grid-row: 2 / 3;
+}
+
+.step-buttons {
+  grid-row: 3 / 4;
+  grid-column: 1 / 3;
 }
 
 .step-buttons button + button {
