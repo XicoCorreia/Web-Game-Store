@@ -1,0 +1,21 @@
+mat-form-field {
+  margin: 1rem auto;
+}
+
+#address-field {
+  width: 60vw;
+}
+
+@media only screen and (max-width: 600px) {
+  #address-field {
+    width: 100%;
+  }
+}
+
+.step-buttons button + button {
+  margin-left: 1rem;
+}
+
+.radio-group {
+  display: flex;
+}
