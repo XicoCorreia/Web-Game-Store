@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 export class FollowersComponent implements OnInit {
   followers!: User[];
   user!: User;
+  showNoFollowersMessage = false;
 
   constructor(
     private userService: UserService,
@@ -33,6 +34,9 @@ export class FollowersComponent implements OnInit {
   getFollowers(username: string): void {
     this.userService.getFollowers(username).subscribe((followers: User[]) => {
       this.followers = followers;
+      setTimeout(() => {
+        this.showNoFollowersMessage = this.followers.length === 0;
+      }, 100);
     });
   }
 }

@@ -1,13 +1,14 @@
-<h2>Followers</h2>
-<ng-container *ngIf="followers && followers.length > 0; else noFollowers">
+<div *ngIf="followers">
+  <h1>Followers of {{ user.username }}</h1>
+  
   <ul>
     <li *ngFor="let follower of followers">
       <img src="{{ follower.image }} " alt="user image" /> 
-      {{ follower.username }}
-    </li>
+      {{ follower.username }}</li>
   </ul>
-</ng-container>
 
-<ng-template #noFollowers>
-  <p>Still don't follow anyone!</p>
-</ng-template>
+  <ng-container *ngIf="showNoFollowersMessage">
+    <p>Still don't have any followers!</p>
+  </ng-container>
+  
+</div>
