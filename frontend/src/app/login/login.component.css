@@ -50,3 +50,7 @@ p {
   font-size: 17px;
   text-decoration: none;
 }
+input.loading {
+  background-color: rgba(158, 158, 147, 0.148);
+  color: black;
+}

@@ -11,11 +11,13 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   currentUser: User = {} as User;
   feedback = '';
+  isloading = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
   login(name: string, pass: string): void {
     if (name !== '' && pass !== '') {
+      this.isloading = true;
       this.authService.login(name, pass).subscribe((user: User) => {
         if (user !== null) {
           this.currentUser = user;
@@ -26,6 +28,9 @@ export class LoginComponent {
         }
       });
     }
-    this.feedback = 'Login falhou! Tente novamente.';
+    setTimeout(() => {
+      this.isloading = false;
+      this.feedback = 'Login falhou! Tente novamente.';
+    }, 2000);
   }
 }
