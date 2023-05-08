@@ -53,3 +53,10 @@ nav a {
   color: white;
   text-decoration: none;
 }
+.follow-button {
+  display: none;
+}
+
+.p-following {
+  display: none;
+}

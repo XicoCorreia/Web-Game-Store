@@ -16,7 +16,7 @@ export class ProfileComponent implements OnInit {
   followingMsg = 'Show following';
   followers = false;
   following = false;
-  isfollowing = false;
+  isfollowing = true;
 
   constructor(
     private router: Router,
