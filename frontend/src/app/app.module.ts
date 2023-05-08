@@ -27,12 +27,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FollowersComponent } from './followers/followers.component';
 import { FollowingComponent } from './following/following.component';
 import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { BasicDialogComponent } from './basic-dialog/basic-dialog.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
     FollowingComponent,
     CartComponent,
     CheckoutComponent,
+    BasicDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,6 +73,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
     MatSnackBarModule,
     MatStepperModule,
     MatRadioModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
