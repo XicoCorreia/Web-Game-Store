@@ -11,26 +11,22 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   currentUser: User = {} as User;
   feedback = '';
-  isloading = false;
+  isLoading = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
   login(name: string, pass: string): void {
     if (name !== '' && pass !== '') {
-      this.isloading = true;
+      this.isLoading = true;
       this.authService.login(name, pass).subscribe((user: User) => {
-        if (user !== null) {
-          this.currentUser = user;
+        this.isLoading = false;
+        if (user) {
           this.feedback = 'Login efetuado com sucesso!';
-          const name = user.username;
-          sessionStorage.setItem('currentUser', name);
           this.router.navigate(['/dashboard']);
+        } else {
+          this.feedback = 'Login falhou! Tente novamente.';
         }
       });
     }
-    setTimeout(() => {
-      this.isloading = false;
-      this.feedback = 'Login falhou! Tente novamente.';
-    }, 2000);
   }
 }

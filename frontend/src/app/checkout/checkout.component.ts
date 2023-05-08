@@ -20,6 +20,7 @@ import { Router } from '@angular/router';
 import { LineItem } from 'src/line-item';
 import { CartService } from '../cart.service';
 import { User } from 'src/user';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-checkout',
@@ -31,6 +32,7 @@ import { User } from 'src/user';
 })
 export class CheckoutComponent {
   cart!: LineItem[];
+  currentUser!: User;
 
   private dialogSuccess: DialogData = {
     title: 'Purchase confirmed',
@@ -68,6 +70,7 @@ export class CheckoutComponent {
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private breakpointObserver: BreakpointObserver,
+    private authService: AuthService,
     private userService: UserService,
     private cartService: CartService,
     private router: Router
@@ -78,6 +81,7 @@ export class CheckoutComponent {
   }
 
   ngOnInit(): void {
+    this.authService.userSubject.subscribe((user) => (this.currentUser = user));
     this.cartService.cartSubject.subscribe(
       (cart) => (this.cart = [...cart.values()])
     );
@@ -150,7 +154,6 @@ export class CheckoutComponent {
       library.add(li.item.id);
       wishlist.delete(li.item.id);
     });
-    console.log(user.library, user.wishlist);
 
     const partialUpdate: unknown = {
       library: [...library.values()],
@@ -168,14 +171,11 @@ export class CheckoutComponent {
     this.completed = true;
     this.state = 'done';
 
-    const username = sessionStorage.getItem('currentUser') ?? '';
-    const user = await firstValueFrom(this.userService.getUser(username));
-
     this.sendMockPayment().subscribe(async (isSuccess) => {
       let dialogData = this.dialogSuccess;
-      let url = `/list/${username}/library`;
+      let url = `/list/${this.currentUser.username}/library`;
       if (isSuccess) {
-        await this.updateUser(user);
+        await this.updateUser(this.currentUser);
       } else {
         [dialogData, url] = [this.dialogError, '/cart'];
       }

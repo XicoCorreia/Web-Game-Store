@@ -85,7 +85,8 @@
         <h4 [ngStyle]="{ margin: 0 }">Total:</h4>
         <span class="item-price">{{ getTotal() | currency: "EUR" }}</span>
         <a
-          routerLink="/checkout"
+          routerLink="{{ isLoggedIn ? '/checkout' : '/login' }}"
+          [ngClass]="{ 'font-style': isLoggedIn ? 'normal' : 'italic' }"
           mat-raised-button
           color="accent"
           class="checkout-btn"
