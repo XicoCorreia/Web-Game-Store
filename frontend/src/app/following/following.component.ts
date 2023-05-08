@@ -11,6 +11,8 @@ import { ActivatedRoute } from '@angular/router';
 export class FollowingComponent implements OnInit{
   following!: User[];
   user!: User;
+  showNoFollowingMessage = false;
+  loading = true;
 
   constructor(
     private userService: UserService,
@@ -31,6 +33,10 @@ export class FollowingComponent implements OnInit{
   getFollowing(username: string): void {
     this.userService.getFollowing(username).subscribe((following: User[]) => {
       this.following = following;
+      setTimeout(() => {
+        this.showNoFollowingMessage = this.following.length === 0;
+      }, 50);
+      this.loading = false;
     });
   }
 }
