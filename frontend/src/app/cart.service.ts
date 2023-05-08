@@ -46,6 +46,11 @@ export class CartService {
     this.saveCart();
   }
 
+  clear(): void {
+    this.cart.clear();
+    this.saveCart();
+  }
+
   getSubTotal(li: LineItem): number {
     return li.count * li.item.price;
   }
