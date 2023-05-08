@@ -28,6 +28,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatBadgeModule } from '@angular/material/badge';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FollowersComponent } from './followers/followers.component';
@@ -74,6 +75,7 @@ import { BasicDialogComponent } from './basic-dialog/basic-dialog.component';
     MatStepperModule,
     MatRadioModule,
     MatDialogModule,
+    MatBadgeModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

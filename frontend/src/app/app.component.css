@@ -82,8 +82,15 @@ button:hover {
 }
 
 .right-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   margin-left: auto;
   right: 0;
+}
+
+#cart-link {
+  padding: 0;
 }
 
 @media only screen and (max-width: 600px) {

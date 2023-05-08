@@ -141,7 +141,7 @@ export class CheckoutComponent {
   }
 
   private sendMockPayment() {
-    const isSuccess = true;
+    const isSuccess = Boolean(~~(Math.random() + 0.5));
     return of(isSuccess).pipe(delay(1000));
   }
 
