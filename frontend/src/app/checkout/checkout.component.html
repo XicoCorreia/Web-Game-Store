@@ -2,7 +2,7 @@
   <mat-step
     [stepControl]="firstFormGroup"
     errorMessage="Invalid address."
-    optional
+    [optional]="isEmptyFormGroup(firstFormGroup)"
   >
     <form [formGroup]="firstFormGroup" id="address-form">
       <ng-template matStepLabel>Fill out your address</ng-template>
@@ -15,8 +15,10 @@
         />
       </mat-form-field>
       <mat-form-field id="postal-code-field" appearance="fill">
-        <mat-label>Postal Code</mat-label>
+        <mat-label>Postal/Zip Code</mat-label>
         <input
+          #postalCodeField
+          [required]="!isEmptyFormGroup(firstFormGroup)"
           matInput
           placeholder="1000-000"
           formControlName="firstCtrlPostal"
@@ -76,44 +78,31 @@
       </mat-radio-group>
       <div class="step-buttons">
         <button mat-raised-button matStepperPrevious>Back</button>
-        <button mat-raised-button matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
-
-  <mat-step [stepControl]="fourthFormGroup" errorMessage="Name is required.">
-    <form [formGroup]="fourthFormGroup">
-      <ng-template matStepLabel>Payment details</ng-template>
-      <mat-form-field id="address-field" appearance="fill">
-        <mat-label>{{
-          thirdFormGroup.get("thirdCtrl")?.value ?? ""
-        }}</mat-label>
-        <input
-          matInput
-          placeholder="Alameda da Universidade"
-          formControlName="fourthCtrl"
-          required
-        />
-      </mat-form-field>
-      <div class="step-buttons">
-        <button mat-raised-button matStepperPrevious>Back</button>
-        <button mat-raised-button matStepperNext>Next</button>
+        <button mat-flat-button matStepperNext>Next</button>
       </div>
     </form>
   </mat-step>
 
   <mat-step [completed]="completed" [state]="state">
-    <ng-template matStepLabel>Done</ng-template>
-    <p>Review your purchase:</p>
+    <ng-template matStepLabel>Review the details of your order</ng-template>
+    <p>Review the details of your order:</p>
     <div class="step-buttons">
       <button [disabled]="completed" mat-raised-button matStepperPrevious>
         Back
       </button>
       <button
+        #confirmPurchaseBtn
+        id="confirm-purchase-btn"
         [disabled]="completed"
-        mat-stroked-button
+        mat-flat-button
+        color="accent"
         (click)="confirmPurchase()"
       >
+        <mat-icon
+          aria-hidden="true"
+          [color]="confirmPurchaseBtn.disabled ? '' : 'primary'"
+          >credit_card</mat-icon
+        >
         Confirm purchase
       </button>
     </div>

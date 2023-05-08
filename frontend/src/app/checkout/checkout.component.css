@@ -28,3 +28,7 @@
 .radio-group {
   display: flex;
 }
+
+#confirm-purchase-btn {
+  font-weight: bold;
+}

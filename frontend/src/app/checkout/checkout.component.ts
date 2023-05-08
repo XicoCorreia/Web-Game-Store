@@ -8,8 +8,18 @@ import {
   Validators,
 } from '@angular/forms';
 import { StepperOrientation } from '@angular/material/stepper';
-import { Observable, map } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { Observable, delay, firstValueFrom, map, of, tap } from 'rxjs';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import {
+  BasicDialogComponent,
+  DialogData,
+} from '../basic-dialog/basic-dialog.component';
+import { UserService } from '../user.service';
+import { Router } from '@angular/router';
+import { LineItem } from 'src/line-item';
+import { CartService } from '../cart.service';
+import { User } from 'src/user';
 
 @Component({
   selector: 'app-checkout',
@@ -20,6 +30,23 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
   ],
 })
 export class CheckoutComponent {
+  cart!: LineItem[];
+
+  private dialogSuccess: DialogData = {
+    title: 'Purchase confirmed',
+    message: 'Your purchase was successful. Have fun!',
+    matIcon: 'library_add_check',
+    buttonText: 'Go to library',
+  };
+
+  private dialogError: DialogData = {
+    title: 'Error while purchasing',
+    message:
+      'An error ocurred during the transaction. Your purchase did not go through.',
+    matIcon: 'error',
+    buttonText: 'Go to cart',
+  };
+
   paymentMethods: string[] = ['MBWay', 'Debit or Credit card'];
 
   firstFormGroup: FormGroup = this.formBuilder.group({
@@ -33,21 +60,28 @@ export class CheckoutComponent {
     thirdCtrl: ['', Validators.required],
   });
 
-  fourthFormGroup: FormGroup = this.formBuilder.group({
-    fourthCtrl: ['', Validators.required],
-  });
-
   completed!: boolean;
   state!: string;
   stepperOrientation$!: Observable<StepperOrientation>;
 
   constructor(
+    private dialog: MatDialog,
     private formBuilder: FormBuilder,
-    breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private userService: UserService,
+    private cartService: CartService,
+    private router: Router
   ) {
-    this.stepperOrientation$ = breakpointObserver
+    this.stepperOrientation$ = this.breakpointObserver
       .observe('(min-width: 600px)')
       .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
+  }
+
+  ngOnInit(): void {
+    this.cartService.cartSubject.subscribe(
+      (cart) => (this.cart = [...cart.values()])
+    );
+    this.cartService.loadCart();
   }
 
   private nifValidator(control: AbstractControl): ValidationErrors | null {
@@ -93,9 +127,60 @@ export class CheckoutComponent {
       : { forbiddenNif: { value: control.value } };
   }
 
-  confirmPurchase() {
+  private openRedirectDialog(dialogData: DialogData, url: string) {
+    this.dialog
+      .open(BasicDialogComponent, { data: dialogData })
+      .afterClosed()
+      .subscribe(() => {
+        this.router.navigateByUrl(url);
+      });
+  }
+
+  private sendMockPayment() {
+    const isSuccess = true;
+    return of(isSuccess).pipe(delay(1000));
+  }
+
+  private updateUser(user: User) {
+    const [library, wishlist] = [
+      new Set(user.library.map((item) => item.id)),
+      new Set(user.wishlist.map((item) => item.id)),
+    ];
+    this.cart.forEach((li) => {
+      library.add(li.item.id);
+      wishlist.delete(li.item.id);
+    });
+    console.log(user.library, user.wishlist);
+
+    const partialUpdate: unknown = {
+      library: [...library.values()],
+      wishlist: [...wishlist.values()],
+    };
+
+    return firstValueFrom(
+      this.userService
+        .updateUser(user.username, partialUpdate as User)
+        .pipe(tap(() => this.cartService.clear()))
+    );
+  }
+
+  async confirmPurchase() {
     this.completed = true;
     this.state = 'done';
+
+    const username = sessionStorage.getItem('currentUser') ?? '';
+    const user = await firstValueFrom(this.userService.getUser(username));
+
+    this.sendMockPayment().subscribe(async (isSuccess) => {
+      let dialogData = this.dialogSuccess;
+      let url = `/list/${username}/library`;
+      if (isSuccess) {
+        await this.updateUser(user);
+      } else {
+        [dialogData, url] = [this.dialogError, '/cart'];
+      }
+      this.openRedirectDialog(dialogData, url);
+    });
   }
 
   isEmptyFormGroup(fg: FormGroup<object>) {
