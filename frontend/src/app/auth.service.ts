@@ -36,7 +36,6 @@ export class AuthService {
       }),
       catchError((err) => {
         console.error(err);
-        this.userSubject.error(err);
         throw err;
       })
     );
@@ -52,7 +51,6 @@ export class AuthService {
       }),
       catchError((err) => {
         console.error(err);
-        this.userSubject.error(err);
         throw err;
       })
     );

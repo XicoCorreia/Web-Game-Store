@@ -6,7 +6,7 @@
     <input type="Password" id="Password" placeholder="Password" #password />
     <br /><br />
     <input
-      [ngClass]="{ loading: isLoading }"
+      [disabled]="isLoading"
       type="button"
       id="button"
       value="Log In"
