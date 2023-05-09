@@ -17,10 +17,10 @@ export class ProfileEditComponent implements OnInit {
   userExists!: boolean;
   selectedImage!: string;
   profilePictures = {
-    dog: '../../assets/dog.jpg',
-    cat: '../../assets/cat.jpg',
-    gamer: '../../assets/gamer.jpg',
-    default: '../../assets/default.webp',
+    dog: 'https://fc55955.blob.core.windows.net/psi013/dog.jpg',
+    cat: 'https://fc55955.blob.core.windows.net/psi013/cat.jpg',
+    gamer: 'https://fc55955.blob.core.windows.net/psi013/gamer.jpg',
+    default: 'https://fc55955.blob.core.windows.net/psi013/default.webp',
   };
 
   sleep = (ms: number | undefined) => new Promise((r) => setTimeout(r, ms));

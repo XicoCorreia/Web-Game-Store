@@ -30,7 +30,7 @@ const UserSchema = new mongoose.Schema({
   image: {
     type: String,
     required: true,
-    default: "../../assets/default.webp",
+    default: "https://fc55955.blob.core.windows.net/psi013/default.webp",
   },
   following: { type: [ObjectId], ref: "User", default: [] },
   followers: { type: [ObjectId], ref: "User", default: [] },
