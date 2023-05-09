@@ -155,16 +155,17 @@ export class CheckoutComponent {
       wishlist.delete(li.item.id);
     });
 
-    const [updateLibrary, updateWishlist] = [
-      this.userService.addItemsToLibrary,
-      this.userService.addItemsToWishlist,
-    ];
-
     return firstValueFrom(
-      updateLibrary(user.username, [...library.values()]).pipe(
-        endWith(updateWishlist(user.username, [...library.values()])),
-        tap(() => this.cartService.clear())
-      )
+      this.userService
+        .addItemsToLibrary(user.username, [...library.values()])
+        .pipe(
+          endWith(
+            this.userService.addItemsToWishlist(user.username, [
+              ...library.values(),
+            ])
+          ),
+          tap(() => this.cartService.clear())
+        )
     );
   }
 
