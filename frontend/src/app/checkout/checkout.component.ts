@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { StepperOrientation } from '@angular/material/stepper';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, delay, firstValueFrom, map, of, tap } from 'rxjs';
+import { Observable, delay, endWith, firstValueFrom, map, of, tap } from 'rxjs';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import {
   BasicDialogComponent,
@@ -147,7 +147,7 @@ export class CheckoutComponent {
 
   private updateUser(user: User) {
     const [library, wishlist] = [
-      new Set(user.library.map((item) => item.id)),
+      new Set(user.library.map((ownedItem) => ownedItem.item.id)),
       new Set(user.wishlist.map((item) => item.id)),
     ];
     this.cart.forEach((li) => {
@@ -155,15 +155,16 @@ export class CheckoutComponent {
       wishlist.delete(li.item.id);
     });
 
-    const partialUpdate: unknown = {
-      library: [...library.values()],
-      wishlist: [...wishlist.values()],
-    };
+    const [updateLibrary, updateWishlist] = [
+      this.userService.addItemsToLibrary,
+      this.userService.addItemsToWishlist,
+    ];
 
     return firstValueFrom(
-      this.userService
-        .updateUser(user.username, partialUpdate as User)
-        .pipe(tap(() => this.cartService.clear()))
+      updateLibrary(user.username, [...library.values()]).pipe(
+        endWith(updateWishlist(user.username, [...library.values()])),
+        tap(() => this.cartService.clear())
+      )
     );
   }
 

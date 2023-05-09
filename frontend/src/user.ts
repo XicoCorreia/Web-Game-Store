@@ -1,10 +1,10 @@
-import { Item } from "./item";
+import { Item, OwnedItem } from './item';
 
 export interface User {
   username: string;
   image: string;
   following: User[];
   followers: User[];
-  library: Item[];
+  library: OwnedItem[];
   wishlist: Item[];
 }

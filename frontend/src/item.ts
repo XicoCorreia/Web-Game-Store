@@ -14,3 +14,8 @@ export interface Item {
   stars: number;
   reviews: Review[];
 }
+
+export interface OwnedItem {
+  item: Item;
+  purchaseDate: Date;
+}

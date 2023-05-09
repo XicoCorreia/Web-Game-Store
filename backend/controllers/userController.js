@@ -1,6 +1,19 @@
 const { Item } = require("../models/item");
 const { User } = require("../models/user");
 
+const POPULATE_ALL = [
+  "wishlist",
+  "following",
+  "followers",
+  {
+    path: "library",
+    populate: {
+      path: "item",
+      model: "Item",
+    },
+  },
+];
+
 /**
  * Logs in the user with the given `username` and `password`.
  */
@@ -34,7 +47,9 @@ exports.signup = async (req, res, _next) => {
  */
 exports.getUser = async (req, res, _next) => {
   const username = req.params.username;
-  const users = await User.findOne({ username: username }).populate(['wishlist','library','following','followers']);
+  const users = await User.findOne({ username: username }).populate(
+    POPULATE_ALL
+  );
   res.status(200).json(users);
 };
 
@@ -66,50 +81,59 @@ exports.update = async (req, res, _next) => {
 };
 
 /**
- * Adds the item with the given `title` to the user's wishlist.
- * The request body should contain the `title` of the item.
+ * Adds the items with the given `itemIds` to the user's wishlist.
+ * The request body should contain the list of `itemIds`.
  */
-exports.addItemToWishlist = async (req, res, _next) => {
+exports.addItemsToWishlist = async (req, res, _next) => {
   const username = req.params.username;
-  const { title } = req.body;
-  if (!username || !title) {
+  const itemIds = req.body.itemIds;
+
+  if (!username || itemIds.length === 0) {
     res.status(400).json();
   }
-  const item = await Item.findOne({ title: title });
-  await User.findOneAndUpdate(
+
+  const user = await User.findOneAndUpdate(
     { username: username },
     {
       $addToSet: {
-        wishlist: item,
+        wishlist: { $each: itemIds },
       },
-    }
-  );
+    },
+    { new: true }
+  ).populate(POPULATE_ALL);
 
-  res.status(204).json();
-  
+  res.status(200).json(user);
 };
 
 /**
- * Adds the item with the given `title` to the user's library.
- * The request body should contain the `title` of the item.
+ * Adds the items with the given `itemIds` to the user's library.
+ * The request body should contain the list of `itemIds`.
  */
-exports.addItemToLibrary = async (req, res, _next) => {
+exports.addItemsToLibrary = async (req, res, _next) => {
   const username = req.params.username;
-  const { title } = req.body;
-  if (!username || !title) {
+  const itemIds = req.body.itemIds;
+
+  if (!username || itemIds.length === 0) {
     res.status(400).json();
   }
-  const item = await Item.findOne({ title: title });
 
-  await User.findOneAndUpdate(
+  const purchaseDate = new Date();
+  const items = await Promise.all(itemIds.map((id) => Item.findById(id)));
+  const ownedItems = items.map((item) => {
+    return { item, purchaseDate };
+  });
+
+  const user = await User.findOneAndUpdate(
     { username: username },
     {
       $addToSet: {
-        library: item,
+        library: { $each: ownedItems },
       },
-    }
-  );
-  res.status(204).json();
+    },
+    { new: true }
+  ).populate(POPULATE_ALL);
+
+  res.status(200).json(user);
 };
 
 /**
@@ -146,23 +170,22 @@ exports.addFollower = async (req, res, _next) => {
 
 exports.getFollowers = async (req, res, _next) => {
   const username = req.params.username;
-  const user = await User.findOne({ username: username }).populate('followers');
+  const user = await User.findOne({ username: username }).populate("followers");
   if (!user) {
     res.status(404).json(`User '${username}' not found.`);
   } else {
     const followers = user.followers;
     res.status(200).json(followers);
-  } 
+  }
 };
 
 exports.getFollowing = async (req, res, _next) => {
   const username = req.params.username;
-  const user = await User.findOne({ username: username }).populate('following');
+  const user = await User.findOne({ username: username }).populate("following");
   if (!user) {
     res.status(404).json(`User '${username}' not found.`);
   } else {
     const following = user.following;
     res.status(200).json(following);
-  } 
+  }
 };
-

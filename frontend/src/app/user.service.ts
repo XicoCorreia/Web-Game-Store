@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../user';
-import { Item } from '../item';
 import { catchError, map, Observable, of } from 'rxjs';
 
 @Injectable({
@@ -36,9 +35,9 @@ export class UserService {
     );
   }
 
-  addItemToWishlist(username: string, title: string): Observable<User> {
+  addItemsToWishlist(username: string, itemIds: string[]): Observable<User> {
     const url = `${this.userUrl}/wishlist/${username}`;
-    return this.http.put<User>(url, { title: title }).pipe(
+    return this.http.put<User>(url, { itemIds }).pipe(
       catchError((err) => {
         console.error(err);
         return of();
@@ -46,19 +45,9 @@ export class UserService {
     );
   }
 
-  addItemToLibrary(username: string, title: string): Observable<User> {
+  addItemsToLibrary(username: string, itemIds: string[]): Observable<User> {
     const url = `${this.userUrl}/library/${username}`;
-    return this.http.put<User>(url, { title: title }).pipe(
-      catchError((err) => {
-        console.error(err);
-        return of();
-      })
-    );
-  }
-
-  getWishlist(username: string): Observable<Item[]> {
-    const url = `${this.userUrl}/wishlist?username=${username}`;
-    return this.http.get<Item[]>(url).pipe(
+    return this.http.put<User>(url, { itemIds }).pipe(
       catchError((err) => {
         console.error(err);
         return of();

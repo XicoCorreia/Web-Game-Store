@@ -41,13 +41,15 @@ export class ItemDetailComponent implements OnInit {
     );
   }
 
-  addToWishlist(name: string, title: string): void {
+  addToWishlist(): void {
     if (!this.user.wishlist.map((x) => x.id).includes(this.item.id)) {
-      this.userService.addItemToWishlist(name, title).subscribe(() => {
-        this.message = 'Item added to wishlist';
-        this.user.wishlist.push(this.item);
-        this.snackBar.open(this.message, 'Close');
-      });
+      this.userService
+        .addItemsToWishlist(this.user?.username, [this.item?.id])
+        .subscribe((user) => {
+          this.user = user;
+          this.message = 'Item added to wishlist';
+          this.snackBar.open(this.message, 'Close');
+        });
     } else {
       this.message = 'Item already in wishlist';
       this.snackBar.open(this.message, 'Close');
@@ -59,7 +61,7 @@ export class ItemDetailComponent implements OnInit {
   }
 
   isInLibrary(): boolean {
-    return !!this.user.library.find((x) => x.id === this.item.id);
+    return !!this.user.library.find((x) => x.item?.id === this.item.id);
   }
 
   isInCart() {
@@ -156,13 +158,13 @@ export class ItemDetailComponent implements OnInit {
     el.disabled = true;
     if (!this.isInLibrary()) {
       this.userService
-        .addItemToLibrary(this.user.username, this.item?.title)
-        .subscribe(() => {
+        .addItemsToLibrary(this.user.username, [this.item?.id])
+        .subscribe((user) => {
           this.message = 'Item added to library!';
-          this.user.library.push(this.item);
+          this.user = user;
           this.snackBar
             .open(this.message, 'Go to library')
-            .onAction() // /list/${this.currentUser.username}/library
+            .onAction()
             .subscribe(() => this.router.navigateByUrl(libraryUrl));
         });
     } else {

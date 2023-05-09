@@ -2,6 +2,14 @@ const mongoose = require("mongoose");
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
+const OwnedItemSchema = new mongoose.Schema(
+  {
+    item: { type: ObjectId, ref: "Item", required: true },
+    purchaseDate: { type: Date, required: true },
+  },
+  { _id: false }
+);
+
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -34,7 +42,7 @@ const UserSchema = new mongoose.Schema({
   },
   following: { type: [ObjectId], ref: "User", default: [] },
   followers: { type: [ObjectId], ref: "User", default: [] },
-  library: { type: [ObjectId], ref: "Item", default: [] },
+  library: { type: [OwnedItemSchema], default: [] },
   wishlist: { type: [ObjectId], ref: "Item", default: [] },
 });
 
@@ -45,6 +53,7 @@ UserSchema.set("toJSON", {
   },
 });
 
+const OwnedItem = mongoose.model("OwnedItem", OwnedItemSchema);
 const User = mongoose.model("User", UserSchema);
 
-module.exports = { User };
+module.exports = { User, OwnedItem };

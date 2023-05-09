@@ -37,11 +37,11 @@
         >
           <button
             mat-raised-button
-            *ngIf="user"
-            [disabled]="!isLoggedIn || isInWishlist()"
+            *ngIf="isLoggedIn"
+            [disabled]="!isLoggedIn || isInWishlist() || isInLibrary()"
             [matTooltip]="isLoggedIn ? '' : 'You are not signed in'"
             matTooltipPosition="above"
-            (click)="addToWishlist(user.username, item.title)"
+            (click)="addToWishlist()"
           >
             <mat-icon aria-hidden="true">{{
               isLoggedIn && isInWishlist()

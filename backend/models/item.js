@@ -1,12 +1,15 @@
 const mongoose = require("mongoose");
 
-const ReviewSchema = new mongoose.Schema({
-  description: { type: String, required: true },
-  classification: { type: Number, required: true, min: 1, max: 5 },
-  author: { type: String, required: true },
-  likes: { type: [String], required: true, default: [] },
-  comments: { type: [String], required: true, default: [] },
-});
+const ReviewSchema = new mongoose.Schema(
+  {
+    description: { type: String, required: true },
+    classification: { type: Number, required: true, min: 1, max: 5 },
+    author: { type: String, required: true },
+    likes: { type: [String], required: true, default: [] },
+    comments: { type: [String], required: true, default: [] },
+  },
+  { _id: false }
+);
 
 const ItemSchema = new mongoose.Schema({
   title: { type: String, required: true },
@@ -35,7 +38,7 @@ const ItemSchema = new mongoose.Schema({
   reel: { type: [String], required: false, default: [] },
   video: { type: String, required: false, default: "" },
   stars: { type: Number, required: true, min: 1, max: 5 },
-  reviews: [ReviewSchema],
+  reviews: { type: [ReviewSchema], default: [] },
 });
 
 ItemSchema.set("toJSON", {

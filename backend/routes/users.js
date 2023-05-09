@@ -15,8 +15,7 @@ router.get("/following/:username", asyncHandler(user.getFollowing));
 /* PUT */
 router.put("/:username", asyncHandler(user.update));
 router.put("/follow/:username", asyncHandler(user.addFollower));
-router.put("/library/:username", asyncHandler(user.addItemToLibrary));
-router.put("/wishlist/:username", asyncHandler(user.addItemToWishlist));
-
+router.put("/library/:username", asyncHandler(user.addItemsToLibrary));
+router.put("/wishlist/:username", asyncHandler(user.addItemsToWishlist));
 
 module.exports = router;
