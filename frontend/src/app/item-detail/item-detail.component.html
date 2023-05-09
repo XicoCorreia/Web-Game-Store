@@ -20,7 +20,7 @@
           <button
             #addItemBtn
             mat-raised-button
-            [disabled]="!isLoggedIn || isInLibrary()"
+            [disabled]="isInLibrary()"
             (click)="
               item.price === 0
                 ? addToLibrary(addItemBtn)
@@ -28,7 +28,7 @@
             "
           >
             <mat-icon aria-hidden="true">add_shopping_cart</mat-icon>
-            {{ item.price === 0 ? "Add to library" : "Add to cart" }}
+            {{ getLibraryButtonLabel() }}
           </button>
         </div>
         <div

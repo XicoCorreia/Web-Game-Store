@@ -42,7 +42,7 @@ export class ItemDetailComponent implements OnInit {
   }
 
   addToWishlist(): void {
-    if (!this.user.wishlist.map((x) => x.id).includes(this.item.id)) {
+    if (!this.isInWishlist()) {
       this.userService
         .addItemsToWishlist(this.user?.username, [this.item?.id])
         .subscribe((user) => {
@@ -57,11 +57,11 @@ export class ItemDetailComponent implements OnInit {
   }
 
   isInWishlist(): boolean {
-    return !!this.user.wishlist.find((x) => x.id === this.item.id);
+    return !!this.user.wishlist?.find((x) => x.id === this.item.id);
   }
 
   isInLibrary(): boolean {
-    return !!this.user.library.find((x) => x.item?.id === this.item.id);
+    return !!this.user.library?.find((x) => x.item?.id === this.item.id);
   }
 
   isInCart() {
@@ -172,6 +172,15 @@ export class ItemDetailComponent implements OnInit {
       this.snackBar.open(this.message, 'Close');
     }
     setTimeout(() => (el.disabled = prevState), 1000);
+  }
+
+  getLibraryButtonLabel(): string {
+    if (this.isInLibrary()) {
+      return 'Already in library';
+    }
+    const prefix = this.isLoggedIn ? 'Login to add to' : 'Add to';
+    const suffix = this.item.price === 0 ? 'library' : 'cart';
+    return prefix + suffix;
   }
 
   getWishlistButtonLabel(): string {
