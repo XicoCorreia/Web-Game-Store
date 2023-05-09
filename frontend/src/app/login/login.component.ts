@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { User } from '../../user';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -9,28 +10,29 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  currentUser: User = {} as User;
   feedback = '';
-  isloading = false;
+  isLoading = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
   login(name: string, pass: string): void {
     if (name !== '' && pass !== '') {
-      this.isloading = true;
-      this.authService.login(name, pass).subscribe((user: User) => {
-        if (user !== null) {
-          this.currentUser = user;
+      this.isLoading = true;
+      this.authService
+        .login(name, pass)
+        .pipe(
+          catchError((err) => {
+            this.isLoading = false;
+            this.feedback = 'Login falhou! Tente novamente.';
+            throw err;
+          })
+        )
+        .subscribe((user: User) => {
+          console.info(user.username, 'signed in successfully.');
+          this.isLoading = false;
           this.feedback = 'Login efetuado com sucesso!';
-          const name = user.username;
-          sessionStorage.setItem('currentUser', name);
           this.router.navigate(['/dashboard']);
-        }
-      });
+        });
     }
-    setTimeout(() => {
-      this.isloading = false;
-      this.feedback = 'Login falhou! Tente novamente.';
-    }, 2000);
   }
 }

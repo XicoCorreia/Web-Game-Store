@@ -24,7 +24,18 @@
 
   <nav>
     <div class="right-nav">
-      <a routerLink="/cart">Cart</a>
+      <a routerLink="/cart" id="cart-link">
+        <mat-icon
+          [matBadge]="itemsInCart"
+          matBadgeColor="primary"
+          matBadgeSize="small"
+          matBadgePosition="before"
+          >shopping_cart</mat-icon
+        >
+        <span class="cdk-visually-hidden"
+          >Your cart has {{ itemsInCart }} items.</span
+        ></a
+      >
       <b *ngIf="username; else loginPrompt">Welcome, {{ username }}</b>
       <ng-template #loginPrompt>
         <a routerLink="/login">Login/Sign Up</a>

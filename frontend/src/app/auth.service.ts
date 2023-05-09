@@ -1,38 +1,44 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { User } from '../user';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap } from 'rxjs';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private currentUser: User = {} as User;
-  private isloggedIn = false;
-  private currentUserName = '';
-
   private usersUrl = 'http://localhost:3000/users';
+  loginSubject!: BehaviorSubject<boolean>;
+  userSubject!: BehaviorSubject<User>;
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded',
-    }),
-  };
-
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userService: UserService) {
+    const username = sessionStorage.getItem('currentUser') ?? '';
+    this.userSubject = new BehaviorSubject({} as User);
+    this.loginSubject = new BehaviorSubject(false);
+    this.userSubject.subscribe((user) =>
+      this.loginSubject.next(!!user?.username)
+    );
+    if (username) {
+      this.userService.getUser(username).subscribe((user) => {
+        this.userSubject.next(user);
+      });
+    }
+  }
 
   signup(name: string, pass: string): Observable<User> {
-    return this.http
-      .post<User>(`${this.usersUrl}/signup`, {
-        username: name,
-        password: pass,
+    const body = { username: name, password: pass };
+    const url = `${this.usersUrl}/login`;
+    return this.http.post<User>(url, body).pipe(
+      tap((user: User) => {
+        sessionStorage.setItem('currentUser', user.username);
+        this.userSubject.next(user);
+      }),
+      catchError((err) => {
+        console.error(err);
+        throw err;
       })
-      .pipe(
-        catchError((err) => {
-          console.error(err);
-          throw err;
-        })
-      );
+    );
   }
 
   login(name: string, pass: string): Observable<User> {
@@ -40,35 +46,13 @@ export class AuthService {
     const url = `${this.usersUrl}/login`;
     return this.http.post<User>(url, body).pipe(
       tap((user: User) => {
-        this.currentUserName = user.username;
-        this.currentUser = user;
-        this.isloggedIn = true;
+        sessionStorage.setItem('currentUser', user.username);
+        this.userSubject.next(user);
       }),
       catchError((err) => {
         console.error(err);
-        this.isloggedIn = false;
         throw err;
       })
     );
-  }
-
-  getCurrentUser(): User {
-    return this.currentUser;
-  }
-
-  getCurrentUserObservable(): Observable<User> {
-    if (this.currentUser.username) {
-      return of(this.currentUser);
-    } else {
-      return of();
-    }
-  }
-
-  getCurrentUserName(): string {
-    return this.currentUserName;
-  }
-
-  canActivate(): boolean {
-    return this.isloggedIn;
   }
 }

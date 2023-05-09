@@ -25,12 +25,18 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FollowersComponent } from './followers/followers.component';
 import { FollowingComponent } from './following/following.component';
 import { CartComponent } from './cart/cart.component';
-
+import { CheckoutComponent } from './checkout/checkout.component';
+import { BasicDialogComponent } from './basic-dialog/basic-dialog.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +54,8 @@ import { CartComponent } from './cart/cart.component';
     FollowersComponent,
     FollowingComponent,
     CartComponent,
+    CheckoutComponent,
+    BasicDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +73,11 @@ import { CartComponent } from './cart/cart.component';
     MatIconModule,
     MatButtonModule,
     MatSnackBarModule,
+    MatStepperModule,
+    MatRadioModule,
+    MatDialogModule,
+    MatBadgeModule,
+    MatTooltipModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

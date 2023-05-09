@@ -9,7 +9,8 @@ import { Item } from 'src/item';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  username = sessionStorage.getItem('currentUser') ?? '';
+  isLoggedIn = false;
+  username!: string;
 
   items: Item[] = [];
   constructor(
@@ -19,6 +20,9 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getItems();
+    this.authService.userSubject.subscribe(
+      (user) => (this.username = user.username)
+    );
   }
 
   getItems(): void {
@@ -30,9 +34,5 @@ export class DashboardComponent implements OnInit {
         }
       }
     });
-  }
-
-  canActivate(): boolean {
-    return this.authService.canActivate();
   }
 }

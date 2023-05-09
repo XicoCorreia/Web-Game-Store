@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { LineItem } from '../line-item';
+import { AuthService } from './auth.service';
+import { CartService } from './cart.service';
 
 @Component({
   selector: 'app-root',
@@ -7,24 +8,20 @@ import { LineItem } from '../line-item';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  username = sessionStorage.getItem('currentUser') ?? '';
-  cart = sessionStorage.getItem('cart') ?? new Map<string, LineItem>();
+  username!: string;
+  itemsInCart = 0;
   title = 'G13 Gaming';
 
-  ngDoCheck() {
-    const newUsername = sessionStorage.getItem('currentUser') ?? '';
-    if (this.username !== newUsername) {
-      this.username = newUsername;
-    }
-  }
-
-  ngOnDestroy(): void {
-    sessionStorage.setItem('cart', JSON.stringify([...this.cart]));
-  }
-
-  ngOnInit(): void {
-    //const cart = JSON.parse(sessionStorage.getItem('cart') ?? '[]');
-    //this.cart = new Map(Object.entries(JSON.parse(sessionStorage.getItem('cart') ?? '[]')));
-    this.username = sessionStorage.getItem('currentUser') ?? '';
+  constructor(
+    private authService: AuthService,
+    private cartService: CartService
+  ) {
+    this.authService.userSubject.subscribe(
+      (user) => (this.username = user?.username)
+    );
+    this.cartService.cartSubject.subscribe((cart) => {
+      const listItems = Array.from(cart.values());
+      this.itemsInCart = listItems.reduce((acc, li) => acc + li.count, 0);
+    });
   }
 }

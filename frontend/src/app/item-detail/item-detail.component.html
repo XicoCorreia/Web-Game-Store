@@ -13,25 +13,44 @@
       </p>
       <p *ngIf="item.platform !== 'all'">Platform: {{ item.platform }}</p>
       <div class="item-buttons">
-        <button
-          #addItemBtn
-          mat-raised-button
-          (click)="addToCart(item, addItemBtn)"
+        <div
+          [matTooltip]="isLoggedIn ? '' : 'You are not signed in'"
+          matTooltipPosition="above"
         >
-          <mat-icon aria-hidden="true">add_shopping_cart</mat-icon>
-          Add to cart
-        </button>
-        <button
-          mat-raised-button
-          *ngIf="username"
-          [disabled]="isInWishlist()"
-          (click)="addToWishlist(username, item.title)"
+          <button
+            #addItemBtn
+            mat-raised-button
+            [disabled]="!isLoggedIn || isInLibrary()"
+            (click)="
+              item.price === 0
+                ? addToLibrary(addItemBtn)
+                : addToCart(addItemBtn)
+            "
+          >
+            <mat-icon aria-hidden="true">add_shopping_cart</mat-icon>
+            {{ item.price === 0 ? "Add to library" : "Add to cart" }}
+          </button>
+        </div>
+        <div
+          [matTooltip]="isLoggedIn ? '' : 'You are not signed in'"
+          matTooltipPosition="above"
         >
-          <mat-icon aria-hidden="true">{{
-            isInWishlist() ? "playlist_add_check" : "playlist_add"
-          }}</mat-icon>
-          {{ isInWishlist() ? "Already in wishlist" : "Add to wishlist" }}
-        </button>
+          <button
+            mat-raised-button
+            *ngIf="user"
+            [disabled]="!isLoggedIn || isInWishlist()"
+            [matTooltip]="isLoggedIn ? '' : 'You are not signed in'"
+            matTooltipPosition="above"
+            (click)="addToWishlist(user.username, item.title)"
+          >
+            <mat-icon aria-hidden="true">{{
+              isLoggedIn && isInWishlist()
+                ? "playlist_add_check"
+                : "playlist_add"
+            }}</mat-icon>
+            {{ getWishlistButtonLabel() }}
+          </button>
+        </div>
         <div id="feedback-message">{{ message }}</div>
       </div>
     </div>
@@ -73,7 +92,7 @@
 
   <div tabindex="0">
     <h3>Reviews</h3>
-    <div *ngIf="username; else disabledReviews">
+    <div *ngIf="user; else disabledReviews">
       <div class="reviewItem">
         This game has a total of {{ item.reviews.length }} reviews
         <textarea

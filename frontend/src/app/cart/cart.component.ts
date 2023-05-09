@@ -3,6 +3,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Title } from '@angular/platform-browser';
 import { LineItem } from '../../line-item';
 import { CartService } from '../cart.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -24,7 +25,9 @@ import { CartService } from '../cart.service';
   ],
 })
 export class CartComponent implements OnDestroy {
+  isLoggedIn = false;
   cart!: LineItem[];
+
   private previousTitle!: string;
   private iconMap: { [key: string]: { [key: string]: string } } = {
     game: {
@@ -41,12 +44,19 @@ export class CartComponent implements OnDestroy {
     },
   };
 
-  constructor(private cartService: CartService, private titleService: Title) {
+  constructor(
+    private cartService: CartService,
+    private titleService: Title,
+    private authService: AuthService
+  ) {
     this.previousTitle = this.titleService.getTitle();
     this.titleService.setTitle(this.previousTitle + ' - Cart');
   }
 
   ngOnInit(): void {
+    this.authService.loginSubject.subscribe(
+      (status) => (this.isLoggedIn = status)
+    );
     this.cartService.cartSubject.subscribe(
       (cart) => (this.cart = [...cart.values()])
     );

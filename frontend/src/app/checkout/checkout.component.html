@@ -1,0 +1,110 @@
+<mat-stepper #stepper linear [orientation]="(stepperOrientation$ | async)!">
+  <mat-step
+    [stepControl]="firstFormGroup"
+    errorMessage="Invalid address."
+    [optional]="isEmptyFormGroup(firstFormGroup)"
+  >
+    <form [formGroup]="firstFormGroup" id="address-form">
+      <ng-template matStepLabel>Fill out your address</ng-template>
+      <mat-form-field id="address-field" appearance="fill">
+        <mat-label>Street address</mat-label>
+        <input
+          matInput
+          placeholder="Alameda da Universidade"
+          formControlName="firstCtrlAddress"
+        />
+      </mat-form-field>
+      <mat-form-field id="postal-code-field" appearance="fill">
+        <mat-label>Postal/Zip Code</mat-label>
+        <input
+          #postalCodeField
+          [required]="!isEmptyFormGroup(firstFormGroup)"
+          matInput
+          placeholder="1000-000"
+          formControlName="firstCtrlPostal"
+        />
+      </mat-form-field>
+      <div class="step-buttons">
+        <button mat-raised-button matStepperNext>
+          {{ isEmptyFormGroup(firstFormGroup) ? "Skip" : "Next" }}
+        </button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step
+    [stepControl]="secondFormGroup"
+    [errorMessage]="
+      isEmptyFormGroup(secondFormGroup)
+        ? 'NIF (VAT number) required.'
+        : 'Invalid NIF (VAT number).'
+    "
+  >
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Fill out your NIF (VAT number)</ng-template>
+      <mat-form-field appearance="fill">
+        <mat-label>NIF (VAT number)</mat-label>
+        <input
+          matInput
+          placeholder="200400800"
+          formControlName="secondCtrl"
+          required
+        />
+      </mat-form-field>
+      <div class="step-buttons">
+        <button mat-raised-button matStepperPrevious>Back</button>
+        <button mat-raised-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step
+    [stepControl]="thirdFormGroup"
+    errorMessage="No payment method selected."
+  >
+    <form [formGroup]="thirdFormGroup">
+      <ng-template matStepLabel>Select a payment method</ng-template>
+      <label id="payment-methods-label">Payment method</label>
+
+      <mat-radio-group
+        aria-labelledby="payment-methods-label"
+        formControlName="thirdCtrl"
+      >
+        <mat-radio-button
+          class="radio-group"
+          *ngFor="let paymentMethod of paymentMethods"
+          [value]="paymentMethod"
+        >
+          {{ paymentMethod }}
+        </mat-radio-button>
+      </mat-radio-group>
+      <div class="step-buttons">
+        <button mat-raised-button matStepperPrevious>Back</button>
+        <button mat-flat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [completed]="completed" [state]="state">
+    <ng-template matStepLabel>Review the details of your order</ng-template>
+    <p>Review the details of your order:</p>
+    <div class="step-buttons">
+      <button [disabled]="completed" mat-raised-button matStepperPrevious>
+        Back
+      </button>
+      <button
+        #confirmPurchaseBtn
+        id="confirm-purchase-btn"
+        [disabled]="completed"
+        mat-flat-button
+        color="accent"
+        (click)="confirmPurchase()"
+      >
+        <mat-icon
+          aria-hidden="true"
+          [color]="confirmPurchaseBtn.disabled ? '' : 'primary'"
+          >credit_card</mat-icon
+        >
+        Confirm purchase
+      </button>
+    </div>
+  </mat-step>
+</mat-stepper>
