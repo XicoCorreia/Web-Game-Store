@@ -1,5 +1,5 @@
-import { Component, DoCheck, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from '../../item';
 import { ItemService } from '../item.service';
 import { Review } from 'src/review';
@@ -15,14 +15,15 @@ import { MatButton } from '@angular/material/button';
   templateUrl: './item-detail.component.html',
   styleUrls: ['./item-detail.component.css'],
 })
-export class ItemDetailComponent implements DoCheck, OnInit {
+export class ItemDetailComponent implements OnInit {
+  isLoggedIn!: boolean;
   user!: User;
-  username = sessionStorage.getItem('currentUser') ?? '';
   message = '';
   item!: Item;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private itemService: ItemService,
     private userService: UserService,
     private authService: AuthService,
@@ -34,16 +35,10 @@ export class ItemDetailComponent implements DoCheck, OnInit {
 
   ngOnInit(): void {
     this.getItem();
-    this.userService
-      .getUser(this.username)
-      .subscribe((user) => (this.user = user));
-  }
-
-  ngDoCheck() {
-    const newUsername = sessionStorage.getItem('currentUser') ?? '';
-    if (this.username !== newUsername) {
-      this.username = newUsername;
-    }
+    this.authService.userSubject.subscribe((user) => (this.user = user));
+    this.authService.loginSubject.subscribe(
+      (status) => (this.isLoggedIn = status)
+    );
   }
 
   addToWishlist(name: string, title: string): void {
@@ -51,14 +46,20 @@ export class ItemDetailComponent implements DoCheck, OnInit {
       this.userService.addItemToWishlist(name, title).subscribe(() => {
         this.message = 'Item added to wishlist';
         this.user.wishlist.push(this.item);
+        this.snackBar.open(this.message, 'Close');
       });
     } else {
       this.message = 'Item already in wishlist';
+      this.snackBar.open(this.message, 'Close');
     }
   }
 
   isInWishlist(): boolean {
-    return !!this.user?.wishlist.find((x) => x.id === this.item.id);
+    return !!this.user.wishlist.find((x) => x.id === this.item.id);
+  }
+
+  isInLibrary(): boolean {
+    return !!this.user.library.find((x) => x.id === this.item.id);
   }
 
   isInCart() {
@@ -88,7 +89,7 @@ export class ItemDetailComponent implements DoCheck, OnInit {
       const review: Review = {
         description: description,
         classification: classification,
-        author: this.username,
+        author: this.user.username,
         likes: [],
         comments: [],
       };
@@ -100,17 +101,17 @@ export class ItemDetailComponent implements DoCheck, OnInit {
 
   like(review: Review) {
     if (!this.userAlreadyLikes(review)) {
-      review.likes.push(this.username);
+      review.likes.push(this.user.username);
       this.itemService.updateReview(this.item).subscribe();
     }
   }
 
   userAlreadyLikes(review: Review) {
-    return !!review.likes.find((u) => u === this.username); // this works because usernames can't be nullish
+    return !!review.likes.find((u) => u === this.user.username); // this works because usernames can't be nullish
   }
 
   userAlreadyVoted() {
-    return !!this.item.reviews.find((r) => r.author === this.username);
+    return !!this.item.reviews.find((r) => r.author === this.user.username);
   }
 
   showComment(review: Review) {
@@ -129,16 +130,57 @@ export class ItemDetailComponent implements DoCheck, OnInit {
       'comment-area-' + review.author
     ) as HTMLInputElement;
     const comment = inputDesc.value;
-    review.comments.push(this.username + ' : ' + comment);
+    review.comments.push(this.user.username + ' : ' + comment);
     this.itemService.updateReview(this.item).subscribe();
   }
 
-  addToCart(item: Item, el: MatButton) {
+  addToCart(el: MatButton) {
     const prevState = el.disabled;
     el.disabled = true;
-    this.cartService.addItem(item);
-    this.message = 'Item added to cart!';
+    if (!this.isInLibrary() && this.item.price !== 0) {
+      this.cartService.addItem(this.item);
+      this.message = 'Item added to cart!';
+    } else {
+      this.message =
+        this.item.price !== 0
+          ? 'Item already in library.'
+          : 'Item is free-to-play.';
+    }
     setTimeout(() => (el.disabled = prevState), 1000);
-    // TODO: use MatSnackBar this.snackBar.open(message, 'Close');
+    this.snackBar.open(this.message, 'Close');
+  }
+
+  addToLibrary(el: MatButton) {
+    const libraryUrl = `/list/${this.user.username}/library`;
+    const prevState = el.disabled;
+    el.disabled = true;
+    if (!this.isInLibrary()) {
+      this.userService
+        .addItemToLibrary(this.user.username, this.item?.title)
+        .subscribe(() => {
+          this.message = 'Item added to library!';
+          this.user.library.push(this.item);
+          this.snackBar
+            .open(this.message, 'Go to library')
+            .onAction() // /list/${this.currentUser.username}/library
+            .subscribe(() => this.router.navigateByUrl(libraryUrl));
+        });
+    } else {
+      this.message = 'Item already in library.';
+      this.snackBar.open(this.message, 'Close');
+    }
+    setTimeout(() => (el.disabled = prevState), 1000);
+  }
+
+  getWishlistButtonLabel(): string {
+    if (this.isLoggedIn) {
+      if (this.isInLibrary()) {
+        return 'Already in library';
+      }
+      if (this.isInWishlist()) {
+        return 'Already in wishlist';
+      }
+    }
+    return 'Add to wishlist';
   }
 }

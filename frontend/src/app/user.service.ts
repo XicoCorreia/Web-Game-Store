@@ -46,6 +46,16 @@ export class UserService {
     );
   }
 
+  addItemToLibrary(username: string, title: string): Observable<User> {
+    const url = `${this.userUrl}/library/${username}`;
+    return this.http.put<User>(url, { title: title }).pipe(
+      catchError((err) => {
+        console.error(err);
+        return of();
+      })
+    );
+  }
+
   getWishlist(username: string): Observable<Item[]> {
     const url = `${this.userUrl}/wishlist?username=${username}`;
     return this.http.get<Item[]>(url).pipe(

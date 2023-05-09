@@ -16,21 +16,26 @@
         <button
           #addItemBtn
           mat-raised-button
-          (click)="addToCart(item, addItemBtn)"
+          [disabled]="!isLoggedIn || isInLibrary()"
+          [title]="isLoggedIn ? '' : 'You are not signed in'"
+          (click)="
+            item.price === 0 ? addToLibrary(addItemBtn) : addToCart(addItemBtn)
+          "
         >
           <mat-icon aria-hidden="true">add_shopping_cart</mat-icon>
-          Add to cart
+          {{ item.price === 0 ? "Add to library" : "Add to cart" }}
         </button>
         <button
           mat-raised-button
-          *ngIf="username"
-          [disabled]="isInWishlist()"
-          (click)="addToWishlist(username, item.title)"
+          *ngIf="user"
+          [disabled]="!isLoggedIn || isInWishlist()"
+          [title]="isLoggedIn ? '' : 'You are not signed in'"
+          (click)="addToWishlist(user.username, item.title)"
         >
           <mat-icon aria-hidden="true">{{
-            isInWishlist() ? "playlist_add_check" : "playlist_add"
+            isLoggedIn && isInWishlist() ? "playlist_add_check" : "playlist_add"
           }}</mat-icon>
-          {{ isInWishlist() ? "Already in wishlist" : "Add to wishlist" }}
+          {{ getWishlistButtonLabel() }}
         </button>
         <div id="feedback-message">{{ message }}</div>
       </div>
@@ -73,7 +78,7 @@
 
   <div tabindex="0">
     <h3>Reviews</h3>
-    <div *ngIf="username; else disabledReviews">
+    <div *ngIf="user; else disabledReviews">
       <div class="reviewItem">
         This game has a total of {{ item.reviews.length }} reviews
         <textarea
