@@ -2,8 +2,8 @@
   <ul *ngIf="username; else loginRedirections">
     <li><a routerLink="/">HOME</a></li>
     <li><a routerLink="/profile/{{ username }}">PROFILE</a></li>
-    <li><a routerLink="/following/{{username}}">FOLLOWING</a></li>
-    <li><a routerLink="/followers/{{username}}">FOLLOWERS</a></li>
+    <li><a routerLink="/following/{{ username }}">FOLLOWING</a></li>
+    <li><a routerLink="/followers/{{ username }}">FOLLOWERS</a></li>
     <li><a routerLink="/dashboard">LISTS</a></li>
     <li><a routerLink="/list/{{ username }}/library">LIBRARY</a></li>
     <li><a routerLink="/list/{{ username }}/wishlist">WISHLIST</a></li>

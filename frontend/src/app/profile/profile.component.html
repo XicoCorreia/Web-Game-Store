@@ -1,8 +1,8 @@
 <div *ngIf="user">
   <nav>
     <ul>
-      <li><a routerLink="/following/{{user.username}}">FOLLOWING</a></li>
-      <li><a routerLink="/followers/{{user.username}}">FOLLOWERS</a></li>
+      <li><a routerLink="/following/{{ user.username }}">FOLLOWING</a></li>
+      <li><a routerLink="/followers/{{ user.username }}">FOLLOWERS</a></li>
       <li><a routerLink="/dashboard">LISTS</a></li>
       <li><a routerLink="/list/{{ user.username }}/library">LIBRARY</a></li>
       <li><a routerLink="/list/{{ user.username }}/wishlist">WISHLIST</a></li>
@@ -20,7 +20,7 @@
     <h1 id="profile_name">{{ user.username }}</h1>
     <button
       [class.follow-button]="isfollowing"
-      *ngIf="user.username !== sessionUsername" 
+      *ngIf="user.username !== sessionUsername"
       (click)="follow(user.username); isfollowing = true"
     >
       Follow

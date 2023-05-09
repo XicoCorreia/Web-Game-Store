@@ -1,14 +1,14 @@
 <div *ngIf="followers">
   <h1>Followers of {{ user.username }}</h1>
-  
+
   <ul>
     <li *ngFor="let follower of followers">
-      <img src="{{ follower.image }} " alt="user image" /> 
-      {{ follower.username }}</li>
+      <img src="{{ follower.image }} " alt="user image" />
+      {{ follower.username }}
+    </li>
   </ul>
 
   <ng-container *ngIf="showNoFollowersMessage">
     <p>Still don't have any followers!</p>
   </ng-container>
-  
 </div>

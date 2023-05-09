@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User } from '../../user';
 import { UserService } from '../user.service';
 import { ActivatedRoute } from '@angular/router';
@@ -6,9 +6,9 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-following',
   templateUrl: './following.component.html',
-  styleUrls: ['./following.component.css']
+  styleUrls: ['./following.component.css'],
 })
-export class FollowingComponent implements OnInit{
+export class FollowingComponent implements OnInit {
   following!: User[];
   user!: User;
   showNoFollowingMessage = false;
@@ -26,7 +26,7 @@ export class FollowingComponent implements OnInit{
     const username = this.route.snapshot.paramMap.get('username') ?? '';
     this.userService.getUser(username).subscribe((user) => {
       this.user = user;
-      
+
       this.getFollowing(user.username);
     });
   }

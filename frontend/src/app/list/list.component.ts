@@ -14,8 +14,8 @@ export class ListComponent {
   userName = '';
   user: User | undefined;
   listName = '';
-  itemList:Item[]=[];
-  userList:User[]=[];
+  itemList: Item[] = [];
+  userList: User[] = [];
 
   constructor(
     private userService: UserService,
