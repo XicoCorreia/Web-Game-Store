@@ -37,6 +37,7 @@ import { FollowingComponent } from './following/following.component';
 import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { BasicDialogComponent } from './basic-dialog/basic-dialog.component';
+import { LibraryComponent } from './library/library.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { BasicDialogComponent } from './basic-dialog/basic-dialog.component';
     CartComponent,
     CheckoutComponent,
     BasicDialogComponent,
+    LibraryComponent,
   ],
   imports: [
     BrowserModule,

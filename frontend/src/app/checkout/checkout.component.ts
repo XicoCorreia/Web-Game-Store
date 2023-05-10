@@ -175,7 +175,7 @@ export class CheckoutComponent {
 
     this.sendMockPayment().subscribe(async (isSuccess) => {
       let dialogData = this.dialogSuccess;
-      let url = `/list/${this.currentUser.username}/library`;
+      let url = `/${this.currentUser.username}/library`;
       if (isSuccess) {
         await this.updateUser(this.currentUser);
       } else {
