@@ -30,11 +30,13 @@ export class LibraryComponent {
   ngOnInit(): void {
     this.userName = String(this.route.snapshot.paramMap.get('username'));
     this.getUser(this.userName);
+    
   }
 
   getUser(name: string): void {
     this.userService.getUser(name).subscribe((elem) => {
       this.user = elem;
+      this.user.library.sort((a,b) => (a.item.title > b.item.title) ? 1 : ((b.item.title > a.item.title) ? -1 : 0))
     });
   }
 
