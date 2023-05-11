@@ -14,14 +14,28 @@ nav a {
   color: #fff;
   text-decoration: none;
   font-size: 1.2rem;
-  padding: 0.5rem;
   border-radius: 4px;
 }
 
-.left-nav {
-  margin-top: 2%;
-  margin-right: auto;
-  left: 0;
+nav a > * {
+  vertical-align: middle;
+}
+
+nav a > * + * {
+  margin-left: 0.2rem;
+}
+
+.dropdown-content > * + *,
+.right-nav > * + * {
+  margin-left: 0.6rem;
+}
+
+#browse-link > * + * {
+  margin-left: 0.35rem;
+}
+
+#dashboard-link {
+  margin-right: 0.6rem;
 }
 
 .right-nav {
@@ -89,8 +103,6 @@ button:hover {
 .right-nav {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-left: auto;
   right: 0;
 }
 
@@ -98,7 +110,7 @@ button:hover {
   padding: 0;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
   main {
     max-width: 95vw;
   }

@@ -76,8 +76,8 @@ export class CheckoutComponent {
     private router: Router
   ) {
     this.stepperOrientation$ = this.breakpointObserver
-      .observe('(min-width: 600px)')
-      .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
+      .observe('(max-width: 768px)')
+      .pipe(map(({ matches }) => (matches ? 'vertical' : 'horizontal')));
   }
 
   ngOnInit(): void {
