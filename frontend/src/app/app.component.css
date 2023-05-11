@@ -8,6 +8,7 @@ header {
   flex-wrap: wrap;
   align-content: flex-start;
   color: #fff;
+  gap: 1rem;
 }
 
 nav a {
