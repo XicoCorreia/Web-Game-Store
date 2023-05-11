@@ -7,7 +7,7 @@ import { UserService } from '../user.service';
 import { AuthService } from '../auth.service';
 import { User } from '../../user';
 import { CartService } from '../cart.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { MatButton } from '@angular/material/button';
 
 @Component({
@@ -16,6 +16,10 @@ import { MatButton } from '@angular/material/button';
   styleUrls: ['./item-detail.component.css'],
 })
 export class ItemDetailComponent implements OnInit {
+  private snackBarConfig: MatSnackBarConfig = {
+    duration: 3000,
+  };
+
   isLoggedIn!: boolean;
   user!: User;
   message = '';
@@ -48,11 +52,11 @@ export class ItemDetailComponent implements OnInit {
         .subscribe((user) => {
           this.user = user;
           this.message = 'Item added to wishlist';
-          this.snackBar.open(this.message, 'Close');
+          this.snackBar.open(this.message, 'Close', this.snackBarConfig);
         });
     } else {
       this.message = 'Item already in wishlist';
-      this.snackBar.open(this.message, 'Close');
+      this.snackBar.open(this.message, 'Close', this.snackBarConfig);
     }
   }
 
@@ -149,11 +153,11 @@ export class ItemDetailComponent implements OnInit {
           : 'Item is free-to-play.';
     }
     setTimeout(() => (el.disabled = prevState), 1000);
-    this.snackBar.open(this.message, 'Close');
+    this.snackBar.open(this.message, 'Close', this.snackBarConfig);
   }
 
   addToLibrary(el: MatButton) {
-    const libraryUrl = `/list/${this.user.username}/library`;
+    const libraryUrl = `${this.user.username}/library`;
     const prevState = el.disabled;
     el.disabled = true;
     if (!this.isInLibrary()) {
@@ -169,7 +173,7 @@ export class ItemDetailComponent implements OnInit {
         });
     } else {
       this.message = 'Item already in library.';
-      this.snackBar.open(this.message, 'Close');
+      this.snackBar.open(this.message, 'Close', this.snackBarConfig);
     }
     setTimeout(() => (el.disabled = prevState), 1000);
   }
