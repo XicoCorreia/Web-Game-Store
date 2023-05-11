@@ -45,6 +45,17 @@ export class UserService {
     );
   }
 
+  removeItemsFromWishlist(username: string, itemIds: string[]): Observable<User> {
+    const url = `${this.userUrl}/wishlist/${username}`;
+    const options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: { itemIds } };
+    return this.http.delete<User>(url, options).pipe(
+      catchError((err) => {
+        console.error(err);
+        return of();
+      })
+    );
+}
+
   addItemsToLibrary(username: string, itemIds: string[]): Observable<User> {
     const url = `${this.userUrl}/library/${username}`;
     return this.http.put<User>(url, { itemIds }).pipe(
