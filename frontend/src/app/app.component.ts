@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { AuthService } from './auth.service';
 import { CartService } from './cart.service';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -11,11 +13,12 @@ export class AppComponent {
   username!: string;
   itemsInCart = 0;
   title = 'G13 Gaming';
-  shouldDisplayBurgerMenu = false;
+  shouldDisplayBurgerMenu$: Observable<boolean>;
 
   constructor(
     private authService: AuthService,
-    private cartService: CartService
+    private cartService: CartService,
+    private breakpointObserver: BreakpointObserver
   ) {
     this.authService.userSubject.subscribe(
       (user) => (this.username = user?.username)
@@ -25,16 +28,9 @@ export class AppComponent {
       this.itemsInCart = listItems.reduce((acc, li) => acc + li.count, 0);
     });
 
-    let shouldDisplayBurgerMenu = false;
-
-    window.addEventListener('resize', function () {
-      if (window.innerWidth < 600) {
-        shouldDisplayBurgerMenu = true;
-      } else {
-        shouldDisplayBurgerMenu = false;
-      }
-      console.log(shouldDisplayBurgerMenu);
-    });
+    this.shouldDisplayBurgerMenu$ = this.breakpointObserver
+      .observe('(max-width: 768px)')
+      .pipe(map((state) => state.matches));
   }
 
   logout(): void {
