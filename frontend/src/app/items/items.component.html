@@ -5,10 +5,15 @@
   <a *ngFor="let item of items" routerLink="/detail/{{ item.id }}">
     <img class="img-responsive" src="{{ item.cover }}" /><br />
     <p *ngIf="item.price > 0">
+      <b>
       &nbsp;{{ item.title }} <br />&nbsp;&nbsp;{{ item.price }}€
+    </b>
     </p>
     <p *ngIf="item.price == 0">
+    <b>
       &nbsp;{{ item.title }} <br />&nbsp;&nbsp;Free to Play
+    </b>
     </p>
+
   </a>
 </div>

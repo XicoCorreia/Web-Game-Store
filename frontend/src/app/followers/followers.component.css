@@ -1,4 +1,7 @@
 ul {
+  margin: auto;
+  max-width: 150px;
+  align-self: center;
   list-style: none;
   padding: 0;
 }

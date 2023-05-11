@@ -6,9 +6,11 @@ label {
   margin-bottom: 0.5rem;
 }
 input {
+  margin: auto;
   padding: 0.5rem;
   width: 100%;
   max-width: 600px;
   box-sizing: border-box;
   display: block;
+  align-self: center;
 }

@@ -1,0 +1,28 @@
+.center {
+    padding: 0;
+    margin: auto;
+    max-width: 400px;
+  
+    /* flexbox */
+    display: flex;
+    flex-direction: column;
+    
+  }
+  .img-responsive {
+    border-radius: 29px;
+    float: left;
+    width: 100px;
+  }
+  a {
+    border-style: solid;
+    border-radius: 30px;
+    color: white;
+    text-decoration: none;
+    background-color: #47645c;
+    margin: 10px;
+  }
+
+  p {
+    margin-top: 4%;
+    align-items: center;
+  }
