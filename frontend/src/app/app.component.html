@@ -4,14 +4,8 @@
       <div class="dropdown-content">
         <a routerLink="/dashboard"><b>G13 Gaming</b></a>
         <a routerLink="/browse">Browse</a>
-        <a
-          *ngIf="username; else loginRedirection"
-          routerLink="/profile/{{ username }}"
-          >Profile</a
-        >
-        <a *ngIf="username; else loginRedirection2" routerLink="/profilesearch"
-          >ProfileSearch</a
-        >
+        <a *ngIf="username; else loginRedirection" routerLink="/profile/{{ username }}">Profile</a>
+        <a *ngIf="username; else loginRedirection2" routerLink="/profilesearch">ProfileSearch</a>
         <ng-template #loginRedirection>
           <a routerLink="/login">Profile</a>
         </ng-template>
@@ -25,21 +19,16 @@
   <nav>
     <div class="right-nav">
       <a routerLink="/cart" id="cart-link">
-        <mat-icon
-          [matBadge]="itemsInCart"
-          matBadgeColor="primary"
-          matBadgeSize="small"
-          matBadgePosition="before"
-          >shopping_cart</mat-icon
-        >
-        <span class="cdk-visually-hidden"
-          >Your cart has {{ itemsInCart }} items.</span
-        ></a
-      >
-      <b *ngIf="username; else loginPrompt">Welcome, {{ username }}</b>
-      <ng-template #loginPrompt>
+        <mat-icon [matBadge]="itemsInCart" matBadgeColor="primary" matBadgeSize="small" matBadgePosition="before">shopping_cart</mat-icon>
+        <span class="cdk-visually-hidden">Your cart has {{ itemsInCart }} items.</span>
+      </a>
+      <ng-container *ngIf="username">
+        <b *ngIf="username">Welcome, {{ username }}</b>
+        <button class="logout" *ngIf="username" (click)="logout()">Logout</button>
+      </ng-container>
+      <ng-container *ngIf="!username">
         <a routerLink="/login">Login/Sign Up</a>
-      </ng-template>
+      </ng-container>
     </div>
   </nav>
 </header>

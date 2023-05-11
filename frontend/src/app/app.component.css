@@ -98,3 +98,18 @@ button:hover {
     max-width: 95vw;
   }
 }
+
+.right-nav .logout {
+  background-color: #588377;
+  color: #fff;
+  font-size: 1.2rem;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 4px;
+}
+
+.right-nav .logout:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}

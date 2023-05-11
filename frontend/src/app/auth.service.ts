@@ -55,4 +55,9 @@ export class AuthService {
       })
     );
   }
+
+  logout(): void {
+    sessionStorage.removeItem('currentUser');
+    this.userSubject.next({} as User);
+  }
 }
