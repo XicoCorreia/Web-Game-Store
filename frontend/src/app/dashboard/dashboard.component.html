@@ -31,7 +31,9 @@
   >
     <img src="{{ item.cover }}" alt="game cover" />
     <br />
-    <p *ngIf="item.price > 0">{{ item.title }} <br /><br />{{ item.price }}€</p>
+    <p *ngIf="item.price > 0">
+      {{ item.title }}<br /><br />{{ item.price | currency: "EUR" }}
+    </p>
     <p *ngIf="item.price == 0">
       {{ item.title }} <br /><br />
       Free to Play

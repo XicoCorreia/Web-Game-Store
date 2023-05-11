@@ -1,25 +1,28 @@
 <div *ngIf="user">
-    <h2 *ngIf="user.library">{{ user.username }}'s&nbsp; library </h2>
-    <label for="items">Order by:</label>
-    <select type="string" [(ngModel)]="orderBy" (ngModelChange)="onChange()">
-  <option value="title">Title</option>
-  <option value="purchaseDate">Purchase Date</option>
-</select >
-    <div class="most-popular-content">
-        <a
-          class="box-with-game"
-          *ngFor="let ownedItem of user.library"
-          routerLink="/detail/{{ ownedItem.item.id }}"
-        >
-          <img src="{{ ownedItem.item.cover }}" alt="game cover" />
-          <br />
-          <p>Purchased on {{ ownedItem.purchaseDate | date:'shortDate' }}</p>
-        </a>
-      </div>
-
-      <div *ngIf="user.library.length == 0">
-        <h2>No items on library</h2>
-      </div>
-    
+  <h2 *ngIf="user.library">{{ user.username }}'s library</h2>
+  <label for="items">Order by:</label>
+  <select
+    type="string"
+    id="items"
+    [(ngModel)]="orderBy"
+    (ngModelChange)="onChange()"
+  >
+    <option value="title">Title</option>
+    <option value="purchaseDate">Purchase Date</option>
+  </select>
+  <div class="most-popular-content">
+    <a
+      class="box-with-game"
+      *ngFor="let ownedItem of user.library"
+      routerLink="/detail/{{ ownedItem.item.id }}"
+    >
+      <img src="{{ ownedItem.item.cover }}" alt="game cover" />
+      <br />
+      <p>Purchased on {{ ownedItem.purchaseDate | date: "shortDate" }}</p>
+    </a>
   </div>
-  
+
+  <div *ngIf="user.library.length == 0">
+    <h2>No items on library</h2>
+  </div>
+</div>

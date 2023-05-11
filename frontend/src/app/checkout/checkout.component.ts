@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import {
   AbstractControl,
   FormBuilder,
@@ -9,7 +8,7 @@ import {
 } from '@angular/forms';
 import { StepperOrientation } from '@angular/material/stepper';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, delay, endWith, firstValueFrom, map, of, tap } from 'rxjs';
+import { Observable, delay, endWith, firstValueFrom, of, tap } from 'rxjs';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import {
   BasicDialogComponent,
@@ -69,16 +68,11 @@ export class CheckoutComponent {
   constructor(
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
-    private breakpointObserver: BreakpointObserver,
     private authService: AuthService,
     private userService: UserService,
     private cartService: CartService,
     private router: Router
-  ) {
-    this.stepperOrientation$ = this.breakpointObserver
-      .observe('(max-width: 768px)')
-      .pipe(map(({ matches }) => (matches ? 'vertical' : 'horizontal')));
-  }
+  ) {}
 
   ngOnInit(): void {
     this.authService.userSubject.subscribe((user) => (this.currentUser = user));

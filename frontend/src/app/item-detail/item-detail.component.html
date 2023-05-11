@@ -5,7 +5,7 @@
     <img class="cover" src="{{ item.cover }}" />
     <div class="details">
       <p>{{ item.type | uppercase }} {{ item.stars }}&#9733;</p>
-      <p *ngIf="item.price > 0">Price: {{ item.price }}€</p>
+      <p *ngIf="item.price > 0">Price: {{ item.price | currency: "EUR" }}</p>
       <p *ngIf="item.price == 0">Free to Play</p>
       <p *ngIf="item.platform === 'all'">
         Platform: PC, XBOX,<br />
@@ -87,7 +87,7 @@
   <br />
   <p>Available Languages:</p>
   <div class="lang" tabindex="0">
-    <p *ngFor="let lang of item.language">{{ lang }} &nbsp;&nbsp;</p>
+    <p *ngFor="let lang of item.language">{{ lang }}</p>
   </div>
 
   <div tabindex="0">

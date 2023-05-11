@@ -6,12 +6,14 @@
 }
 
 #address-field {
+  min-width: fit-content;
   width: 80%;
   grid-row: 1 / 2;
   grid-column: span 2;
 }
 
 #postal-code-field {
+  min-width: fit-content;
   width: 30%;
   grid-row: 2 / 3;
 }

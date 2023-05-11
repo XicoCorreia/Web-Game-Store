@@ -1,9 +1,11 @@
 <div *ngIf="user">
-  <h2 *ngIf="listName">{{ user.username }}'s&nbsp;{{ listName }}</h2>
+  <h2 *ngIf="listName">{{ user.username }}'s {{ listName }}</h2>
   <div *ngIf="listName === 'wishlist'" class="center">
     <a *ngFor="let item of user.wishlist" routerLink="/detail/{{ item.id }}">
       <img class="img-responsive" src="{{ item.cover }}" />
-      <p><b>{{ item.title }}</b></p>
+      <p>
+        <b>{{ item.title }}</b>
+      </p>
     </a>
     <div *ngIf="user.wishlist.length == 0">
       <h2>No items on wishlist</h2>

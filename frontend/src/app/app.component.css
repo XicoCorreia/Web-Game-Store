@@ -1,6 +1,5 @@
 header {
   background-color: #47645c;
-  color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -8,13 +7,17 @@ header {
   flex-direction: row;
   flex-wrap: wrap;
   align-content: flex-start;
-  align-items: flex-start;
-}
-nav a {
   color: #fff;
-  text-decoration: none;
-  font-size: 1.2rem;
+}
+
+nav a {
+  font-size: 1rem;
   border-radius: 4px;
+}
+
+nav a:not(#dashboard-link) {
+  color: #fff;
+  background-color: #477e70;
 }
 
 nav a > * {
@@ -43,27 +46,6 @@ nav a > * + * {
   right: 0;
 }
 
-.login-signup {
-  display: flex;
-  align-items: center;
-}
-
-.login-signup button {
-  background-color: #3498db;
-  color: #fff;
-  font-size: 1.2rem;
-  border: none;
-  border-radius: 4px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-left: 1rem;
-}
-
-.login-signup button:hover {
-  background-color: #3d7fcc;
-}
-
 main {
   margin: 2rem auto;
   max-width: 80vw;
@@ -78,21 +60,6 @@ h2 {
 p {
   font-size: 1.2rem;
   margin-bottom: 2rem;
-}
-
-button {
-  background-color: #3498db;
-  color: #fff;
-  font-size: 1.2rem;
-  border: none;
-  border-radius: 4px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #3d7fcc;
 }
 
 .left-nav {
@@ -114,19 +81,4 @@ button:hover {
   main {
     max-width: 95vw;
   }
-}
-
-.right-nav .logout {
-  background-color: #588377;
-  color: #fff;
-  font-size: 1.2rem;
-  border: none;
-  padding: 0.5rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  border-radius: 4px;
-}
-
-.right-nav .logout:hover {
-  background-color: rgba(255, 255, 255, 0.2);
 }
