@@ -178,7 +178,7 @@ export class ItemDetailComponent implements OnInit {
     if (this.isInLibrary()) {
       return 'Already in library';
     }
-    const prefix = this.isLoggedIn ? 'Login to add to' : 'Add to';
+    const prefix = this.isLoggedIn ? 'Add to ' : 'Login to add to ';
     const suffix = this.item.price === 0 ? 'library' : 'cart';
     return prefix + suffix;
   }

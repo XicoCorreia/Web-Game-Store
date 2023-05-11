@@ -1,4 +1,3 @@
-// @ts-ignore
 import { Component } from '@angular/core';
 import { AuthService } from './auth.service';
 import { CartService } from './cart.service';
@@ -28,7 +27,7 @@ export class AppComponent {
 
     let shouldDisplayBurgerMenu = false;
 
-    window.addEventListener('resize', function (event) {
+    window.addEventListener('resize', function () {
       if (window.innerWidth < 600) {
         shouldDisplayBurgerMenu = true;
       } else {
