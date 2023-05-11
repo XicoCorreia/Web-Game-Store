@@ -20,7 +20,7 @@
           <button
             #addItemBtn
             mat-raised-button
-            [disabled]="isInLibrary()"
+            [disabled]="!isLoggedIn || isInLibrary()"
             (click)="
               item.price === 0
                 ? addToLibrary(addItemBtn)
