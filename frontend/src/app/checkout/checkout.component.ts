@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { StepperOrientation } from '@angular/material/stepper';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, delay, endWith, firstValueFrom, of, tap } from 'rxjs';
+import { Observable, delay, lastValueFrom, mergeMap, of, tap } from 'rxjs';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import {
   BasicDialogComponent,
@@ -139,27 +139,18 @@ export class CheckoutComponent {
     return of(isSuccess).pipe(delay(1000));
   }
 
-  private updateUser(user: User) {
-    const [library, wishlist] = [
-      new Set(user.library.map((ownedItem) => ownedItem.item.id)),
-      new Set(user.wishlist.map((item) => item.id)),
-    ];
-    this.cart.forEach((li) => {
-      library.add(li.item.id);
-      wishlist.delete(li.item.id);
-    });
+  private updateUser(user: User): Promise<User> {
+    const librarySet = new Set(user.library.map((oi) => oi.item.id));
+    this.cart.forEach((li) => librarySet.add(li.item.id));
+    const library = Array.from(librarySet.values());
 
-    return firstValueFrom(
-      this.userService
-        .addItemsToLibrary(user.username, [...library.values()])
-        .pipe(
-          endWith(
-            this.userService.addItemsToWishlist(user.username, [
-              ...library.values(),
-            ])
-          ),
-          tap(() => this.cartService.clear())
-        )
+    return lastValueFrom(
+      this.userService.addItemsToLibrary(user.username, library).pipe(
+        mergeMap(() =>
+          this.userService.removeItemsFromWishlist(user.username, library)
+        ),
+        tap(() => this.cartService.clear())
+      )
     );
   }
 
