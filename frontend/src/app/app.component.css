@@ -39,6 +39,8 @@ nav a > * + * {
 }
 
 #dashboard-link {
+  background-color: #69f0ae;
+  color: #333;
   margin-right: 0.6rem;
 }
 
