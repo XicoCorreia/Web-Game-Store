@@ -4,6 +4,7 @@ import { User } from 'src/user';
 import { Item } from 'src/item';
 import { UserService } from '../user.service';
 import { ItemService } from '../item.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-list',
@@ -16,12 +17,18 @@ export class ListComponent {
   listName = '';
   itemList: Item[] = [];
   userList: User[] = [];
+  sessionUser: User | undefined;
 
   constructor(
     private userService: UserService,
     itemService: ItemService,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private authService: AuthService,
+  ) {
+    this.authService.userSubject.subscribe(
+      (sessionUser) => (this.sessionUser = sessionUser)
+    );
+  }
 
   //route=/list/username/listname
   ngOnInit(): void {
@@ -35,4 +42,17 @@ export class ListComponent {
       this.user = elem;
     });
   }
+
+  removeItemFromWishlist(item: Item): void {
+    if (!this.user) {
+      return;
+    }
+    const updatedWishlist = this.user.wishlist.filter((i) => i.id !== item.id);
+    this.userService.removeItemsFromWishlist(this.user.username, [item.id])
+      .subscribe((user) => {
+        this.user = user;
+        this.user.wishlist = updatedWishlist;
+      });
+  }
+  
 }

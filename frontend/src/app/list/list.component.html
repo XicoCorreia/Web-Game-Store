@@ -6,6 +6,7 @@
       <p>
         <b>{{ item.title }}</b>
       </p>
+      <button *ngIf="user.username === sessionUser?.username" (click)="removeItemFromWishlist(item)">Remove from Wishlist</button>
     </a>
     <div *ngIf="user.wishlist.length == 0">
       <h2>No items on wishlist</h2>

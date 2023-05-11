@@ -106,6 +106,31 @@ exports.addItemsToWishlist = async (req, res, _next) => {
 };
 
 /**
+ * Removes the items with the given `itemIds` from the user's wishlist.
+ * The request body should contain the list of `itemIds`.
+ */
+exports.removeItemsFromWishlist = async (req, res, _next) => {
+  const username = req.params.username;
+  const itemIds = req.body.itemIds;
+
+  if (!username || itemIds.length === 0) {
+    res.status(400).json();
+  }
+
+  const user = await User.findOneAndUpdate(
+    { username: username },
+    {
+      $pull: {
+        wishlist: { $in: itemIds },
+      },
+    },
+    { new: true }
+  ).populate(POPULATE_ALL);
+
+  res.status(200).json(user);
+};
+
+/**
  * Adds the items with the given `itemIds` to the user's library.
  * The request body should contain the list of `itemIds`.
  */
