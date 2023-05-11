@@ -1,0 +1,28 @@
+  .most-popular-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+  
+  .box-with-game {
+    width: 300px;
+    height: auto;
+    margin: 10px;
+    justify-content: center;
+    border-style: solid;
+    border-radius: 30px;
+    color: white;
+    text-decoration: none;
+    background-color: #47645c;
+  }
+  
+  .box-with-game img {
+    border-radius: 30px;
+    max-width: 300px;
+    height: auto;
+    max-width: 300px;
+  }
+  
+
+  
