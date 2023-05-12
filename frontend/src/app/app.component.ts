@@ -35,5 +35,6 @@ export class AppComponent {
 
   logout(): void {
     this.authService.logout();
+    this.cartService.clear();
   }
 }
