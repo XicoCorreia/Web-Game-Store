@@ -147,9 +147,8 @@ exports.addItemsToLibrary = async (req, res, _next) => {
   const ownedItems = items.map((item) => {
     return { item, purchaseDate };
   });
-
   const user = await User.findOneAndUpdate(
-    { username: username },
+    { username: username, "item.id": { $nin: itemIds } },
     {
       $addToSet: {
         library: { $each: ownedItems },

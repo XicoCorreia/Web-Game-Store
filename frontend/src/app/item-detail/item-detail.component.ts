@@ -161,7 +161,7 @@ export class ItemDetailComponent implements OnInit {
     el.disabled = true;
     if (!this.isInLibrary()) {
       this.userService
-        .addItemsToLibrary(this.user.username, [this.item?.id])
+        .addItemsToLibrary(this.user.username, [this.item.id])
         .subscribe((user) => {
           this.userService.currentUser$.next(user); // update currentUser
           this.message = 'Item added to library!';

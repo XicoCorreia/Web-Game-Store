@@ -19,7 +19,6 @@ import { Router } from '@angular/router';
 import { LineItem } from 'src/line-item';
 import { CartService } from '../cart.service';
 import { User } from 'src/user';
-import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-checkout',
@@ -68,7 +67,6 @@ export class CheckoutComponent {
   constructor(
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
-    private authService: AuthService,
     private userService: UserService,
     private cartService: CartService,
     private router: Router
@@ -142,14 +140,12 @@ export class CheckoutComponent {
   }
 
   private updateUser(user: User): Promise<User> {
-    const librarySet = new Set(user.library.map((oi) => oi.item.id));
-    this.cart.forEach((li) => librarySet.add(li.item.id));
-    const library = Array.from(librarySet.values());
+    const newItems = this.cart.map((li) => li.item.id);
 
     return lastValueFrom(
-      this.userService.addItemsToLibrary(user.username, library).pipe(
-        mergeMap(() =>
-          this.userService.removeItemsFromWishlist(user.username, library)
+      this.userService.addItemsToLibrary(user.username, newItems).pipe(
+        mergeMap((user) =>
+          this.userService.removeItemsFromWishlist(user.username, newItems)
         ),
         tap((user) => {
           this.userService.currentUser$.next(user);

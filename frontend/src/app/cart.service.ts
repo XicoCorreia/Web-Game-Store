@@ -47,7 +47,7 @@ export class CartService {
   }
 
   clear(): void {
-    this.cart.clear();
+    this.cart?.clear();
     this.saveCart();
   }
 
