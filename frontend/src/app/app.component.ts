@@ -3,6 +3,8 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { AuthService } from './auth.service';
 import { CartService } from './cart.service';
 import { Observable, map } from 'rxjs';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-root',
@@ -18,7 +20,8 @@ export class AppComponent {
   constructor(
     private authService: AuthService,
     private cartService: CartService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private router: Router
   ) {
     this.authService.userSubject.subscribe(
       (user) => (this.username = user?.username)
@@ -36,5 +39,6 @@ export class AppComponent {
   logout(): void {
     this.authService.logout();
     this.cartService.clear();
+    this.router.navigateByUrl('/dashboard');
   }
 }

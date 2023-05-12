@@ -45,9 +45,9 @@
         >
       </a>
       <ng-container *ngIf="username">
-        <button mat-raised-button class="logout" (click)="logout()">
+        <button mat-raised-button class="logout" (click)="logout()" routerLink="/dashboard">
           Logout
-        </button>
+        </button>        
       </ng-container>
       <ng-container *ngIf="!username">
         <a routerLink="/login" mat-raised-button>Login/Sign Up</a>
