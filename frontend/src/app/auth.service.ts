@@ -28,7 +28,7 @@ export class AuthService {
 
   signup(name: string, pass: string): Observable<User> {
     const body = { username: name, password: pass };
-    const url = `${this.usersUrl}/login`;
+    const url = `${this.usersUrl}/signup`;
     return this.http.post<User>(url, body).pipe(
       tap((user: User) => {
         sessionStorage.setItem('currentUser', user.username);
