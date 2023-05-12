@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Item } from 'src/item';
 import { User } from 'src/user';
-import { ItemService } from '../item.service';
 import { UserService } from '../user.service';
 
 @Component({
@@ -19,7 +18,6 @@ export class LibraryComponent {
 
   constructor(
     private userService: UserService,
-    itemService: ItemService,
     private route: ActivatedRoute
   ) {}
 

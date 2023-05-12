@@ -1,19 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../user';
-import { catchError, map, Observable, of } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   private userUrl = 'http://localhost:3000/users';
+  currentUser$!: BehaviorSubject<User>;
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    const username = sessionStorage.getItem('currentUser') ?? '';
+    this.currentUser$ = new BehaviorSubject({} as User);
+    if (username) {
+      this.getUser(username).subscribe((user) => {
+        this.currentUser$.next(user);
+      });
+    }
+  }
 
   getUser(username: string): Observable<User> {
     const url = `${this.userUrl}/${username}`;
@@ -45,16 +54,22 @@ export class UserService {
     );
   }
 
-  removeItemsFromWishlist(username: string, itemIds: string[]): Observable<User> {
+  removeItemsFromWishlist(
+    username: string,
+    itemIds: string[]
+  ): Observable<User> {
     const url = `${this.userUrl}/wishlist/${username}`;
-    const options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: { itemIds } };
+    const options = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      body: { itemIds },
+    };
     return this.http.delete<User>(url, options).pipe(
       catchError((err) => {
         console.error(err);
         return of();
       })
     );
-}
+  }
 
   addItemsToLibrary(username: string, itemIds: string[]): Observable<User> {
     const url = `${this.userUrl}/library/${username}`;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ItemService } from '../item.service';
-import { AuthService } from '../auth.service';
 import { Item } from 'src/item';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,12 +15,12 @@ export class DashboardComponent implements OnInit {
   items: Item[] = [];
   constructor(
     private itemService: ItemService,
-    private authService: AuthService
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
     this.getItems();
-    this.authService.userSubject.subscribe(
+    this.userService.currentUser$.subscribe(
       (user) => (this.username = user.username)
     );
   }

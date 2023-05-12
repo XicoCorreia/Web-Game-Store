@@ -8,16 +8,16 @@ import { Subject } from 'rxjs';
 })
 export class CartService {
   private cart!: Map<string, LineItem>;
-  cartSubject = new Subject<Map<string, LineItem>>();
+  currentCart$ = new Subject<Map<string, LineItem>>();
 
   loadCart(): void {
     this.cart = new Map(JSON.parse(sessionStorage.getItem('cart') ?? '[]'));
-    this.cartSubject.next(this.cart);
+    this.currentCart$.next(this.cart);
   }
 
   saveCart(): void {
     sessionStorage.setItem('cart', JSON.stringify([...this.cart]));
-    this.cartSubject.next(this.cart);
+    this.currentCart$.next(this.cart);
   }
 
   add(li: LineItem): void {

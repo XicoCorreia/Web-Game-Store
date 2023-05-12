@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { User } from 'src/user';
 import { Item } from 'src/item';
 import { UserService } from '../user.service';
-import { ItemService } from '../item.service';
-import { AuthService } from '../auth.service';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 @Component({
@@ -17,21 +15,18 @@ export class ListComponent {
   userName = '';
   user: User | undefined;
   listName = '';
-  sessionUser: User | undefined;
+  currentUser!: User;
   private snackBarConfig: MatSnackBarConfig = {
     duration: 3000,
   };
 
   constructor(
     private userService: UserService,
-    itemService: ItemService,
     private route: ActivatedRoute,
-    private authService: AuthService,
-    private snackBar: MatSnackBar,
-    
+    private snackBar: MatSnackBar
   ) {
-    this.authService.userSubject.subscribe(
-      (sessionUser) => (this.sessionUser = sessionUser)
+    this.userService.currentUser$.subscribe(
+      (sessionUser) => (this.currentUser = sessionUser)
     );
   }
 
@@ -53,13 +48,16 @@ export class ListComponent {
       return;
     }
     const updatedWishlist = this.user.wishlist.filter((i) => i.id !== item.id);
-    this.userService.removeItemsFromWishlist(this.user.username, [item.id])
+    this.userService
+      .removeItemsFromWishlist(this.user.username, [item.id])
       .subscribe((user) => {
         this.user = user;
         this.user.wishlist = updatedWishlist;
       });
-    this.snackBar.open("Item removed from wishlist", 'Close', this.snackBarConfig);
-      
+    this.snackBar.open(
+      'Item removed from wishlist',
+      'Close',
+      this.snackBarConfig
+    );
   }
-  
 }

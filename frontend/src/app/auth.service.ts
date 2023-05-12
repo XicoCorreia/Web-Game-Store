@@ -9,19 +9,14 @@ import { UserService } from './user.service';
 })
 export class AuthService {
   private usersUrl = 'http://localhost:3000/users';
-  loginSubject!: BehaviorSubject<boolean>;
-  userSubject!: BehaviorSubject<User>;
+  private currentUser$!: BehaviorSubject<User>;
 
   constructor(private http: HttpClient, private userService: UserService) {
     const username = sessionStorage.getItem('currentUser') ?? '';
-    this.userSubject = new BehaviorSubject({} as User);
-    this.loginSubject = new BehaviorSubject(false);
-    this.userSubject.subscribe((user) =>
-      this.loginSubject.next(!!user?.username)
-    );
+    this.currentUser$ = userService.currentUser$;
     if (username) {
       this.userService.getUser(username).subscribe((user) => {
-        this.userSubject.next(user);
+        this.currentUser$.next(user);
       });
     }
   }
@@ -32,7 +27,7 @@ export class AuthService {
     return this.http.post<User>(url, body).pipe(
       tap((user: User) => {
         sessionStorage.setItem('currentUser', user.username);
-        this.userSubject.next(user);
+        this.currentUser$.next(user);
       }),
       catchError((err) => {
         console.error(err);
@@ -47,7 +42,7 @@ export class AuthService {
     return this.http.post<User>(url, body).pipe(
       tap((user: User) => {
         sessionStorage.setItem('currentUser', user.username);
-        this.userSubject.next(user);
+        this.currentUser$.next(user);
       }),
       catchError((err) => {
         console.error(err);
@@ -58,6 +53,6 @@ export class AuthService {
 
   logout(): void {
     sessionStorage.removeItem('currentUser');
-    this.userSubject.next({} as User);
+    this.currentUser$.next({} as User);
   }
 }

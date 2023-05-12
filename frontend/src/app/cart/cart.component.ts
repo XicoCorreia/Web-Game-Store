@@ -3,7 +3,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Title } from '@angular/platform-browser';
 import { LineItem } from '../../line-item';
 import { CartService } from '../cart.service';
-import { AuthService } from '../auth.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-cart',
@@ -47,17 +47,17 @@ export class CartComponent implements OnDestroy {
   constructor(
     private cartService: CartService,
     private titleService: Title,
-    private authService: AuthService
+    private userService: UserService
   ) {
     this.previousTitle = this.titleService.getTitle();
     this.titleService.setTitle(this.previousTitle + ' - Cart');
   }
 
   ngOnInit(): void {
-    this.authService.loginSubject.subscribe(
-      (status) => (this.isLoggedIn = status)
+    this.userService.currentUser$.subscribe(
+      (user) => (this.isLoggedIn = !!user?.username)
     );
-    this.cartService.cartSubject.subscribe(
+    this.cartService.currentCart$.subscribe(
       (cart) => (this.cart = [...cart.values()])
     );
     this.cartService.loadCart();

@@ -75,8 +75,10 @@ export class CheckoutComponent {
   ) {}
 
   ngOnInit(): void {
-    this.authService.userSubject.subscribe((user) => (this.currentUser = user));
-    this.cartService.cartSubject.subscribe(
+    this.userService.currentUser$.subscribe(
+      (user) => (this.currentUser = user)
+    );
+    this.cartService.currentCart$.subscribe(
       (cart) => (this.cart = [...cart.values()])
     );
     this.cartService.loadCart();
@@ -135,7 +137,7 @@ export class CheckoutComponent {
   }
 
   private sendMockPayment() {
-    const isSuccess = Boolean(~~(Math.random() + 0.5));
+    const isSuccess = Boolean(~~(Math.random() + 0.5)); // 1/2 odds
     return of(isSuccess).pipe(delay(1000));
   }
 
@@ -149,7 +151,10 @@ export class CheckoutComponent {
         mergeMap(() =>
           this.userService.removeItemsFromWishlist(user.username, library)
         ),
-        tap(() => this.cartService.clear())
+        tap((user) => {
+          this.userService.currentUser$.next(user);
+          this.cartService.clear();
+        })
       )
     );
   }

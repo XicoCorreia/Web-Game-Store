@@ -4,7 +4,7 @@ import { AuthService } from './auth.service';
 import { CartService } from './cart.service';
 import { Observable, map } from 'rxjs';
 import { Router } from '@angular/router';
-
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-root',
@@ -20,13 +20,14 @@ export class AppComponent {
   constructor(
     private authService: AuthService,
     private cartService: CartService,
+    private userService: UserService,
     private breakpointObserver: BreakpointObserver,
     private router: Router
   ) {
-    this.authService.userSubject.subscribe(
+    this.userService.currentUser$.subscribe(
       (user) => (this.username = user?.username)
     );
-    this.cartService.cartSubject.subscribe((cart) => {
+    this.cartService.currentCart$.subscribe((cart) => {
       const listItems = Array.from(cart.values());
       this.itemsInCart = listItems.reduce((acc, li) => acc + li.count, 0);
     });

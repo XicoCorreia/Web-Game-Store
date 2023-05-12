@@ -1,29 +1,39 @@
 <div *ngIf="user">
   <h2 *ngIf="listName">{{ user.username }}'s {{ listName }}</h2>
-  <div *ngIf="listName === 'wishlist' && user.username === sessionUser?.username" class="center">
-    <a *ngFor="let item of user.wishlist" >
+  <div
+    *ngIf="listName === 'wishlist' && user.username === currentUser?.username"
+    class="center"
+  >
+    <a *ngFor="let item of user.wishlist">
       <div class="box">
-        <img class="img-responsive" src="{{ item.cover }}" routerLink="/detail/{{ item.id }}"/>
+        <img
+          class="img-responsive"
+          src="{{ item.cover }}"
+          routerLink="/detail/{{ item.id }}"
+        />
         <p class="p1" routerLink="/detail/{{ item.id }}">
           {{ item.title }}
         </p>
-        <button 
-        mat-raised-button 
-        *ngIf="user.username === sessionUser?.username" 
-        aria-label="Remove Item From Wishlist" 
-        (click)="removeItemFromWishlist(item)">X</button>
+        <button
+          mat-raised-button
+          *ngIf="user.username === currentUser?.username"
+          aria-label="Remove Item From Wishlist"
+          (click)="removeItemFromWishlist(item)"
+        >
+          X
+        </button>
       </div>
     </a>
     <div *ngIf="user.wishlist.length == 0">
       <h2>No items on wishlist</h2>
     </div>
   </div>
-  <div *ngIf="user.username != sessionUser?.username" class="center">
+  <div *ngIf="user.username != currentUser?.username" class="center">
     <a *ngFor="let item of user.wishlist" routerLink="/detail/{{ item.id }}">
-        <img class="img-responsive2" src="{{ item.cover }}" />
-        <p class="p2" >
-          {{ item.title }}
-        </p>
+      <img class="img-responsive2" src="{{ item.cover }}" />
+      <p class="p2">
+        {{ item.title }}
+      </p>
     </a>
     <div *ngIf="user.wishlist.length == 0">
       <h2>No items on wishlist</h2>

@@ -20,7 +20,7 @@ export class ItemDetailComponent implements OnInit {
     duration: 3000,
   };
 
-  isLoggedIn!: boolean;
+  isLoggedIn = false;
   user!: User;
   message = '';
   item!: Item;
@@ -39,10 +39,10 @@ export class ItemDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.getItem();
-    this.authService.userSubject.subscribe((user) => (this.user = user));
-    this.authService.loginSubject.subscribe(
-      (status) => (this.isLoggedIn = status)
-    );
+    this.userService.currentUser$.subscribe((user) => {
+      this.user = user;
+      this.isLoggedIn = !!user?.username;
+    });
   }
 
   addToWishlist(): void {
@@ -50,7 +50,7 @@ export class ItemDetailComponent implements OnInit {
       this.userService
         .addItemsToWishlist(this.user?.username, [this.item?.id])
         .subscribe((user) => {
-          this.user = user;
+          this.userService.currentUser$.next(user); // update currentUser
           this.message = 'Item added to wishlist';
           this.snackBar.open(this.message, 'Close', this.snackBarConfig);
         });
@@ -61,11 +61,11 @@ export class ItemDetailComponent implements OnInit {
   }
 
   isInWishlist(): boolean {
-    return !!this.user.wishlist?.find((x) => x.id === this.item.id);
+    return !!this.user?.wishlist?.find((x) => x.id === this.item.id);
   }
 
   isInLibrary(): boolean {
-    return !!this.user.library?.find((x) => x.item?.id === this.item.id);
+    return !!this.user?.library?.find((x) => x.item?.id === this.item.id);
   }
 
   isInCart() {
@@ -158,14 +158,13 @@ export class ItemDetailComponent implements OnInit {
 
   addToLibrary(el: MatButton) {
     const libraryUrl = `${this.user.username}/library`;
-    const prevState = el.disabled;
     el.disabled = true;
     if (!this.isInLibrary()) {
       this.userService
         .addItemsToLibrary(this.user.username, [this.item?.id])
         .subscribe((user) => {
+          this.userService.currentUser$.next(user); // update currentUser
           this.message = 'Item added to library!';
-          this.user = user;
           this.snackBar
             .open(this.message, 'Go to library')
             .onAction()
@@ -175,7 +174,6 @@ export class ItemDetailComponent implements OnInit {
       this.message = 'Item already in library.';
       this.snackBar.open(this.message, 'Close', this.snackBarConfig);
     }
-    setTimeout(() => (el.disabled = prevState), 1000);
   }
 
   getLibraryButtonLabel(): string {
