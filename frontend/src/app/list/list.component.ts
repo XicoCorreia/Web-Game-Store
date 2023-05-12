@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute} from '@angular/router';
+
 import { User } from 'src/user';
 import { Item } from 'src/item';
 import { UserService } from '../user.service';
 import { ItemService } from '../item.service';
 import { AuthService } from '../auth.service';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-list',
@@ -15,15 +17,18 @@ export class ListComponent {
   userName = '';
   user: User | undefined;
   listName = '';
-  itemList: Item[] = [];
-  userList: User[] = [];
   sessionUser: User | undefined;
+  private snackBarConfig: MatSnackBarConfig = {
+    duration: 3000,
+  };
 
   constructor(
     private userService: UserService,
     itemService: ItemService,
     private route: ActivatedRoute,
     private authService: AuthService,
+    private snackBar: MatSnackBar,
+    
   ) {
     this.authService.userSubject.subscribe(
       (sessionUser) => (this.sessionUser = sessionUser)
@@ -53,6 +58,8 @@ export class ListComponent {
         this.user = user;
         this.user.wishlist = updatedWishlist;
       });
+    this.snackBar.open("Item removed from wishlist", 'Close', this.snackBarConfig);
+      
   }
   
 }
