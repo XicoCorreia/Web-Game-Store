@@ -49,8 +49,7 @@ export class ItemDetailComponent implements OnInit {
     if (!this.isInWishlist()) {
       this.userService
         .addItemsToWishlist(this.user?.username, [this.item?.id])
-        .subscribe((user) => {
-          this.userService.currentUser$.next(user); // update currentUser
+        .subscribe(() => {
           this.message = 'Item added to wishlist';
           this.snackBar.open(this.message, 'Close', this.snackBarConfig);
         });
@@ -162,8 +161,7 @@ export class ItemDetailComponent implements OnInit {
     if (!this.isInLibrary()) {
       this.userService
         .addItemsToLibrary(this.user.username, [this.item.id])
-        .subscribe((user) => {
-          this.userService.currentUser$.next(user); // update currentUser
+        .subscribe(() => {
           this.message = 'Item added to library!';
           this.snackBar
             .open(this.message, 'Go to library')

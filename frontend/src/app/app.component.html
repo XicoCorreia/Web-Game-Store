@@ -45,9 +45,14 @@
         >
       </a>
       <ng-container *ngIf="username">
-        <button mat-raised-button class="logout" (click)="logout()" routerLink="/dashboard">
+        <button
+          mat-raised-button
+          class="logout"
+          (click)="logout()"
+          routerLink="/dashboard"
+        >
           Logout
-        </button>        
+        </button>
       </ng-container>
       <ng-container *ngIf="!username">
         <a routerLink="/login" mat-raised-button>Login/Sign Up</a>
@@ -57,7 +62,7 @@
 </header>
 
 <main>
-  <h2>Welcome {{ username ? ", " + username : "to G13 Gaming" }}</h2>
+  <h2>Welcome {{ username ? username : "to G13 Gaming" }}</h2>
   <p>
     Discover the latest and greatest games, connect with other gamers, and share
     your experiences!

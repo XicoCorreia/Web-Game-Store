@@ -1,8 +1,7 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { User } from '../../user';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user.service';
-import { Location } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
@@ -12,9 +11,8 @@ import { firstValueFrom } from 'rxjs';
 })
 export class ProfileEditComponent implements OnInit {
   user!: User;
-  username!: string;
+  @Input() username!: string;
   feedback = '';
-  userExists!: boolean;
   selectedImage!: string;
   profilePictures = {
     dog: 'https://fc55955.blob.core.windows.net/psi013/dog.jpg',
@@ -28,20 +26,18 @@ export class ProfileEditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private location: Location,
     private userService: UserService
   ) {}
 
   ngOnInit(): void {
-    this.getUser();
-  }
-
-  getUser(): void {
-    const username = this.route.snapshot.paramMap.get('username') ?? '';
-    this.username = username;
-    this.userService.getUser(username).subscribe((user) => {
-      this.user = user;
-      this.selectedImage = this.user?.image;
+    this.route.paramMap.subscribe((params) => {
+      const username = params.get('username') || '';
+      this.userService.currentUser$.subscribe((user) => {
+        if (username === user.username) {
+          this.user = user;
+          this.selectedImage = user.image;
+        }
+      });
     });
   }
 
@@ -52,35 +48,34 @@ export class ProfileEditComponent implements OnInit {
   async save(): Promise<void> {
     this.feedback = '';
 
-    const updatedUser = {
-      ...this.user,
-      image: this.selectedImage,
-      username: this.username,
-    };
-
+    const payload = {
+      image: this.selectedImage ?? this.user.image,
+      username: this.username ?? this.user.username,
+    } as User;
+    console.log('PAYLOAD', payload);
     if (this.user) {
-      if (updatedUser.username.length < 3) {
+      if (payload.username.length < 3) {
         this.feedback = 'Your name must have more than 3 characters!';
         return;
       }
-      if (!updatedUser.username.match(/^[0-9a-zA-Z]+$/)) {
+      if (!payload.username.match(/^[0-9a-zA-Z]+$/)) {
         this.feedback = 'Your name can only have numbers and letters!';
         return;
       }
 
       const hasChanged = !this.isUnchanged();
       const usernameAvailable = !(await firstValueFrom(
-        this.userService.usernameExists(updatedUser.username)
+        this.userService.usernameExists(payload.username)
       ));
       if (usernameAvailable || hasChanged) {
         this.userService
-          .updateUser(this.user.username, updatedUser)
-          .subscribe(() => {
+          .updateUser(this.user.username, payload)
+          .subscribe((updatedUser) => {
+            console.log(updatedUser);
             sessionStorage.setItem('currentUser', updatedUser.username);
             this.router.navigateByUrl(
-              this.router.url.replace(this.user.username, updatedUser.username)
+              this.router.url.replace(this.user.username, payload.username)
             );
-            this.user = updatedUser;
             this.feedback = 'Changes applied with success';
           });
       } else {

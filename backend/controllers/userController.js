@@ -73,11 +73,13 @@ exports.getUsers = async (req, res, _next) => {
 exports.update = async (req, res, _next) => {
   const username = req.params.username;
   let user = req.body;
-  user = await User.updateOne({ username: username }, user);
+  user = await User.findOneAndUpdate({ username: username }, user, {
+    new: true,
+  }).populate(POPULATE_ALL);
   if (!user) {
     res.status(404).json();
   }
-  res.status(204).json();
+  res.status(200).json(user);
 };
 
 /**
@@ -169,7 +171,7 @@ exports.addFollower = async (req, res, _next) => {
   const usernameToFollow = req.params.username;
   const { username } = req.body;
 
-  const user = await User.findOne({ username: username });
+  let user = await User.findOne({ username: username });
 
   if (!user) {
     res.status(404).json(`User '${username}' not found.`);
@@ -188,8 +190,12 @@ exports.addFollower = async (req, res, _next) => {
     res.status(404).json(`User '${usernameToFollow}' not found.`);
   }
 
-  await user?.updateOne({ $addToSet: { following: userToFollow } });
-  res.status(204).json();
+  user = await User.findOneAndUpdate(
+    { username: user?.username },
+    { $addToSet: { following: userToFollow } },
+    { new: true }
+  );
+  res.status(200).json(user);
 };
 
 exports.getFollowers = async (req, res, _next) => {

@@ -147,8 +147,7 @@ export class CheckoutComponent {
         mergeMap((user) =>
           this.userService.removeItemsFromWishlist(user.username, newItems)
         ),
-        tap((user) => {
-          this.userService.currentUser$.next(user);
+        tap(() => {
           this.cartService.clear();
         })
       )

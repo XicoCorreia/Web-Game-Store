@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../user';
-import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -34,9 +34,10 @@ export class UserService {
     );
   }
 
-  updateUser(username: string, updatedUser: User): Observable<object> {
+  updateUser(username: string, updatedUser: User): Observable<User> {
     const url = `${this.userUrl}/${username}`;
-    return this.http.put(url, updatedUser, this.httpOptions).pipe(
+    return this.http.put<User>(url, updatedUser).pipe(
+      tap((user) => this.currentUser$.next(user)),
       catchError((err) => {
         console.error(err);
         return of();
@@ -47,6 +48,7 @@ export class UserService {
   addItemsToWishlist(username: string, itemIds: string[]): Observable<User> {
     const url = `${this.userUrl}/wishlist/${username}`;
     return this.http.put<User>(url, { itemIds }).pipe(
+      tap((user) => this.currentUser$.next(user)),
       catchError((err) => {
         console.error(err);
         return of();
@@ -64,6 +66,7 @@ export class UserService {
       body: { itemIds },
     };
     return this.http.delete<User>(url, options).pipe(
+      tap((user) => this.currentUser$.next(user)),
       catchError((err) => {
         console.error(err);
         return of();
@@ -74,6 +77,7 @@ export class UserService {
   addItemsToLibrary(username: string, itemIds: string[]): Observable<User> {
     const url = `${this.userUrl}/library/${username}`;
     return this.http.put<User>(url, { itemIds }).pipe(
+      tap((user) => this.currentUser$.next(user)),
       catchError((err) => {
         console.error(err);
         return of();
@@ -93,6 +97,7 @@ export class UserService {
   follow(username: string, usernameToFollow: string): Observable<User> {
     const url = `${this.userUrl}/follow/${usernameToFollow}`;
     return this.http.put<User>(url, { username }).pipe(
+      tap((user) => this.currentUser$.next(user)),
       catchError((err) => {
         console.error(err);
         throw err;
