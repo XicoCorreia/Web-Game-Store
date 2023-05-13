@@ -52,7 +52,7 @@ export class ProfileEditComponent implements OnInit {
       image: this.selectedImage ?? this.user.image,
       username: this.username ?? this.user.username,
     } as User;
-    console.log('PAYLOAD', payload);
+
     if (this.user) {
       if (payload.username.length < 3) {
         this.feedback = 'Your name must have more than 3 characters!';
@@ -71,7 +71,6 @@ export class ProfileEditComponent implements OnInit {
         this.userService
           .updateUser(this.user.username, payload)
           .subscribe((updatedUser) => {
-            console.log(updatedUser);
             sessionStorage.setItem('currentUser', updatedUser.username);
             this.router.navigateByUrl(
               this.router.url.replace(this.user.username, payload.username)
