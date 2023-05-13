@@ -15,7 +15,11 @@ export class SignupComponent {
   currentUser: User = {} as User;
   feedback = '';
 
-  constructor(private authService: AuthService, private userService: UserService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   signup(name: string, pass: string, pass2: string): void {
     this.feedback = '';
@@ -28,7 +32,8 @@ export class SignupComponent {
 
     // Verifica se o nome tem pelo menos 3 caracteres alfanuméricos
     if (name.length < 3) {
-      this.feedback = 'Username tem que ter no mínimo 3 caracteres alfanuméricos!';
+      this.feedback =
+        'Username tem que ter no mínimo 3 caracteres alfanuméricos!';
       return;
     }
 
@@ -59,16 +64,19 @@ export class SignupComponent {
           // Validação da senha
           this.feedback = '';
           if (!/(?=.*[a-z])/.test(pass)) {
-            this.feedback += 'A senha precisa ter pelo menos uma letra minúscula.';
+            this.feedback +=
+              'A senha precisa ter pelo menos uma letra minúscula.';
           }
           if (!/(?=.*[A-Z])/.test(pass)) {
-            this.feedback += 'A senha precisa ter pelo menos uma letra maiúscula.';
+            this.feedback +=
+              'A senha precisa ter pelo menos uma letra maiúscula.';
           }
           if (!/(?=.*\d)/.test(pass)) {
             this.feedback += 'A senha precisa ter pelo menos um número.';
           }
           if (!/^[a-zA-Z\d]{8,}$/.test(pass)) {
-            this.feedback += 'A senha precisa ter pelo menos 8 caracteres alfanuméricos.';
+            this.feedback +=
+              'A senha precisa ter pelo menos 8 caracteres alfanuméricos.';
           }
         }
       }

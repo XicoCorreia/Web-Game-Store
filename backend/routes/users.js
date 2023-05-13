@@ -19,6 +19,9 @@ router.put("/library/:username", asyncHandler(user.addItemsToLibrary));
 router.put("/wishlist/:username", asyncHandler(user.addItemsToWishlist));
 
 /* DELETE */
-router.delete("/wishlist/:username", asyncHandler(user.removeItemsFromWishlist));
+router.delete(
+  "/wishlist/:username",
+  asyncHandler(user.removeItemsFromWishlist)
+);
 
 module.exports = router;
